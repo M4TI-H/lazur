@@ -3,9 +3,7 @@ import { Icon } from "@iconify/vue";
 </script>
 
 <template>
-  <section
-    class="relative w-full h-full min-h-[32rem] lg:min-h-[48rem] flex flex-col items-center"
-  >
+  <section class="relative w-full h-screen flex flex-col items-center">
     <img
       class="w-full h-full object-cover z-10"
       src="https://images.unsplash.com/photo-1610275504335-f2b494fbe239?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

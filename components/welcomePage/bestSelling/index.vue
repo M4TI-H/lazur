@@ -1,10 +1,49 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import Item from "./topItem.vue";
+
+const items = [
+  {
+    id: 0,
+    name: "Cotton Shirt",
+    price: "79.99",
+    category: "Shirt",
+    cover:
+      "https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-blue-shirt-mockup-cutout-png-file-png-image_11588762.png",
+    review: "4",
+  },
+  {
+    id: 1,
+    name: "Striped Shirt",
+    price: "129.49",
+    category: "Shirt",
+    cover:
+      "https://cdn.shopify.com/s/files/1/2304/9839/files/RW658_DSG_001.png?v=1753091626",
+    review: "",
+  },
+  {
+    id: 2,
+    name: "Flaming Shirt",
+    price: "99.99",
+    category: "Shirt",
+    cover:
+      "https://cdn11.bigcommerce.com/s-vhimnvf2fd/images/stencil/2000x2000/products/531/2024/425CL-Mens-Button-Down-Printed-Camp-Shirts---Hot-Rod__17274__27168.1717682589.png?c=1",
+    review: "3",
+  },
+  {
+    id: 3,
+    name: "Cotton Shirt",
+    price: "99.99",
+    category: "Shirt",
+    cover: "https://pngimg.com/d/dress_shirt_PNG8117.png",
+    review: "3",
+  },
+];
 </script>
 
 <template>
-  <div
-    class="w-full h-[32rem] flex flex-col items-center bg-[#E9ECEF] p-4 gap-4"
+  <section
+    class="w-full h-[44rem] flex flex-col items-center bg-[#E9ECEF] p-4 gap-4"
   >
     <h2
       class="text-primary text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
@@ -35,82 +74,13 @@ import { Icon } from "@iconify/vue";
         Footwear
       </button>
     </div>
-    <div class="w-full flex justify-center gap-16">
-      <div class="w-[14rem] h-[20rem] bg-[#DEE2E6] rounded-xl">
-        <img
-          src="https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-blue-shirt-mockup-cutout-png-file-png-image_11588762.png"
-          class="w-full h-[12rem] rounded-t-xl"
-        />
-        <div
-          class="w-full h-[8rem] flex flex-col p-2 bg-[#F8F9FA] rounded-b-xl"
-        >
-          <div class="w-full h-[5rem]">
-            <p class="text-secondary text-sm font-thin">Shirt</p>
-            <p class="text-primary font-semibold">Cotton Shirt</p>
-          </div>
-
-          <div class="w-full h-[3rem] flex items-center justify-between">
-            <p class="text-primary font-semibold">$79.99</p>
-            <button
-              class="size-[2rem] bg-[#445388] rounded-full flex items-center justify-center hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer"
-            >
-              <Icon icon="tabler:plus" class="text-xl text-light" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-[14rem] h-[20rem] bg-[#DEE2E6] rounded-xl">
-        <img
-          src="https://cdn.shopify.com/s/files/1/2304/9839/files/RW658_DSG_001.png?v=1753091626"
-          class="w-full h-[12rem] rounded-t-xl"
-        />
-        <div
-          class="w-full h-[8rem] flex flex-col p-2 bg-[#F8F9FA] rounded-b-xl"
-        >
-          <div class="w-full h-[5rem]">
-            <p class="text-secondary text-sm font-thin">Shirt</p>
-            <p class="text-primary font-semibold">Striped Shirt</p>
-          </div>
-
-          <div class="w-full h-[3rem] flex items-center justify-between">
-            <p class="text-primary font-semibold">$129.49</p>
-            <button
-              class="size-[2rem] bg-[#445388] rounded-full flex items-center justify-center hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer"
-            >
-              <Icon icon="tabler:plus" class="text-xl text-light" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="w-[14rem] h-[20rem] bg-[#DEE2E6] rounded-xl">
-        <img
-          src="https://cdn11.bigcommerce.com/s-vhimnvf2fd/images/stencil/2000x2000/products/531/2024/425CL-Mens-Button-Down-Printed-Camp-Shirts---Hot-Rod__17274__27168.1717682589.png?c=1"
-          class="w-full h-[12rem] rounded-t-xl"
-        />
-        <div
-          class="w-full h-[8rem] flex flex-col p-2 bg-[#F8F9FA] rounded-b-xl"
-        >
-          <div class="w-full h-[5rem]">
-            <p class="text-secondary text-sm font-thin">Shirt</p>
-            <p class="text-primary font-semibold">Flaming Shirt</p>
-          </div>
-
-          <div class="w-full h-[3rem] flex items-center justify-between">
-            <p class="text-primary font-semibold">$99.99</p>
-            <button
-              class="size-[2rem] bg-[#445388] rounded-full flex items-center justify-center hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer"
-            >
-              <Icon icon="tabler:plus" class="text-xl text-light" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section class="w-full flex justify-center gap-4">
+      <TopItem v-for="item in items" :key="item.id" :itemData="item" />
+    </section>
     <a class="text-secondary hover:text-primary hover:cursor-pointer">
       <span class="flex items-center gap-2"
         >View all
         <Icon icon="tabler:arrow-narrow-right" class="text-lg" /> </span
     ></a>
-  </div>
+  </section>
 </template>

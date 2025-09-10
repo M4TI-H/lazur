@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
+const { scrollY } = useScroll();
 </script>
 <template>
-  <main class="fixed w-screen h-screen bg-[#F8F9FA] pb-32 overflow-y-auto">
-    <NavMenu />
+  <NavMenu :scrollY="scrollY" />
+  <main class="w-screen min-h-screen bg-[#F8F9FA] pb-32 overflow-y-auto">
     <WelcomePanel />
     <FeaturesText />
     <BestSelling />
+    <ClientsReviews />
   </main>
 </template>

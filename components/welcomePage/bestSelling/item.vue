@@ -1,1 +1,0 @@
-<template>Best Selling</template>
