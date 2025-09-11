@@ -9,11 +9,11 @@ const { itemData } = defineProps<{
 <template>
   <NuxtLink
     :to="`/garments/itemDetails/${itemData.id}`"
-    class="w-[8rem] md:w-[18rem] h-[12rem] md:h-[28rem] bg-[#DEE2E6] rounded-xl overflow-hidden"
+    class="w-[8rem] md:w-[20rem] lg:w-[24rem] h-[12rem] md:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-xl overflow-hidden"
   >
     <img
       :src="itemData.cover"
-      class="w-full h-[8rem] md:h-[20rem] rounded-t-xl"
+      class="w-full h-[8rem] md:h-[20rem] lg:h-[24rem] rounded-t-xl"
     />
     <div
       class="w-full h-full flex flex-col items-center md:items-start p-2 py-2 md:px-4 bg-[#F8F9FA] rounded-b-xl"
