@@ -8,7 +8,7 @@ const { itemData } = defineProps<{
 
 <template>
   <NuxtLink
-    :to="`/garments/itemDetails/${itemData.id}`"
+    :to="`/garments/itemDetails/${itemData.id + 1}`"
     class="w-[8rem] md:w-[20rem] lg:w-[24rem] h-[12rem] md:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-xl overflow-hidden"
   >
     <img
