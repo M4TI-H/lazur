@@ -6,10 +6,9 @@ export function useFetchSingleGarment(id: number) {
     pending: loading,
     error,
     refresh,
-  } = useFetch<Garment>(`/api/garments/fetch/${id}`, {
-    lazy: true,
-    key: `garment-${id}`,
-  });
+  } = useAsyncData<Garment>(`garment-${id}`, () =>
+    $fetch(`/api/garments/fetch/${id}`)
+  );
 
   return { garment, loading, error, refresh };
 }

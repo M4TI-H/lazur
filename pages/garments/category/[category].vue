@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type Garment from "~/types/Garment";
+import { useFetchCategory } from "~/composables/garments/useFetchCategory";
+const route = useRoute();
+const category = route.params.category as string;
 
 const { scrollY } = useScroll();
+const { garments, loading } = useFetchCategory(category);
 </script>
-
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
@@ -24,14 +26,12 @@ const { scrollY } = useScroll();
         </h1>
       </div>
     </section>
-    <CategoryMenu />
-    <div class="w-full flex items-center justify-between gap-8 p-2">
-      <p class="text-sm text-secondary">Results: 1 - 48</p>
-      <span class="flex items-center gap-2">
-        <p class="text-lg text-secondary">Sorting by</p>
-        <p class="text-lg text-primary font-semibold">Price &uarr;</p>
-      </span>
+    <div class="w-full flex justify-center mt-4">
+      <h1 class="text-secondary text-4xl font-thin my-2">
+        {{ category.toUpperCase() }}
+      </h1>
     </div>
-    <ClothesDisplay />
+    <i v-if="loading" class="pi pi-spinner pi-spin text-2xl text-black"></i>
+    <ClothesDisplay v-else :garments="garments" />
   </main>
 </template>
