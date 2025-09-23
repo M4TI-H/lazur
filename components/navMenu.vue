@@ -4,6 +4,9 @@ import { Icon } from "@iconify/vue";
 const { scrollY } = defineProps<{
   scrollY: number;
 }>();
+
+const cartStore = useCartStore();
+cartStore.loadFromStorage();
 </script>
 
 <template>
@@ -15,21 +18,20 @@ const { scrollY } = defineProps<{
       >Lazur</NuxtLink
     >
     <div class="flex items-center gap-4 md:gap-8">
-      <span
+      <NuxtLink
+        to="/garments"
         class="group size-[2rem] sm:w-[6rem] sm:h-[2rem] rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
         :class="
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
         "
       >
         <Icon icon="tabler:shirt" class="text-2xl text-light sm:hidden" />
-        <NuxtLink
-          to="/garments"
-          class="text-sm md:text-lg text-light font-thin hidden sm:block"
-        >
+        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
           Garments
-        </NuxtLink>
-      </span>
-      <span
+        </p>
+      </NuxtLink>
+      <NuxtLink
+        to="/explore"
         :class="[
           'group size-[2rem] sm:w-[6rem] sm:h-[2rem] rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
@@ -42,8 +44,9 @@ const { scrollY } = defineProps<{
         <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
           Explore
         </p>
-      </span>
-      <span
+      </NuxtLink>
+      <NuxtLink
+        to="/aboutus"
         :class="[
           'size-[2rem] sm:w-[6rem] sm:h-[2rem] rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
@@ -53,20 +56,26 @@ const { scrollY } = defineProps<{
         <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
           About Us
         </p>
-      </span>
-      <a
+      </NuxtLink>
+      <NuxtLink
+        to="/cart"
         :class="
           scrollY < 50
             ? ['hover:bg-[#1F1D20]/30', 'active:bg-[#1F1D20]/30']
             : ''
         "
-        class="text-2xl md:text-2xl text-light size-[2rem] md:size-[2.5rem] rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        class="relative text-lg md:text-xl text-light size-[2rem] md:size-[2.5rem] rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
       >
-        <Icon
-          icon="tabler:shopping-bag"
-          class="transition duration-300 ease-in-out"
-        />
-      </a>
+        <i class="pi pi-shopping-bag transition duration-300 ease-in-out" />
+        <div
+          v-if="cartStore.itemCount > 0"
+          class="absolute top-1 right-0 px-1 bg-blue-500 rounded-full flex items-center justify-center"
+        >
+          <p class="text-sm">
+            {{ cartStore.itemCount > 99 ? "99+" : cartStore.itemCount }}
+          </p>
+        </div>
+      </NuxtLink>
     </div>
   </section>
 </template>

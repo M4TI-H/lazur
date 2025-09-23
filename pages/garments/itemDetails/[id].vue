@@ -16,35 +16,45 @@ onMounted(() => {
 <template>
   <NavMenu :scrollY="200" />
   <main
-    class="w-screen h-screen pt-[4rem] flex flex-col justify-center bg-[#F8F9FA]"
+    class="w-full min-h-screen pt-[4rem] flex flex-col items-center justify-center bg-[#F8F9FA]"
   >
     <div
       v-if="garment"
-      class="py-4 px-8 md:p-16 w-full h-full flex flex-col md:flex-row"
+      class="py-4 px-8 md:p-16 w-full lg:w-[90vw] xl:w-[80vw] h-full min-h-[36rem] flex flex-col md:flex-row"
     >
-      <div class="bg-[#d9d9d9] w-full md:w-[60%] flex flex-col md:flex-row">
-        <img
-          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-          class="w-full md:w-[50%] hover:bg-[#000]/5 hover:cursor-pointer"
-        />
-        <div class="w-full md:w-[50%] h-full flex flex-row-reverse md:flex-col">
+      <div class="w-full md:w-[60%] flex flex-col-reverse md:flex-row">
+        <div
+          class="w-full md:w-[20%] h-full flex md:flex-col justify-center gap-4 py-4 md:px-4"
+        >
           <img
             src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-            class="w-[40%] md:w-full md:h-[60%] hover:bg-[#000]/5 hover:cursor-pointer"
+            class="w-1/3 max-w-[6rem] md:w-full md:max-w-full max-h-[4rem] md:h-[8rem] md:max-h-[6rem] bg-[#d9d9d9] hover:bg-[#000]/5 hover:cursor-pointer"
           />
           <img
             src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-            class="w-[60%] md:w-full md:h-[40%] hover:bg-[#000]/5 hover:cursor-pointer"
+            class="w-1/3 max-w-[6rem] md:w-full md:max-w-full max-h-[4rem] md:h-[8rem] md:max-h-[6rem] bg-[#d9d9d9] hover:bg-[#000]/5 hover:cursor-pointer"
+          />
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+            class="w-1/3 max-w-[6rem] md:w-full md:max-w-full max-h-[4rem] md:h-[8rem] md:max-h-[6rem] bg-[#d9d9d9] hover:bg-[#000]/5 hover:cursor-pointer"
           />
         </div>
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="w-full md:w-[80%] md:max-w-full bg-[#d9d9d9] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
       </div>
       <div
         class="w-full md:w-[40%] p-4 flex flex-col justify-between bg-[#F8F9FA]"
       >
-        <div class="flex flex-col gap-4">
-          <h3 class="text-xl md:text-3xl font-thin">{{ garment.name }}</h3>
+        <div class="flex flex-col gap-2 md:gap-4">
+          <h3 class="text-xl md:text-3xl font-thin whitespace-nowrap">
+            {{ garment.name }}
+          </h3>
 
-          <h3 class="text-xl md:text-3xl font-thin">${{ garment.price }}</h3>
+          <h3 class="text-xl md:text-3xl font-thin">
+            ${{ garment.price.toFixed(2) }}
+          </h3>
           <div class="w-full h-[1px] bg-black"></div>
 
           <div class="flex items-center">
@@ -70,61 +80,82 @@ onMounted(() => {
             </p>
           </div>
 
-          <div class="w-full flex items-center justify-around">
-            <select
-              class="w-[4rem] md:w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center"
-            >
-              <option>XS</option>
-              <option>S</option>
-              <option>M</option>
-              <option>L</option>
-              <option>XL</option>
-            </select>
+          <div>
             <button
-              class="w-[8rem] md:w-[16rem] h-[2.5rem] bg-[#445388] rounded-lg flex items-center justify-center text-light hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer self-center"
+              @click="isExpanded = !isExpanded"
+              class="w-full h-[2.5rem] flex items-center justify-between text-primary text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5"
             >
-              Add to cart
+              See details
+              <Icon v-if="!isExpanded" icon="tabler:chevron-right" />
+              <Icon v-if="isExpanded" icon="tabler:chevron-down" />
             </button>
+            <div
+              v-if="isExpanded"
+              class="w-full self-center px-[0.5rem] md:px-[1rem] flex flex-col z-20"
+            >
+              <p class="text-sm text-secondary font-thin">Description</p>
+              <p class="text-primary">{{ garment.description }}</p>
+              <p class="text-sm text-secondary font-thin whitespace-nowrap">
+                Categry
+              </p>
+              <p class="text-primary">
+                {{
+                  garment.category.charAt(0).toUpperCase() +
+                  garment.category.slice(1)
+                }}
+              </p>
+              <p class="text-sm text-secondary font-thin">Fabrics</p>
+              <p class="text-primary whitespace-nowrap">
+                {{ garment.fabrics }}
+              </p>
+            </div>
           </div>
+        </div>
 
+        <div class="w-full flex items-center justify-around gap-2">
+          <select
+            class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center"
+          >
+            <option class="text-primary text-center">XS</option>
+            <option class="text-primary text-center">S</option>
+            <option class="text-primary text-center">M</option>
+            <option class="text-primary text-center">L</option>
+            <option class="text-primary text-center">XL</option>
+          </select>
           <button
-            @click="isExpanded = !isExpanded"
-            class="w-full h-[2.5rem] flex items-center justify-between px-[1rem] text-primary text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5"
+            class="w-[10rem] md:w-[16rem] h-[2.5rem] bg-[#445388] rounded-lg flex items-center justify-center text-light hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer self-center"
           >
-            See details
-            <Icon v-if="!isExpanded" icon="tabler:chevron-right" />
-            <Icon v-if="isExpanded" icon="tabler:chevron-down" />
+            Add to cart
           </button>
-          <div
-            v-if="isExpanded"
-            class="w-full self-center px-[2rem] flex flex-col"
-          >
-            <p class="text-sm text-secondary font-thin">Description</p>
-            <p class="text-primary">{{ garment.description }}</p>
-            <p class="text-sm text-secondary font-thin">Fabrics</p>
-            <p class="text-primary">{{ garment.fabrics }}</p>
-          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="w-full flex flex-col items-center mt-6">
-          <h2 class="text-lg font-thin">You may also like</h2>
-          <div
-            class="w-full flex items-center px-3 gap-8 overflow-x-auto whitespace-nowrap"
-          >
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-              class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
-            />
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-              class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
-            />
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-              class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
-            />
-          </div>
-        </div>
+    <div
+      class="w-[90vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw] flex flex-col gap-4"
+    >
+      <h2 class="text-lg">You may also like</h2>
+      <div class="w-full flex px-3 gap-8 overflow-x-auto whitespace-nowrap">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+          class="h-[12rem] hover:bg-[#000]/5 hover:cursor-pointer"
+        />
       </div>
     </div>
   </main>

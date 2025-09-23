@@ -9,7 +9,7 @@ const { garments, loading } = useFetchCategory(category);
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-screen min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
+    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
   >
     <section class="w-full h-[40vh] relative flex flex-col items-center">
       <img

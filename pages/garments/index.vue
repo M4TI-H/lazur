@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import type Garment from "~/types/Garment";
-
 const { scrollY } = useScroll();
 </script>
 
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-screen min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
+    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
   >
     <section class="w-full h-[40vh] relative flex flex-col items-center">
       <img
@@ -26,7 +24,6 @@ const { scrollY } = useScroll();
     </section>
     <CategoryMenu />
     <div class="w-full flex items-center justify-between gap-8 p-2">
-      <p class="text-sm text-secondary">Results: 1 - 48</p>
       <span class="flex items-center gap-2">
         <p class="text-lg text-secondary">Sorting by</p>
         <p class="text-lg text-primary font-semibold">Price &uarr;</p>

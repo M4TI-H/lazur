@@ -52,5 +52,6 @@ export function useFetchAllGarments(limit: number) {
     hasMore,
     fetchFirstPage,
     fetchNextPage,
+    page,
   };
 }
