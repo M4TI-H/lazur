@@ -6,9 +6,17 @@
 }
 
 .text-secondary {
-  color: #373539;
+  color: #6a6272;
 }
 
 .text-light {
   color: #dee2e6;
+}
+
+h1,
+h2,
+h3,
+p,
+a {
+  color: #1f1d20;
 }

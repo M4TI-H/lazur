@@ -26,7 +26,7 @@ const { scrollY } = useScroll();
     <div class="w-full flex items-center justify-between gap-8 p-2">
       <span class="flex items-center gap-2">
         <p class="text-lg text-secondary">Sorting by</p>
-        <p class="text-lg text-primary font-semibold">Price &uarr;</p>
+        <p class="text-lg font-semibold">Price &uarr;</p>
       </span>
     </div>
     <ClothesDisplay />

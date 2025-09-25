@@ -4,7 +4,7 @@ import { Icon } from "@iconify/vue";
 const route = useRoute();
 const itemid = Number(route.params.id);
 
-const { garment, loading, error, refresh } = useFetchSingleGarment(itemid);
+const { garment, loading, refresh } = useFetchSingleGarment(itemid);
 
 const isExpanded = ref<boolean>(false);
 
@@ -83,7 +83,7 @@ onMounted(() => {
           <div>
             <button
               @click="isExpanded = !isExpanded"
-              class="w-full h-[2.5rem] flex items-center justify-between text-primary text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5"
+              class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5"
             >
               See details
               <Icon v-if="!isExpanded" icon="tabler:chevron-right" />
@@ -94,18 +94,18 @@ onMounted(() => {
               class="w-full self-center px-[0.5rem] md:px-[1rem] flex flex-col z-20"
             >
               <p class="text-sm text-secondary font-thin">Description</p>
-              <p class="text-primary">{{ garment.description }}</p>
+              <p>{{ garment.description }}</p>
               <p class="text-sm text-secondary font-thin whitespace-nowrap">
                 Categry
               </p>
-              <p class="text-primary">
+              <p>
                 {{
                   garment.category.charAt(0).toUpperCase() +
                   garment.category.slice(1)
                 }}
               </p>
               <p class="text-sm text-secondary font-thin">Fabrics</p>
-              <p class="text-primary whitespace-nowrap">
+              <p class="whitespace-nowrap">
                 {{ garment.fabrics }}
               </p>
             </div>
@@ -116,11 +116,11 @@ onMounted(() => {
           <select
             class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center"
           >
-            <option class="text-primary text-center">XS</option>
-            <option class="text-primary text-center">S</option>
-            <option class="text-primary text-center">M</option>
-            <option class="text-primary text-center">L</option>
-            <option class="text-primary text-center">XL</option>
+            <option class="text-center">XS</option>
+            <option class="text-center">S</option>
+            <option class="text-center">M</option>
+            <option class="text-center">L</option>
+            <option class="text-center">XL</option>
           </select>
           <button
             class="w-[10rem] md:w-[16rem] h-[2.5rem] bg-[#445388] rounded-lg flex items-center justify-center text-light hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer self-center"

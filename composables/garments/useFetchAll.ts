@@ -19,9 +19,9 @@ export function useFetchAllGarments(limit: number) {
       hasMore.value = data.length === limit;
     } catch (err: any) {
       error.value = err;
-    } finally {
-      loading.value = false;
     }
+
+    loading.value = false;
   };
 
   //fetch all the other on client's side
