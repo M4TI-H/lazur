@@ -46,7 +46,11 @@ const handleSubmitOrder = async () => {
     created_at: "",
   };
 
-  await createOrder(totalOrderData);
+  const result = await createOrder(totalOrderData, cartStore.cart.items);
+  if (result && result != "error") {
+    orderStore.setOrderData({ id: result });
+    navigateTo("/cart/confirmation");
+  }
 };
 
 const onSubmit = handleSubmit(handleSubmitOrder);
@@ -103,7 +107,9 @@ onMounted(() => {
         <p class="text-sm text-secondary">Phone number</p>
         <p class="text-lg">{{ orderStore.orderData.phone }}</p>
       </div>
+
       <div class="w-full self-center h-[2px] bg-[#444] my-2"></div>
+
       <div class="flex flex-col gap-1">
         <select
           v-model="delivery"

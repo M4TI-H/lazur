@@ -1,30 +1,42 @@
+import type Garment from "~/types/Garment";
 import type Order from "~/types/Order";
 
 export function useCreateOrder() {
   const loading = ref<boolean>(false);
   const error = ref<Error | null>(null);
 
-  const createOrder = async (data: Order) => {
+  const createOrder = async (
+    data: Order,
+    cart: (Garment & { quantity: number; size: string })[]
+  ) => {
     loading.value = true;
-    const { error } = await fetchData<Order>("/api/orders/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        surname: data.surname,
-        address: data.address,
-        email: data.email,
-        phone: data.phone,
-        delivery: data.delivery,
-        total: data.total,
-      }),
-    });
-
-    if (error) console.error(error);
+    const { data: response, error } = await fetchData<{ order_id: number }>(
+      "/api/orders/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          items: cart.map((item) => ({
+            product_id: item.id,
+            quantity: item.quantity,
+            size: item.size,
+            price_at_order: item.price,
+          })),
+        }),
+      }
+    );
 
     loading.value = false;
+
+    if (error) {
+      console.error(error);
+      return "error";
+    }
+
+    return response?.order_id ?? null;
   };
 
   return {

@@ -58,6 +58,12 @@ export const useCartStore = defineStore("cart", {
         this.cart = JSON.parse(data);
       }
     },
+    clearStorage() {
+      this.cart.items = [];
+      this.cart.total = 0;
+      localStorage.removeItem("cart");
+      localStorage.clear();
+    },
   },
 
   getters: {

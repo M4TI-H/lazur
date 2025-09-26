@@ -62,7 +62,7 @@ const onSubmit = handleSubmit(handleSubmitData);
   >
     <span class="w-full flex justify-between items-center">
       <h2 class="text-2xl font-semibold">Summary</h2>
-      <p class="">{{ cartStore.itemCount }} Items</p>
+      <p>{{ cartStore.itemCount }} Items</p>
     </span>
 
     <div class="flex flex-col gap-2 lg:gap-4">

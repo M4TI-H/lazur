@@ -12,9 +12,7 @@ const cartStore = useCartStore();
 cartStore.loadFromStorage();
 
 function addToCart() {
-  console.log(cartStore.totalPrice);
   cartStore.addToCart(itemData, selectedSize.value);
-  console.log(cartStore.totalPrice);
 }
 </script>
 

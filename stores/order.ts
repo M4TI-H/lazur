@@ -22,5 +22,9 @@ export const useOrderStore = defineStore("order", {
         this.orderData = JSON.parse(data);
       }
     },
+    clearStorage() {
+      localStorage.removeItem("order");
+      localStorage.clear();
+    },
   },
 });
