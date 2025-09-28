@@ -70,6 +70,12 @@ onMounted(async () => {
       >
         Back to shop
       </NuxtLink>
+      <NuxtLink
+        to="/review"
+        class="w-[80%] max-w-[24rem] h-[2.5rem] flex items-center justify-center border-2 border-[#444] text-[#444] rounded-md self-center hover:cursor-pointer hover:bg-[#b6b6b6] transition-color ease-in-out duration-200"
+      >
+        Leave a review
+      </NuxtLink>
     </section>
   </main>
 </template>
