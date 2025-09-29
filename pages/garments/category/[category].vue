@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useFetchCategory } from "~/composables/garments/useFetchCategory";
 const route = useRoute();
 const category = route.params.category as string;
 
 const { scrollY } = useScroll();
-const { garments, loading } = useFetchCategory(category);
 </script>
 <template>
   <NavMenu :scrollY="scrollY" />
@@ -31,7 +29,6 @@ const { garments, loading } = useFetchCategory(category);
         {{ category.toUpperCase() }}
       </h1>
     </div>
-    <i v-if="loading" class="pi pi-spinner pi-spin text-2xl text-black"></i>
-    <ClothesDisplay v-else :garments="garments" />
+    <CategoryDisplay :category="category" />
   </main>
 </template>
