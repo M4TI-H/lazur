@@ -5,7 +5,7 @@ export default interface Review {
   quality: number;
   price: number;
   satisfaction: number;
-  experience: number;
-  general: number;
+  shopping_experience: number;
+  general_rating: number;
   created_at: string;
 }

@@ -2,17 +2,20 @@
 import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
+import { useCreateReview } from "~/composables/reviews/useCreateReview";
 
 const { scrollY } = useScroll();
+
+const { createReview, loading } = useCreateReview();
 
 const validationSchema = toTypedSchema(
   z.object({
     review: z.string().min(1, "Please write a review."),
     name: z.string().min(1, "Provide us your credentials."),
-    quality: z.number(),
-    price: z.number(),
-    satisfaction: z.number(),
-    experience: z.number(),
+    quality: z.number().min(1, "Please leave a rating"),
+    price: z.number().min(1, "Please leave a rating"),
+    satisfaction: z.number().min(1, "Please leave a rating"),
+    experience: z.number().min(1, "Please leave a rating"),
   })
 );
 
@@ -38,18 +41,22 @@ const { value: price, errorMessage: priceError } = useField<number>("price");
 const { value: experience, errorMessage: experienceError } =
   useField<number>("experience");
 
-const handleReviewSubmit = () => {
+const handleReviewSubmit = async () => {
   const reviewData = {
     id: 0,
     review: review.value,
     name: name.value,
     quality: quality.value,
     price: price.value,
-    experience: experience.value,
+    satisfaction: satisfaction.value,
+    shopping_experience: experience.value,
+    general_rating: 0,
     created_at: "",
   };
 
-  console.log(reviewData);
+  await createReview(reviewData);
+
+  navigateTo("/review/confirmation");
 };
 
 const onSubmit = handleSubmit(handleReviewSubmit);
@@ -82,7 +89,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
               <p class="text-sm text-secondary">Quality</p>
               <StarReview v-model="quality" :value="quality" />
             </span>
-            <p v-if="satisfactionError" class="text-sm !text-[red]">
+            <p v-if="qualityError" class="text-sm !text-[red]">
               {{ qualityError }}
             </p>
           </span>
@@ -92,7 +99,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
               <p class="text-sm text-secondary">Price</p>
               <StarReview v-model="price" :value="price" />
             </span>
-            <p v-if="satisfactionError" class="text-sm !text-[red]">
+            <p v-if="priceError" class="text-sm !text-[red]">
               {{ priceError }}
             </p>
           </span>
@@ -151,19 +158,19 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       </p>
 
       <button
-        v-if="meta.valid"
+        v-if="!loading && meta.valid"
         class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#444] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#222] transition-color ease-in-out duration-200"
       >
         Confirm
       </button>
       <button
-        v-if="!meta.valid"
+        v-if="!loading && !meta.valid"
         class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#666] text-light rounded-md self-center mt-auto"
       >
         Confirm
       </button>
       <button
-        v-if="meta.valid"
+        v-if="loading && meta.valid"
         class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#444] text-light rounded-md self-center mt-auto"
       >
         <i class="pi pi-spin pi-spinner"></i>

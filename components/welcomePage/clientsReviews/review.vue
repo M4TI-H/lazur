@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
+import type Review from "~/types/Review";
 
 const { review } = defineProps<{
-  review: any;
+  review: Review;
 }>();
 </script>
 
@@ -10,7 +11,7 @@ const { review } = defineProps<{
   <div
     class="relative w-[16rem] h-[20rem] bg-[#DEE2E6] rounded-xl flex flex-col items-center justify-end p-4"
     :style="{
-      backgroundImage: `url(${review.cover})`,
+      backgroundImage: `url('https://plus.unsplash.com/premium_photo-1749886490544-d99e60364dcb?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -19,28 +20,27 @@ const { review } = defineProps<{
     <div
       class="relative w-full h-[10rem] flex flex-col items-center justify-end rounded-b-xl z-20 shadow-lg"
     >
-      <img
-        :src="review.user_img"
-        class="absolute top-0 size-[3rem] rounded-full outline-8 outline-[#F8F9FA]"
-      />
       <div
-        class="w-full h-[9rem] bg-[#F8F9FA] flex flex-col items-center justify-end p-4 rounded-xl"
+        class="w-full bg-[#F8F9FA] flex flex-col items-center p-4 rounded-xl"
       >
         <span class="w-full h-[3.5rem] flex flex-col items-center">
-          <p class="text-primary text-xs font-semibold">
-            {{ review.username }}
+          <p class="text-primary text-sm font-semibold">
+            {{ review.name }}
           </p>
-          <p class="text-secondary text-sm text-center font-thin">
-            "{{ review.content }}"
+          <p class="text-secondary text-center font-thin">
+            "{{ review.review }}"
           </p>
         </span>
 
-        <div class="w-full h-[2rem] flex items-center justify-center">
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star" class="text-[#445388]" />
+        <div class="w-full h-[2rem] flex items-end justify-center">
+          <Icon
+            v-for="i in 5"
+            :key="i"
+            :icon="
+              i <= review.general_rating ? 'tabler:star-filled' : 'tabler:star'
+            "
+            class="text-[#445388]"
+          />
         </div>
       </div>
     </div>
