@@ -9,7 +9,7 @@ const { review } = defineProps<{
 
 <template>
   <div
-    class="relative w-[16rem] h-[20rem] bg-[#DEE2E6] rounded-xl flex flex-col items-center justify-end p-4"
+    class="flex-none w-[14rem] sm:w-[16rem] h-[20rem] bg-[#DEE2E6] rounded-xl flex flex-col items-center justify-end p-4"
     :style="{
       backgroundImage: `url('https://plus.unsplash.com/premium_photo-1749886490544-d99e60364dcb?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
       backgroundSize: 'cover',

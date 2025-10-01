@@ -43,44 +43,23 @@ const items = [
 
 <template>
   <section
-    class="w-full h-[44rem] flex flex-col items-center bg-[#E9ECEF] p-4 gap-4"
+    class="w-full h-[44rem] flex flex-col items-center bg-[#E9ECEF] py-4 gap-4"
   >
-    <h2
-      class="text-primary text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
-    >
-      Best selling products
-    </h2>
     <div
-      class="w-[20rem] h-[2.5rem] rounded-full bg-[#DEE2E6] flex items-center p-1"
+      class="w-full md:h-[2.5rem] flex flex-col md:flex-row items-center gap-2 md:gap-8 px-2 md:px-12"
     >
-      <button
-        class="w-1/4 h-full rounded-full bg-[#F8F9FA] text-primary text-sm"
+      <h2
+        class="text-primary text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
       >
-        Shirt
-      </button>
-      <button
-        class="w-1/4 h-full rounded-full hover:bg-[#CED4DA] hover:cursor-pointer text-secondary text-sm transition duration-200 ease-in-out"
-      >
-        Trouser
-      </button>
-      <button
-        class="w-1/4 h-full rounded-full hover:bg-[#CED4DA] hover:cursor-pointer text-secondary text-sm transition duration-200 ease-in-out"
-      >
-        Jacket
-      </button>
-      <button
-        class="w-1/4 h-full rounded-full hover:bg-[#CED4DA] hover:cursor-pointer text-secondary text-sm transition duration-200 ease-in-out"
-      >
-        Footwear
-      </button>
+        Best selling products
+      </h2>
+      <CategorySelect />
     </div>
-    <section class="w-full flex justify-center gap-4">
+
+    <div
+      class="w-full flex justify-center gap-8 overflow-x-auto whitespace-nowrap md:px-12"
+    >
       <TopItem v-for="item in items" :key="item.id" :itemData="item" />
-    </section>
-    <a class="text-secondary hover:text-primary hover:cursor-pointer">
-      <span class="flex items-center gap-2"
-        >View all
-        <Icon icon="tabler:arrow-narrow-right" class="text-lg" /> </span
-    ></a>
+    </div>
   </section>
 </template>

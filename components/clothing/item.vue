@@ -56,7 +56,7 @@ function addToCart() {
           <select
             v-model="selectedSize"
             @click.stop.prevent
-            class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center"
+            class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center outline-0"
           >
             <option class="text-primary text-center">XS</option>
             <option class="text-primary text-center">S</option>

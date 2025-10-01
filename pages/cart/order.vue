@@ -2,7 +2,7 @@
 import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-import { useFetchDelivery } from "~/composables/orders/useDelivery";
+import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
 import { useCreateOrder } from "~/composables/orders/useCreateOrder";
 
 const { scrollY } = useScroll();
