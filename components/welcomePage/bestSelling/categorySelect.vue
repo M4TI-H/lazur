@@ -8,18 +8,16 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div
-    class="w-full h-[2.5rem] rounded-full bg-[#DEE2E6] flex items-center p-1 overflow-x-auto whitespace-nowrap"
-  >
+  <div class="w-full flex items-center overflow-x-auto whitespace-nowrap gap-8">
     <button
-      class="px-4 h-full rounded-full hover:bg-[#CED4DA] hover:cursor-pointer text-secondary font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
+      class="py-4 h-full hover:cursor-pointer text-secondary font-semibold flex items-center justify-center"
     >
       Any
     </button>
     <button
       v-for="(category, id) in categories"
       :key="id"
-      class="px-4 h-full rounded-full hover:bg-[#CED4DA] hover:cursor-pointer text-secondary font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
+      class="py-4 h-full hover:cursor-pointer text-secondary font-semibold flex items-center justify-center"
     >
       <span>{{ category.charAt(0).toUpperCase() + category.slice(1) }}</span>
     </button>

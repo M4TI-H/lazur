@@ -14,9 +14,7 @@ cartStore.loadFromStorage();
     :class="scrollY > 50 ? 'bg-[#1F1D20]/90' : 'bg-none'"
     class="fixed w-full h-[4rem] z-40 flex items-center justify-between pl-4 pr-2 md:px-8 transition-colors duration-500"
   >
-    <p class="text-lg md:text-2xl text-light font-semibold"
-      >Lazur</p
-    >
+    <p class="text-lg md:text-2xl text-light font-semibold">Lazur</p>
     <div class="flex items-center gap-4 md:gap-8">
       <NuxtLink
         to="/"
@@ -43,21 +41,7 @@ cartStore.loadFromStorage();
           Garments
         </p>
       </NuxtLink>
-      <NuxtLink
-        to="/explore"
-        :class="[
-          'group size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
-          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
-        ]"
-      >
-        <Icon
-          icon="tabler:brand-safari"
-          class="text-2xl text-light sm:hidden"
-        />
-        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
-          Explore
-        </p>
-      </NuxtLink>
+
       <NuxtLink
         to="/aboutus"
         :class="[

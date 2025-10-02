@@ -1,67 +1,28 @@
 <script setup lang="ts">
+import { useFetchCategories } from "~/composables/garments/useFetchCategories";
+
 const emit = defineEmits<{
   (e: "selectedCategory", category: string): void;
 }>();
+
+const { categories, loading, refresh } = useFetchCategories();
+
+onMounted(async () => {
+  await refresh();
+});
 </script>
 
 <template>
   <div
-    class="w-full h-[4rem] md:h-[5rem] flex items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
+    class="w-full h-[4rem] md:h-[5rem] flex md:justify-center items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
   >
     <NuxtLink
-      to="/garments/category/shirts"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
+      v-for="(category, id) in categories"
+      :key="id"
+      :to="`/garments/category/${category}`"
+      class="px-2 lg:px-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
     >
-      SHIRTS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/trousers"
-      @click="emit('selectedCategory', 'trousers')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      TROUSERS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/jackets"
-      @click="emit('selectedCategory', 'jackets')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      JACKETS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/sweaters"
-      @click="emit('selectedCategory', 'sweaters')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      SWEATERS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/tops"
-      @click="emit('selectedCategory', 'tops')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      TOPS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/jeans"
-      @click="emit('selectedCategory', 'jeans')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      JEANS
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/footwear"
-      @click="emit('selectedCategory', 'footwear')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      FOOTWEAR
-    </NuxtLink>
-    <NuxtLink
-      to="/garments/category/accessories"
-      @click="emit('selectedCategory', 'accesories')"
-      class="min-w-[8rem] md:min-w-[10rem] lg:w-1/8 h-[2.5rem] md:h-[3rem] bg-[#F8F9FA] rounded-sm border-1 border-[#373539] flex items-center justify-center text-secondary hover:cursor-pointer hover:bg-[#DEE2E6] active:bg-[#DEE2E6] transition-colors duration-200 ease-in-out"
-    >
-      ACCESSORIES
+      {{ category.charAt(0).toUpperCase() + category.slice(1) }}
     </NuxtLink>
   </div>
 </template>

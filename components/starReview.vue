@@ -23,7 +23,7 @@ const selectStar = (value: number) => {
 };
 </script>
 <template>
-  <span>
+  <span class="flex items-center">
     <button
       class="text-lg hover:cursor-pointer"
       v-for="value in 5"

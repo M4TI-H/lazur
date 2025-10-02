@@ -30,18 +30,21 @@ const displayedReviews = computed(() =>
 const firstVisible = ref<number>(0);
 let amountVisible = ref<number>(1);
 const carouselRef = ref<HTMLElement | null>(null);
+const itemWidth = 272; // 16rem = 16 * 16px
 
 const calculateAmountVisible = () => {
   nextTick(() => {
     if (carouselRef.value && displayedReviews.value) {
       const carouselWidth = carouselRef.value.clientWidth;
-      const itemWidth = 300; // 16rem = 16 * 16px
       amountVisible.value = Math.max(1, Math.floor(carouselWidth / itemWidth));
     }
   });
 };
 
-onMounted(calculateAmountVisible);
+onMounted(() => {
+  calculateAmountVisible();
+  window.addEventListener("resize", calculateAmountVisible);
+});
 
 watch(displayedReviews, (newVal) => {
   nextTick(() => {
@@ -53,10 +56,11 @@ watch(displayedReviews, (newVal) => {
   });
 });
 
-window.addEventListener("resize", calculateAmountVisible);
-
 function displayNext() {
-  if (!displayedReviews.value) return;
+  if (!displayedReviews.value) {
+    return;
+  }
+
   if (
     firstVisible.value + amountVisible.value <
     displayedReviews.value.length
@@ -71,25 +75,17 @@ function displayPrev() {
   }
 }
 
-const visibleReviews = computed(
-  () =>
-    displayedReviews.value?.slice(
-      firstVisible.value,
-      firstVisible.value + amountVisible.value
-    ) ?? []
-);
+const offset = computed(() => -(firstVisible.value * itemWidth));
 </script>
 
 <template>
-  <section
-    class="w-full h-[44rem] flex flex-col items-center bg-[#ccc] py-4 gap-4"
-  >
+  <section class="w-full h-[44rem] flex flex-col items-center py-4 gap-8">
     <div
-      class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row items-center justify-between px-12 gap-2 sm:gap-0"
+      class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row items-center justify-between px-6 sm:px-12 gap-2 sm:gap-0"
     >
       <div class="flex flex-col items-start">
         <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
-          Lazur Reviews
+          Reviews
         </h2>
         <p class="text-sm whitespace-nowrap">
           See what other customers think of Lazur
@@ -98,7 +94,7 @@ const visibleReviews = computed(
 
       <span class="absolute flex gap-8 left-1/2 -translate-x-1/2">
         <button
-          v-if="firstVisible - 1 > 0"
+          v-if="firstVisible > 0"
           class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
           @click="displayPrev()"
         >
@@ -112,7 +108,9 @@ const visibleReviews = computed(
         </button>
 
         <button
-          v-if="firstVisible + amountVisible < (displayedReviews?.length ?? 0)"
+          v-if="
+            firstVisible + amountVisible + 1 < (displayedReviews?.length ?? 0)
+          "
           class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
           @click="displayNext()"
         >
@@ -143,14 +141,14 @@ const visibleReviews = computed(
     <!-- arrow buttons slider on desktop -->
     <div
       ref="carouselRef"
-      class="hidden sm:flex w-full h-[20rem] items-center justify-between px-2"
+      class="hidden sm:flex w-full h-[20rem] items-center justify-between"
     >
       <div
-        class="w-full flex justify-center gap-4 overflow-x-auto scroll-smooth px-2 md:px-0"
-        style="scroll-behavior: smooth"
+        class="flex gap-4 transition-transform duration-500 ease-in-out px-2 mx-auto"
+        :style="{ transform: `translateX(${offset}px)` }"
       >
         <Review
-          v-for="review in visibleReviews"
+          v-for="review in displayedReviews"
           :key="review.id"
           :review="review"
         />

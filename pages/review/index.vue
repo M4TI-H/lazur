@@ -130,7 +130,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
         <p>Your Review</p>
         <textarea
           v-model="review"
-          class="w-full h-[5rem] text-sm outline-0 p-2 border-2 border-[#6a6272] rounded-md resize-none"
+          class="w-full h-[5rem] text-sm outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
         ></textarea>
         <p v-if="reviewError" class="text-sm !text-[red]">{{ reviewError }}</p>
       </div>
@@ -140,7 +140,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
         <input
           v-model="name"
           type="text"
-          class="w-full h-[2.5rem] text-sm outline-0 p-2 border-2 border-[#6a6272] rounded-md"
+          class="w-full h-[2.5rem] text-sm outline-0 p-2 border-1 border-[#6a6272] rounded-md"
         />
         <p v-if="nameError" class="text-sm !text-[red]">{{ nameError }}</p>
       </div>

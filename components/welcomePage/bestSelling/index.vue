@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-import Item from "./topItem.vue";
-
 const items = [
   {
     id: 0,
@@ -43,17 +40,31 @@ const items = [
 
 <template>
   <section
-    class="w-full h-[44rem] flex flex-col items-center bg-[#E9ECEF] py-4 gap-4"
+    class="w-full h-[44rem] flex flex-col bg-[#F8F9FA] items-center py-4 gap-4"
   >
     <div
-      class="w-full md:h-[2.5rem] flex flex-col md:flex-row items-center gap-2 md:gap-8 px-2 md:px-12"
+      class="relative w-full flex flex-col sm:flex-row items-center justify-between px-6 sm:px-12 gap-2 sm:gap-0"
     >
-      <h2
-        class="text-primary text-xl lg:text-2xl xl:text-3xl font-semibold text-center"
-      >
-        Best selling products
-      </h2>
-      <CategorySelect />
+      <div class="w-full flex flex-col items-start">
+        <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
+          Trending
+        </h2>
+        <CategorySelect />
+      </div>
+
+      <span class="flex gap-8">
+        <button
+          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+        >
+          <i class="pi pi-arrow-left"></i>
+        </button>
+
+        <button
+          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+        >
+          <i class="pi pi-arrow-right"></i>
+        </button>
+      </span>
     </div>
 
     <div
