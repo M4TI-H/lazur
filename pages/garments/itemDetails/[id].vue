@@ -6,7 +6,10 @@ const itemid = Number(route.params.id);
 
 const { garment, loading, refresh } = useFetchSingleGarment(itemid);
 
+const selectedSize = ref<string>("");
+
 const isExpanded = ref<boolean>(false);
+const isReviewExpanded = ref<boolean>(false);
 
 onMounted(() => {
   refresh();
@@ -45,89 +48,74 @@ onMounted(() => {
         />
       </div>
       <div
-        class="w-full md:w-[40%] p-4 flex flex-col justify-between bg-[#F8F9FA]"
+        class="w-full md:w-[40%] p-4 flex flex-col gap-4 bg-[#F8F9FA]"
       >
         <div class="flex flex-col gap-2 md:gap-4">
-          <h3 class="text-xl md:text-3xl font-thin whitespace-nowrap">
-            {{ garment.name }}
-          </h3>
+          <div class="flex flex-col">
+            <h3 class="text-xl md:text-3xl font-thin whitespace-nowrap">
+              {{ garment.name }}
+            </h3>
 
-          <h3 class="text-xl md:text-3xl font-thin">
-            ${{ garment.price.toFixed(2) }}
-          </h3>
-          <div class="w-full h-[1px] bg-black"></div>
-
-          <div class="flex items-center">
-            <Icon
-              icon="tabler:star-filled"
-              class="text-[#445388] md:text-2xl"
-            />
-            <Icon
-              icon="tabler:star-filled"
-              class="text-[#445388] md:text-2xl"
-            />
-            <Icon
-              icon="tabler:star-filled"
-              class="text-[#445388] md:text-2xl"
-            />
-            <Icon
-              icon="tabler:star-filled"
-              class="text-[#445388] md:text-2xl"
-            />
-            <Icon icon="tabler:star" class="text-[#445388] md:text-2xl" />
-            <p class="text-sm font-thin ml-[1rem]">
-              Rating: {{ garment.category }}
-            </p>
-          </div>
-
-          <div>
-            <button
-              @click="isExpanded = !isExpanded"
-              class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5"
-            >
-              See details
-              <Icon v-if="!isExpanded" icon="tabler:chevron-right" />
-              <Icon v-if="isExpanded" icon="tabler:chevron-down" />
-            </button>
-            <div
-              v-if="isExpanded"
-              class="w-full self-center px-[0.5rem] md:px-[1rem] flex flex-col z-20"
-            >
-              <p class="text-sm text-secondary font-thin">Description</p>
-              <p>{{ garment.description }}</p>
-              <p class="text-sm text-secondary font-thin whitespace-nowrap">
-                Categry
-              </p>
-              <p>
-                {{
-                  garment.category.charAt(0).toUpperCase() +
-                  garment.category.slice(1)
-                }}
-              </p>
-              <p class="text-sm text-secondary font-thin">Fabrics</p>
-              <p class="whitespace-nowrap">
-                {{ garment.fabrics }}
-              </p>
+            <div class="flex items-center gap-4">
+              <h3 class="md:text-xl font-thin">
+                ${{ garment.price.toFixed(2) }}
+              </h3>
+              <span class="flex">
+                <Icon
+                  v-for="i in 5"
+                  :key="i"
+                  :icon="
+                    i <= 4 ? 'tabler:star-filled' : 'tabler:star'
+                  "
+                  class="text-[#445388]"
+                />
+              </span>
             </div>
           </div>
+          
+          <div class="w-full h-[1px] bg-black"></div>
+
+          <Details :garment="garment"/>
         </div>
 
-        <div class="w-full flex items-center justify-around gap-2">
-          <select
-            class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center"
-          >
-            <option class="text-center">XS</option>
-            <option class="text-center">S</option>
-            <option class="text-center">M</option>
-            <option class="text-center">L</option>
-            <option class="text-center">XL</option>
-          </select>
+        <SizeSelection v-model="selectedSize" :value="selectedSize"/>
+        <div>
           <button
-            class="w-[10rem] md:w-[16rem] h-[2.5rem] bg-[#445388] rounded-lg flex items-center justify-center text-light hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer self-center"
+            @click="isReviewExpanded = !isReviewExpanded"
+            class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg hover:cursor-pointer self-center hover:bg-black/5 pr-2"
           >
-            Add to cart
+            Leave a review
+            <Icon v-if="!isReviewExpanded" icon="tabler:chevron-right" />
+            <Icon v-if="isReviewExpanded" icon="tabler:chevron-down" />
           </button>
+          <div
+            v-if="isReviewExpanded"
+            class="w-full self-center flex flex-col gap-2 z-20"
+          >
+            <div class="w-full flex flex-col gap-1">
+              <p>Your Name</p>
+              <input
+                type="text"
+                class="w-full h-[2.5rem] text-sm outline-0 p-2 border-1 border-[#6a6272] rounded-md"
+              />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+              <p>Your Review</p>
+              <textarea
+                class="w-full h-[5rem] text-sm outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
+              ></textarea>
+            </div>
+
+            <button
+              class="w-full max-w-[8rem] md:w-[8rem] h-[2.5rem] bg-[#445388] rounded-lg flex items-center justify-center text-light hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer self-center sm:self-start"
+            >
+              Submit
+            </button>
+          </div>
+          
         </div>
+
       </div>
     </div>
 
