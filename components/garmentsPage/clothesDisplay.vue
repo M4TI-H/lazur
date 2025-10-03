@@ -2,18 +2,33 @@
 import { useFetchAllGarments } from "~/composables/garments/useFetchAll";
 import { useInfiniteScroll } from "@vueuse/core";
 
+const sortStore = useSortStore();
+sortStore.loadFromStorage();
+
 const { allGarments, loading, hasMore, fetchFirstPage, fetchNextPage, page } =
   useFetchAllGarments(8);
+
 const listEl = ref<HTMLElement | null>(null);
 
-await fetchFirstPage();
+await fetchFirstPage(sortStore.option, sortStore.ascending);
 
 useInfiniteScroll(
   window,
   () => {
-    if (!loading.value && hasMore.value) fetchNextPage();
+    if (!loading.value && hasMore.value)
+      fetchNextPage(sortStore.option, sortStore.ascending);
   },
   { distance: 300 }
+);
+
+watch(
+  () => [sortStore.option, sortStore.ascending],
+  async () => {
+    allGarments.value = [];
+    page.value = 1;
+    hasMore.value = true;
+    await fetchFirstPage(sortStore.option, sortStore.ascending);
+  }
 );
 </script>
 

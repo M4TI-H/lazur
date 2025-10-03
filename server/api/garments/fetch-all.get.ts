@@ -10,14 +10,22 @@ export default defineEventHandler(async (event) => {
   const from = (page - 1) * limit;
   const to = page * limit - 1;
 
-  const { data, error } = await supabase
-    .from("garments")
-    .select("*")
-    .range(from, to);
+  const sort = (query.option as string) || "price";
+  const ascending = query.ascending === "true";
 
-  if (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+  if (sort === "price") {
+    const { data, error } = await supabase
+      .from("garments")
+      .select("*")
+      .order("price", { ascending: ascending })
+      .range(from, to);
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    return data as Garment[];
   }
 
-  return data as Garment[];
+  return {};
 });
