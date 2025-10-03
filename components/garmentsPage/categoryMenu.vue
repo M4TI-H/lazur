@@ -20,7 +20,7 @@ onMounted(async () => {
       v-for="(category, id) in categories"
       :key="id"
       :to="`/garments/category/${category}`"
-      class="px-2 lg:px-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
+      class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
     >
       {{ category.charAt(0).toUpperCase() + category.slice(1) }}
     </NuxtLink>

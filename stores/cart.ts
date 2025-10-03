@@ -23,13 +23,17 @@ export const useCartStore = defineStore("cart", {
       this.updateTotal();
       this.saveToStorage();
     },
-    removeFromCart(id: number) {
-      this.cart.items = this.cart.items.filter((i) => i.id !== id);
+    removeFromCart(id: number, size: string) {
+      this.cart.items = this.cart.items.filter(
+        (i) => !(i.id === id && i.size === size)
+      );
       this.updateTotal();
       this.saveToStorage();
     },
-    incrementQuantity(id: number) {
-      const product = this.cart.items.find((i) => i.id == id);
+    incrementQuantity(id: number, size: string) {
+      const product = this.cart.items.find(
+        (i) => i.id === id && i.size === size
+      );
 
       if (product && product.quantity < 99) {
         product.quantity++;
@@ -37,8 +41,10 @@ export const useCartStore = defineStore("cart", {
         this.saveToStorage();
       }
     },
-    decrementQuantity(id: number) {
-      const product = this.cart.items.find((i) => i.id == id);
+    decrementQuantity(id: number, size: string) {
+      const product = this.cart.items.find(
+        (i) => i.id == id && i.size === size
+      );
 
       if (product && product.quantity > 1) {
         product.quantity--;

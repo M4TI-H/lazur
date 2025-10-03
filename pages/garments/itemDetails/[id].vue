@@ -11,6 +11,7 @@ const { garment, loading, refresh } = useFetchSingleGarment(itemid);
 
 const selectedSize = ref<string>("");
 const displayReviews = ref<boolean>(false);
+const displayForm = ref<boolean>(false);
 
 function addToCart() {
   if (garment.value && selectedSize.value !== "-") {
@@ -80,21 +81,31 @@ watch(displayReviews, (val) => {
 
         <div class="w-full h-[1px] bg-[#1f1d20]"></div>
 
-        <button
-          @click="displayReviews = true"
-          class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2 mb-4"
-        >
-          Read reviews
-          <Icon icon="tabler:chevron-right" />
-        </button>
+        <div class="flex flex-col gap-2">
+          <button
+            @click="displayReviews = true"
+            class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2"
+          >
+            Read reviews
+            <Icon icon="tabler:chevron-right" />
+          </button>
+          <button
+            @click="displayForm = !displayForm"
+            class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2"
+          >
+            Write a review
+            <Icon v-if="!displayForm" icon="tabler:chevron-right" />
+            <Icon v-if="displayForm" icon="tabler:chevron-down" />
+          </button>
+        </div>
 
-        <ReviewForm />
+        <ReviewForm v-if="displayForm" />
       </div>
     </div>
 
     <div
       v-if="displayReviews"
-      class="absolute top-0 w-screen h-screen bg-[#1f1d20]/50 flex items-center justify-center"
+      class="absolute top-0 w-screen h-screen bg-[#1f1d20]/50 flex items-center justify-center z-20"
     >
       <ItemReviews @close="displayReviews = false" />
     </div>

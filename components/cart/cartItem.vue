@@ -16,7 +16,7 @@ cartStore.loadFromStorage();
     >
       <div class="w-1/10 h-full hidden md:flex items-center justify-center">
         <button
-          @click="cartStore.removeFromCart(itemData.id)"
+          @click="cartStore.removeFromCart(itemData.id, itemData.size)"
           class="size-[2rem] flex items-center justify-center rounded-md hover:bg-[#ddd] hover:cursor-pointer"
         >
           <i class="pi pi-times text-lg text-primary"></i>
@@ -46,7 +46,7 @@ cartStore.loadFromStorage();
         <div class="w-[9rem] h-[2.5rem] flex items-center border-1 rounded-md">
           <button
             :disabled="itemData.quantity === 1"
-            @click="cartStore.decrementQuantity(itemData.id)"
+            @click="cartStore.decrementQuantity(itemData.id, itemData.size)"
             class="w-[3rem] h-full hover:bg-[#ddd] active:bg-[#ddd] text-primary rounded-l-md hover:cursor-pointer"
           >
             <i class="pi pi-minus"></i>
@@ -56,7 +56,7 @@ cartStore.loadFromStorage();
           </p>
           <button
             :disabled="itemData.quantity === 99"
-            @click="cartStore.incrementQuantity(itemData.id)"
+            @click="cartStore.incrementQuantity(itemData.id, itemData.size)"
             class="w-[3rem] h-full hover:bg-[#ddd] active:bg-[#ddd] text-primary rounded-r-md hover:cursor-pointer"
           >
             <i class="pi pi-plus"></i>

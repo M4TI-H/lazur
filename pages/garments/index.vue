@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 const { scrollY } = useScroll();
+
+const expandSorting = ref<boolean>(false);
 </script>
 
 <template>
@@ -23,11 +26,57 @@ const { scrollY } = useScroll();
       </div>
     </section>
     <CategoryMenu />
-    <div class="w-full flex items-center justify-between gap-8 p-2">
-      <span class="flex items-center gap-2">
-        <p class="text-lg text-secondary">Sorting by</p>
-        <p class="text-lg font-semibold">Price &uarr;</p>
-      </span>
+    <div class="relative w-full flex items-center gap-8 px-16">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+          <button
+            @click="expandSorting = !expandSorting"
+            class="flex items-center justify-between px-2 w-[6rem] h-[2.5rem] bg-[#eee] rounded-lg outline-0 font-semibold hover:cursor-pointer hover:bg-[#ddd]"
+          >
+            Sort by
+            <Icon
+              v-if="!expandSorting"
+              icon="tabler:caret-right-filled"
+              class="text-sm"
+            />
+            <Icon
+              v-if="expandSorting"
+              icon="tabler:caret-down-filled"
+              class="text-sm"
+            />
+          </button>
+          <span class="flex">
+            <button
+              class="size-[2.5rem] bg-[#eee] flex items-center justify-center rounded-l-lg hover:bg-[#ddd] hover:cursor-pointer"
+            >
+              <Icon icon="tabler:sort-ascending" />
+            </button>
+            <button
+              class="size-[2.5rem] bg-[#eee] flex items-center justify-center rounded-r-lg hover:bg-[#ddd] hover:cursor-pointer"
+            >
+              <Icon icon="tabler:sort-descending" />
+            </button>
+          </span>
+        </div>
+
+        <div class="absolute top-[3rem] bg-[#eee] w-[10rem] rounded-lg">
+          <button
+            class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer rounded-t-lg font-semibold"
+          >
+            Price
+          </button>
+          <button
+            class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer font-semibold"
+          >
+            Rating
+          </button>
+          <button
+            class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer rounded-b-lg font-semibold"
+          >
+            Popularity
+          </button>
+        </div>
+      </div>
     </div>
     <ClothesDisplay />
   </main>
