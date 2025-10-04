@@ -9,13 +9,14 @@ export function useFetchAllGarments(limit: number) {
 
   //fetch first page SSR
   const fetchFirstPage = async (option: string, ascending: boolean) => {
+    console.log(option);
     loading.value = true;
     try {
       const data = await $fetch<Garment[]>("/api/garments/fetch-all", {
         params: {
           page: page.value,
           limit: limit,
-          sort: option,
+          option: option,
           ascending: ascending,
         },
       });
@@ -25,7 +26,7 @@ export function useFetchAllGarments(limit: number) {
     } catch (err: any) {
       error.value = err;
     }
-
+    console.log(allGarments.value);
     loading.value = false;
   };
 

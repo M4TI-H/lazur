@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
 
   const sort = (query.option as string) || "price";
   const ascending = query.ascending === "true";
+  console.log(sort);
 
   if (sort === "price") {
     const { data, error } = await supabase
@@ -25,6 +26,16 @@ export default defineEventHandler(async (event) => {
     }
 
     return data as Garment[];
+  } else if (sort === "popularity") {
+    const { data, error } = await supabase
+      .rpc("garments_popularity")
+      .order("total_ordered", { ascending: ascending });
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    return data as (Garment & { total_ordered: number })[];
   }
 
   return {};
