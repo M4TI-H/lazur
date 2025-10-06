@@ -79,9 +79,11 @@ const offset = computed(() => -(firstVisible.value * itemWidth));
 </script>
 
 <template>
-  <section class="w-full h-[44rem] flex flex-col items-center py-4 gap-8">
+  <section
+    class="w-full h-[44rem] flex flex-col items-center py-4 gap-2 sm:gap-8"
+  >
     <div
-      class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row items-center justify-between px-6 sm:px-12 gap-2 sm:gap-0"
+      class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-12 gap-2 sm:gap-0"
     >
       <div class="flex flex-col items-start">
         <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
@@ -92,7 +94,9 @@ const offset = computed(() => -(firstVisible.value * itemWidth));
         </p>
       </div>
 
-      <span class="absolute flex gap-8 left-1/2 -translate-x-1/2">
+      <RatingSelect v-model="selected" />
+
+      <div class="flex gap-8">
         <button
           v-if="firstVisible > 0"
           class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
@@ -122,14 +126,12 @@ const offset = computed(() => -(firstVisible.value * itemWidth));
         >
           <i class="pi pi-arrow-right"></i>
         </button>
-      </span>
-
-      <RatingSelect v-model="selected" />
+      </div>
     </div>
 
     <!-- scrollable carousel on mobile -->
     <div
-      class="w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
+      class="scrollbar-hide w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
     >
       <Review
         v-for="review in displayedReviews"

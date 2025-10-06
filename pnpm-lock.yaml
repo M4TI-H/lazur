@@ -35,6 +35,9 @@ dependencies:
   primeicons:
     specifier: ^7.0.0
     version: 7.0.0
+  tailwind-scrollbar-hide:
+    specifier: ^4.0.0
+    version: 4.0.0(tailwindcss@4.1.13)
   tailwindcss:
     specifier: ^4.1.13
     version: 4.1.13
@@ -6093,6 +6096,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /tailwind-scrollbar-hide@4.0.0(tailwindcss@4.1.13):
+    resolution: {integrity: sha512-gobtvVcThB2Dxhy0EeYSS1RKQJ5baDFkamkhwBvzvevwX6L4XQfpZ3me9s25Ss1ecFVT5jPYJ50n+7xTBJG9WQ==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 4.0.0 || >= 4.0.0-beta.8 || >= 4.0.0-alpha.20'
+    dependencies:
+      tailwindcss: 4.1.13
+    dev: false
 
   /tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}

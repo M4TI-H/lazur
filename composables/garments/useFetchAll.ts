@@ -26,7 +26,6 @@ export function useFetchAllGarments(limit: number) {
       error.value = err;
     }
 
-    console.log(allGarments.value);
     loading.value = false;
   };
 

@@ -23,7 +23,7 @@ cartStore.loadFromStorage();
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
         "
       >
-        <Icon icon="tabler:shirt" class="text-2xl text-light sm:hidden" />
+        <Icon icon="tabler:home" class="text-2xl text-light sm:hidden" />
         <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
           Home
         </p>

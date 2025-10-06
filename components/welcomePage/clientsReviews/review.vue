@@ -24,7 +24,7 @@ const { review } = defineProps<{
         class="w-full bg-[#F8F9FA] flex flex-col items-center p-4 rounded-xl"
       >
         <span class="w-full h-[3.5rem] flex flex-col items-center">
-          <p class="text-primary text-sm font-semibold">
+          <p class="text-sm font-semibold">
             {{ review.name }}
           </p>
           <p class="text-secondary text-center font-thin">

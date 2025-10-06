@@ -14,7 +14,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="w-full h-[4rem] md:h-[5rem] flex md:justify-center items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
+    class="scrollbar-hide w-full h-[4rem] md:h-[5rem] flex md:justify-center items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
   >
     <NuxtLink
       v-for="(category, id) in categories"

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
+@import "tailwind-scrollbar-hide/v4";
 
 .text-primary {
   color: #1f1d20;
