@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useFetchSingleGarment } from "~/composables/garments/useFetchSingle";
 import { Icon } from "@iconify/vue";
+import { useFetchRating } from "~/composables/reviews/item/useFetchRating";
 const route = useRoute();
 const itemid = Number(route.params.id);
 
@@ -8,6 +9,7 @@ const cartStore = useCartStore();
 cartStore.loadFromStorage();
 
 const { garment, loading, refresh } = useFetchSingleGarment(itemid);
+const { rating, ratingLoading, ratingRefresh } = useFetchRating(itemid);
 
 const selectedSize = ref<string>("");
 const displayReviews = ref<boolean>(false);
@@ -21,8 +23,9 @@ function addToCart() {
   }
 }
 
-onMounted(() => {
-  refresh();
+onMounted(async () => {
+  await refresh();
+  await ratingRefresh();
 });
 
 watch(displayReviews, (val) => {
@@ -61,7 +64,9 @@ watch(displayReviews, (val) => {
                 <Icon
                   v-for="i in 5"
                   :key="i"
-                  :icon="i <= 4 ? 'tabler:star-filled' : 'tabler:star'"
+                  :icon="
+                    i <= (rating ?? 0) ? 'tabler:star-filled' : 'tabler:star'
+                  "
                   class="text-[#445388]"
                 />
               </button>
@@ -99,7 +104,11 @@ watch(displayReviews, (val) => {
           </button>
         </div>
 
-        <ReviewForm v-if="displayForm" />
+        <ReviewForm
+          v-if="displayForm"
+          @close="displayForm = false"
+          :item_id="itemid"
+        />
       </div>
     </div>
 

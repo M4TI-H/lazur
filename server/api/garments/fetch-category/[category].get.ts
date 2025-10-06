@@ -16,15 +16,43 @@ export default defineEventHandler(async (event) => {
   const from = (page - 1) * limit;
   const to = page * limit - 1;
 
-  const { data, error } = await supabase
-    .from("garments")
-    .select("*")
-    .eq("category", category)
-    .range(from, to);
+  const sort = (query.option as string) || "price";
+  const ascending = query.ascending === "true";
 
-  if (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+  if (sort === "price") {
+    const { data, error } = await supabase
+      .from("garments")
+      .select("*")
+      .eq("category", category)
+      .order("price", { ascending: ascending })
+      .range(from, to);
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    return data as Garment[];
+  } else if (sort === "popularity") {
+    const { data, error } = await supabase
+      .rpc("garments_category_popularity", { cat: category })
+      .order("total_ordered", { ascending: ascending });
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    return data as (Garment & { total_ordered: number })[];
+  } else if (sort === "rating") {
+    const { data, error } = await supabase
+      .rpc("garments_category_rating", { cat: category })
+      .order("avg_rating", { ascending: ascending });
+
+    if (error) {
+      throw createError({ statusCode: 500, statusMessage: error.message });
+    }
+
+    return data as (Garment & { avg_rating: number })[];
   }
 
-  return data as Garment[];
+  return {};
 });

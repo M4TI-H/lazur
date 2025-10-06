@@ -11,7 +11,7 @@ const { createReview, loading } = useCreateReview();
 const validationSchema = toTypedSchema(
   z.object({
     review: z.string().min(1, "Please write a review."),
-    name: z.string().min(1, "Provide us your credentials."),
+    name: z.string().min(1, "Provide your credentials to us."),
     quality: z.number().min(1, "Please leave a rating"),
     price: z.number().min(1, "Please leave a rating"),
     satisfaction: z.number().min(1, "Please leave a rating"),
@@ -87,7 +87,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
           <span>
             <span class="w-[70%] flex justify-between gap-2">
               <p class="text-sm text-secondary">Quality</p>
-              <StarReview v-model="quality" :value="quality" />
+              <StarReview v-model="quality" />
             </span>
             <p v-if="qualityError" class="text-sm !text-[red]">
               {{ qualityError }}
@@ -97,7 +97,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
           <span>
             <span class="w-[70%] flex justify-between gap-2">
               <p class="text-sm text-secondary">Price</p>
-              <StarReview v-model="price" :value="price" />
+              <StarReview v-model="price" />
             </span>
             <p v-if="priceError" class="text-sm !text-[red]">
               {{ priceError }}
@@ -107,7 +107,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
           <span>
             <span class="w-[70%] flex justify-between gap-2">
               <p class="text-sm text-secondary">Satisfaction</p>
-              <StarReview v-model="satisfaction" :value="satisfaction" />
+              <StarReview v-model="satisfaction" />
             </span>
             <p v-if="satisfactionError" class="text-sm !text-[red]">
               {{ satisfactionError }}
@@ -117,7 +117,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
           <span>
             <span class="w-[70%] flex justify-between gap-2">
               <p class="text-sm text-secondary">Shopping experience</p>
-              <StarReview v-model="experience" :value="experience" />
+              <StarReview v-model="experience" />
             </span>
             <p v-if="experienceError" class="text-sm !text-[red]">
               {{ experienceError }}
@@ -158,12 +158,14 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       </p>
 
       <button
+        type="submit"
         v-if="!loading && meta.valid"
         class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#444] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#222] transition-color ease-in-out duration-200"
       >
         Confirm
       </button>
       <button
+        type="submit"
         v-if="!loading && !meta.valid"
         class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#666] text-light rounded-md self-center mt-auto"
       >

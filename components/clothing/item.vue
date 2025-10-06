@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import type Garment from "~/types/Garment";
+import { useFetchRating } from "~/composables/reviews/item/useFetchRating";
 
 const { itemData } = defineProps<{
   itemData: Garment;
 }>();
+
+const { rating, ratingLoading, ratingRefresh } = useFetchRating(itemData.id!);
 
 const selectedSize = ref<string>("-");
 
@@ -20,6 +23,7 @@ function addToCart() {
 
 <template>
   <NuxtLink
+    v-if="itemData"
     :to="`/garments/itemDetails/${itemData.id}`"
     class="w-[8rem] md:w-[20rem] lg:w-[24rem] h-[12rem] md:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-md overflow-hidden"
   >
@@ -33,7 +37,10 @@ function addToCart() {
     >
       <div class="w-full flex items-center justify-between">
         <div>
-          <p class="hidden md:block text-secondary font-thin text-sm">
+          <p
+            v-if="itemData?.category"
+            class="hidden md:block text-secondary font-thin text-sm"
+          >
             {{
               itemData.category.charAt(0).toUpperCase() +
               itemData.category.slice(1)
@@ -46,18 +53,19 @@ function addToCart() {
         <div
           class="hidden md:flex items-center justify-center md:justify-start"
         >
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star-filled" class="text-[#445388]" />
-          <Icon icon="tabler:star" class="text-[#445388]" />
+          <Icon
+            v-for="i in 5"
+            :key="i"
+            :icon="i <= (rating ?? 0) ? 'tabler:star-filled' : 'tabler:star'"
+            class="text-[#445388]"
+          />
         </div>
       </div>
 
       <div
         class="w-full flex flex-col md:flex-row items-center justify-end md:justify-between gap-1 py-2"
       >
-        <p class="text-primary text-sm md:text-lg">
+        <p v-if="itemData?.price" class="text-primary text-sm md:text-lg">
           ${{ itemData.price.toFixed(2) }}
         </p>
 

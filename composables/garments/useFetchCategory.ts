@@ -8,13 +8,18 @@ export function useFetchCategory(category: string, limit: number) {
   const page = ref<number>(1);
 
   //fetch first page SSR
-  const fetchFirstPage = async () => {
+  const fetchFirstPage = async (option: string, ascending: boolean) => {
     loading.value = true;
     try {
       const data = await $fetch<Garment[]>(
         `/api/garments/fetch-category/${category}`,
         {
-          params: { page: page.value, limit: limit },
+          params: {
+            page: page.value,
+            limit: limit,
+            option: option,
+            ascending: ascending,
+          },
         }
       );
       garments.value.push(...data);
@@ -28,7 +33,7 @@ export function useFetchCategory(category: string, limit: number) {
   };
 
   //fetch all the other on client's side
-  const fetchNextPage = async () => {
+  const fetchNextPage = async (option: string, ascending: boolean) => {
     if (!hasMore.value || loading.value) return;
 
     loading.value = true;
@@ -37,7 +42,12 @@ export function useFetchCategory(category: string, limit: number) {
       const newData = await $fetch<Garment[]>(
         `/api/garments/fetch-category/${category}`,
         {
-          params: { page: page.value, limit: limit },
+          params: {
+            page: page.value,
+            limit: limit,
+            sort: option,
+            ascending: ascending,
+          },
         }
       );
 

@@ -35,7 +35,12 @@ cartStore.loadFromStorage();
         </NuxtLink>
 
         <div class="flex flex-col">
-          <p class="text-secondary font-semibold">{{ itemData.category }}</p>
+          <p class="text-secondary font-semibold">
+            {{
+              itemData.category.charAt(0).toUpperCase() +
+              itemData.category.slice(1)
+            }}
+          </p>
           <p class="text-xl text-primary font-semibold">{{ itemData.name }}</p>
         </div>
       </div>

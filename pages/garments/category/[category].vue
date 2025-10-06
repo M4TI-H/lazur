@@ -24,11 +24,8 @@ const { scrollY } = useScroll();
         </h1>
       </div>
     </section>
-    <div class="w-full flex justify-center mt-4">
-      <h1 class="text-secondary text-4xl font-thin my-2">
-        {{ category.toUpperCase() }}
-      </h1>
-    </div>
+    <CategoryMenu />
+    <Sorting />
     <CategoryDisplay :category="category" />
   </main>
 </template>

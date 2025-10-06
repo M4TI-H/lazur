@@ -24,7 +24,7 @@ watch(selected, async (newVal) => {
 });
 
 const displayedReviews = computed(() =>
-  selected.value === 0 ? reviews.value : ratingReviews.value
+  selected.value === 0 ? reviews.value ?? [] : ratingReviews.value ?? []
 );
 
 const firstVisible = ref<number>(0);

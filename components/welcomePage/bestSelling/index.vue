@@ -1,41 +1,31 @@
 <script setup lang="ts">
-const items = [
-  {
-    id: 0,
-    name: "Cotton Shirt",
-    price: "79.99",
-    category: "Shirt",
-    cover:
-      "https://png.pngtree.com/png-vector/20240202/ourmid/pngtree-blue-shirt-mockup-cutout-png-file-png-image_11588762.png",
-    review: "4",
-  },
-  {
-    id: 1,
-    name: "Striped Shirt",
-    price: "129.49",
-    category: "Shirt",
-    cover:
-      "https://cdn.shopify.com/s/files/1/2304/9839/files/RW658_DSG_001.png?v=1753091626",
-    review: "",
-  },
-  {
-    id: 2,
-    name: "Flaming Shirt",
-    price: "99.99",
-    category: "Shirt",
-    cover:
-      "https://cdn11.bigcommerce.com/s-vhimnvf2fd/images/stencil/2000x2000/products/531/2024/425CL-Mens-Button-Down-Printed-Camp-Shirts---Hot-Rod__17274__27168.1717682589.png?c=1",
-    review: "3",
-  },
-  {
-    id: 3,
-    name: "Cotton Shirt",
-    price: "99.99",
-    category: "Shirt",
-    cover: "https://pngimg.com/d/dress_shirt_PNG8117.png",
-    review: "3",
-  },
-];
+import type Garment from "~/types/Garment";
+import { useFetchAnyTrending } from "~/composables/garments/useFetchAnyTrending";
+import { useFetchTrendingCategories } from "~/composables/garments/useFetchTrendingCategories";
+
+const category = ref<string>("any");
+
+const { garments, loading, refresh } = useFetchAnyTrending();
+const { catGarments, catLoading, catRefresh } =
+  useFetchTrendingCategories(category);
+
+watch(category, async (newVal) => {
+  if (newVal === "any") {
+    await refresh();
+  } else {
+    await catRefresh();
+  }
+});
+
+const displayedGarments = computed<(Garment & { total_ordered: number })[]>(
+  () =>
+    category.value === "any" ? garments.value ?? [] : catGarments.value ?? []
+);
+
+onMounted(async () => {
+  if (category.value === "any") await refresh();
+  else await catRefresh();
+});
 </script>
 
 <template>
@@ -49,7 +39,7 @@ const items = [
         <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
           Trending
         </h2>
-        <CategorySelect />
+        <CategorySelect v-model="category" />
       </div>
 
       <span class="flex gap-8">
@@ -70,7 +60,8 @@ const items = [
     <div
       class="w-full flex justify-center gap-8 overflow-x-auto whitespace-nowrap md:px-12"
     >
-      <TopItem v-for="item in items" :key="item.id" :itemData="item" />
+      <Item v-for="item in displayedGarments" :key="item.id" :itemData="item" />
     </div>
+    <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
   </section>
 </template>
