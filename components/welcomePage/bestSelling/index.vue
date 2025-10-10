@@ -7,7 +7,7 @@ const category = ref<string>("any");
 const firstVisible = ref<number>(0);
 let amountVisible = ref<number>(1);
 const carouselRef = ref<HTMLElement | null>(null);
-const itemWidth = 272; // 16rem = 16 * 16px
+const itemWidth = ref<number>(0);
 
 const { garments, loading, refresh } = useFetchAnyTrending();
 const { catGarments, catLoading, catRefresh } =
@@ -33,23 +33,34 @@ const displayedGarments = computed<(Garment & { total_ordered: number })[]>(
     category.value === "any" ? garments.value ?? [] : catGarments.value ?? []
 );
 
+function updateItemWidth() {
+  if (window.innerWidth >= 1024) itemWidth.value = 336; // lg:w-[20rem]
+  else if (window.innerWidth >= 640) itemWidth.value = 272; // sm:w-[16rem]
+  else itemWidth.value = 228; // w-[14rem]
+}
+
 const calculateAmountVisible = () => {
   nextTick(() => {
     if (carouselRef.value && displayedGarments.value) {
-      const carouselWidth = carouselRef.value.clientWidth;
-      amountVisible.value = Math.max(1, Math.floor(carouselWidth / itemWidth));
+      const carouselWidth = carouselRef.value.clientWidth - 16;
+      amountVisible.value = Math.max(
+        1,
+        Math.floor(carouselWidth / itemWidth.value)
+      );
     }
   });
 };
 
-const offset = computed(() => -(firstVisible.value * itemWidth));
+const offset = computed(() => -(firstVisible.value * itemWidth.value));
 
 watch(displayedGarments, (newVal) => {
   nextTick(() => {
-    if (carouselRef.value && newVal?.length) {
-      const carouselWidth = carouselRef.value.clientWidth;
-      const itemWidth = 300; // szerokość jednej recenzji
-      amountVisible.value = Math.max(1, Math.floor(carouselWidth / itemWidth));
+    if (carouselRef.value && displayedGarments.value) {
+      const carouselWidth = carouselRef.value.clientWidth - 16;
+      amountVisible.value = Math.max(
+        1,
+        Math.floor(carouselWidth / itemWidth.value)
+      );
     }
   });
 });
@@ -74,85 +85,106 @@ function displayPrev() {
 }
 
 onMounted(() => {
+  updateItemWidth();
   calculateAmountVisible();
-  window.addEventListener("resize", calculateAmountVisible);
+  window.addEventListener("resize", () => {
+    updateItemWidth();
+    calculateAmountVisible();
+  });
 });
 </script>
 
 <template>
-  <section class="w-full py-4 flex flex-col bg-[#F8F9FA] items-center gap-4">
+  <section class="relative w-full h-screen flex flex-col bg-[#F8F9FA]">
+    <img
+      class="w-full h-full object-cover z-10"
+      src="https://images.unsplash.com/photo-1696392322523-37379e6808ca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
     <div
-      class="relative w-full flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-12 gap-2 sm:gap-0"
-    >
-      <div class="flex flex-col items-start">
-        <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
-          Trending
-        </h2>
-        <p class="text-sm whitespace-nowrap">Discover most popular items</p>
-      </div>
-
-      <CategorySelect v-model="category" />
-
-      <div class="flex gap-8">
-        <button
-          v-if="firstVisible > 0"
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
-          @click="displayPrev()"
-        >
-          <i class="pi pi-arrow-left"></i>
-        </button>
-        <button
-          v-else
-          class="hidden sm:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
-        >
-          <i class="pi pi-arrow-left"></i>
-        </button>
-
-        <button
-          v-if="
-            firstVisible + amountVisible + 1 < (displayedGarments?.length ?? 0)
-          "
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
-          @click="displayNext()"
-        >
-          <i class="pi pi-arrow-right"></i>
-        </button>
-        <button
-          v-else
-          class="hidden sm:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
-        >
-          <i class="pi pi-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-    <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
-
-    <!-- scrollable carousel on mobile -->
-    <div
-      class="scrollbar-hide w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
-    >
-      <TopItem
-        v-for="item in displayedGarments"
-        :key="item.id"
-        :itemData="item"
-      />
-    </div>
-
-    <!-- arrow buttons slider on desktop -->
-    <div
-      ref="carouselRef"
-      class="hidden sm:flex w-full items-center justify-between"
+      class="absolute bg-[#1F1D20]/70 w-full h-full z-20 gap-8 flex flex-col items-center pt-16"
     >
       <div
-        class="flex gap-4 transition-transform duration-500 ease-in-out px-2 mx-auto"
-        :style="{ transform: `translateX(${offset}px)` }"
+        class="relative w-full flex flex-col sm:items-center justify-between px-3 md:px-6 lg:px-12 gap-4"
       >
+        <div
+          class="flex flex-col max-w-[24rem] md:max-w-[32rem] sm:items-center gap-4 self-center"
+        >
+          <h2 class="text-light text-2xl md:text-3xl font-semibold">
+            Trending
+          </h2>
+          <p class="text-light text-sm sm:text-md md:text-lg sm:text-center">
+            Discover the most popular pieces that define the season's style.
+            <br class="hidden lg:block" />
+            Handpicked favorites loved by our customers.
+          </p>
+        </div>
+
+        <div class="w-full flex justify-center items-center gap-2">
+          <button
+            v-if="firstVisible > 0"
+            class="hidden md:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+            @click="displayPrev()"
+          >
+            <i class="pi pi-arrow-left"></i>
+          </button>
+          <button
+            v-else
+            class="hidden md:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+          >
+            <i class="pi pi-arrow-left"></i>
+          </button>
+
+          <CategorySelect v-model="category" />
+
+          <button
+            v-if="
+              firstVisible + amountVisible + 1 <
+              (displayedGarments?.length ?? 0)
+            "
+            class="hidden md:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+            @click="displayNext()"
+          >
+            <i class="pi pi-arrow-right"></i>
+          </button>
+          <button
+            v-else
+            class="hidden md:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+          >
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- scrollable carousel on mobile -->
+      <div
+        class="scrollbar-hide w-full flex md:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
+      >
+        <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
         <TopItem
+          v-else
           v-for="item in displayedGarments"
           :key="item.id"
           :itemData="item"
         />
+      </div>
+
+      <!-- arrow buttons slider on desktop -->
+      <div
+        ref="carouselRef"
+        class="hidden md:flex items-center justify-start overflow-hidden w-full md:max-w-[50rem] lg:max-w-[105rem] mx-auto"
+      >
+        <div
+          class="flex gap-4 transition-transform duration-500 ease-in-out px-2"
+          :style="{ transform: `translateX(${offset}px)` }"
+        >
+          <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
+          <TopItem
+            v-else
+            v-for="item in displayedGarments"
+            :key="item.id"
+            :itemData="item"
+          />
+        </div>
       </div>
     </div>
   </section>

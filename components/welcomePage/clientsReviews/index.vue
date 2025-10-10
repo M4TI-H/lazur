@@ -13,6 +13,11 @@ onMounted(async () => {
   else await ratingRefresh();
 });
 
+const firstVisible = ref<number>(0);
+let amountVisible = ref<number>(1);
+const carouselRef = ref<HTMLElement | null>(null);
+const itemWidth = ref<number>(0);
+
 watch(selected, async (newVal) => {
   firstVisible.value = 0;
 
@@ -23,35 +28,44 @@ watch(selected, async (newVal) => {
   }
 });
 
+function updateItemWidth() {
+  if (window.innerWidth >= 640) itemWidth.value = 272; // sm:w-[16rem]
+  else itemWidth.value = 228; // w-[14rem]
+}
+
 const displayedReviews = computed(() =>
   selected.value === 0 ? reviews.value ?? [] : ratingReviews.value ?? []
 );
 
-const firstVisible = ref<number>(0);
-let amountVisible = ref<number>(1);
-const carouselRef = ref<HTMLElement | null>(null);
-const itemWidth = 272; // 16rem = 16 * 16px
-
 const calculateAmountVisible = () => {
   nextTick(() => {
     if (carouselRef.value && displayedReviews.value) {
-      const carouselWidth = carouselRef.value.clientWidth;
-      amountVisible.value = Math.max(1, Math.floor(carouselWidth / itemWidth));
+      const carouselWidth = carouselRef.value.clientWidth - 16;
+      amountVisible.value = Math.max(
+        1,
+        Math.floor(carouselWidth / itemWidth.value)
+      );
     }
   });
 };
 
 onMounted(() => {
+  updateItemWidth();
   calculateAmountVisible();
-  window.addEventListener("resize", calculateAmountVisible);
+  window.addEventListener("resize", () => {
+    updateItemWidth();
+    calculateAmountVisible();
+  });
 });
 
 watch(displayedReviews, (newVal) => {
   nextTick(() => {
     if (carouselRef.value && newVal?.length) {
-      const carouselWidth = carouselRef.value.clientWidth;
-      const itemWidth = 300; // szerokość jednej recenzji
-      amountVisible.value = Math.max(1, Math.floor(carouselWidth / itemWidth));
+      const carouselWidth = carouselRef.value.clientWidth - 16;
+      amountVisible.value = Math.max(
+        1,
+        Math.floor(carouselWidth / itemWidth.value)
+      );
     }
   });
 });
@@ -75,12 +89,12 @@ function displayPrev() {
   }
 }
 
-const offset = computed(() => -(firstVisible.value * itemWidth));
+const offset = computed(() => -(firstVisible.value * itemWidth.value));
 </script>
 
 <template>
   <section
-    class="w-full h-[44rem] flex flex-col items-center py-4 gap-2 sm:gap-8"
+    class="w-full h-[32rem] flex flex-col items-center pt-16 mb-8 gap-2 sm:gap-8"
   >
     <div
       class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-12 gap-2 sm:gap-0"
@@ -143,10 +157,10 @@ const offset = computed(() => -(firstVisible.value * itemWidth));
     <!-- arrow buttons slider on desktop -->
     <div
       ref="carouselRef"
-      class="hidden sm:flex w-full h-[20rem] items-center justify-between"
+      class="hidden sm:flex h-[20rem] items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
     >
       <div
-        class="flex gap-4 transition-transform duration-500 ease-in-out px-2 mx-auto"
+        class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
         :style="{ transform: `translateX(${offset}px)` }"
       >
         <Review

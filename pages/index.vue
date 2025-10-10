@@ -10,5 +10,6 @@ const { scrollY } = useScroll();
     <FeaturesText />
     <BestSelling />
     <ClientsReviews />
+    <AppSection />
   </main>
 </template>
