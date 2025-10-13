@@ -94,23 +94,32 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
 
 <template>
   <section
-    class="w-full h-[32rem] flex flex-col items-center pt-16 mb-8 gap-2 sm:gap-8"
+    class="w-full h-[36rem] flex flex-col items-center pt-16 mb-8 gap-2 sm:gap-4"
   >
     <div
-      class="relative w-full sm:h-[3rem] flex flex-col sm:flex-row sm:items-center justify-between px-3 sm:px-12 gap-2 sm:gap-0"
+      class="relative w-full flex flex-col items-center justify-between px-3 sm:px-12 gap-2 sm:gap-2"
     >
-      <div class="flex flex-col items-start">
-        <h2 class="text-primary text-xl md:text-2xl lg:text-3xl font-semibold">
-          Reviews
-        </h2>
-        <p class="text-sm whitespace-nowrap">
-          See what other customers think of Lazur
-        </p>
-      </div>
+      <h2 class="text-2xl md:text-3xl font-semibold">Trending</h2>
+      <p class="text-sm sm:text-md md:text-lg sm:text-center">
+        See what other customers think of Lazur
+      </p>
+    </div>
+    <RatingSelect v-model="selected" />
 
-      <RatingSelect v-model="selected" />
+    <!-- scrollable carousel on mobile -->
+    <div
+      class="scrollbar-hide w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
+    >
+      <Review
+        v-for="review in displayedReviews"
+        :key="review.id"
+        :review="review"
+      />
+    </div>
 
-      <div class="flex gap-8">
+    <!-- arrow buttons slider on desktop -->
+    <div class="w-full h-[20rem] flex items-center justify-between px-16">
+      <div>
         <button
           v-if="firstVisible > 0"
           class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
@@ -124,7 +133,23 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
         >
           <i class="pi pi-arrow-left"></i>
         </button>
-
+      </div>
+      <div
+        ref="carouselRef"
+        class="hidden sm:flex h-full items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
+      >
+        <div
+          class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
+          :style="{ transform: `translateX(${offset}px)` }"
+        >
+          <Review
+            v-for="review in displayedReviews"
+            :key="review.id"
+            :review="review"
+          />
+        </div>
+      </div>
+      <div>
         <button
           v-if="
             firstVisible + amountVisible + 1 < (displayedReviews?.length ?? 0)
@@ -140,34 +165,6 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
         >
           <i class="pi pi-arrow-right"></i>
         </button>
-      </div>
-    </div>
-
-    <!-- scrollable carousel on mobile -->
-    <div
-      class="scrollbar-hide w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
-    >
-      <Review
-        v-for="review in displayedReviews"
-        :key="review.id"
-        :review="review"
-      />
-    </div>
-
-    <!-- arrow buttons slider on desktop -->
-    <div
-      ref="carouselRef"
-      class="hidden sm:flex h-[20rem] items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
-    >
-      <div
-        class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
-        :style="{ transform: `translateX(${offset}px)` }"
-      >
-        <Review
-          v-for="review in displayedReviews"
-          :key="review.id"
-          :review="review"
-        />
       </div>
     </div>
   </section>

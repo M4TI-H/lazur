@@ -85,7 +85,7 @@ function addToCart() {
 
           <button
             @click.stop.prevent="addToCart"
-            class="hidden w-[2.5rem] h-[2.5rem] bg-[#445388] rounded-full md:flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer"
+            class="hidden w-[2.5rem] h-[2.5rem] bg-[#445388] rounded-full md:flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer transition-colors ease-in-out duration-250"
           >
             <p class="text-light text-sm md:hidden">Add to cart</p>
             <i class="pi pi-shopping-bag text-sm md:text-lg text-light" />

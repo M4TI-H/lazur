@@ -95,7 +95,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="relative w-full h-screen flex flex-col bg-[#F8F9FA]">
+  <section class="relative w-full h-[56rem] flex flex-col bg-[#F8F9FA]">
     <img
       class="w-full h-full object-cover z-10"
       src="https://images.unsplash.com/photo-1696392322523-37379e6808ca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -122,16 +122,18 @@ onMounted(() => {
         <div class="w-full flex justify-center items-center gap-2">
           <button
             v-if="firstVisible > 0"
-            class="hidden md:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duratio-250"
             @click="displayPrev()"
           >
-            <i class="pi pi-arrow-left"></i>
+            <i class="pi pi-arrow-left text-xs"></i>
+            <span class="hidden lg:block">Previous</span>
           </button>
           <button
             v-else
-            class="hidden md:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#7881a3] text-light rounded-full text-sm"
           >
-            <i class="pi pi-arrow-left"></i>
+            <i class="pi pi-arrow-left text-xs"></i>
+            <span class="hidden lg:block">Previous</span>
           </button>
 
           <CategorySelect v-model="category" />
@@ -141,16 +143,18 @@ onMounted(() => {
               firstVisible + amountVisible + 1 <
               (displayedGarments?.length ?? 0)
             "
-            class="hidden md:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duratio-250"
             @click="displayNext()"
           >
-            <i class="pi pi-arrow-right"></i>
+            <span class="hidden lg:block">Next</span>
+            <i class="pi pi-arrow-right text-xs"></i>
           </button>
           <button
             v-else
-            class="hidden md:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#7881a3] text-light rounded-full text-sm"
           >
-            <i class="pi pi-arrow-right"></i>
+            <span class="hidden lg:block">Next</span>
+            <i class="pi pi-arrow-right text-xs"></i>
           </button>
         </div>
       </div>
@@ -159,7 +163,10 @@ onMounted(() => {
       <div
         class="scrollbar-hide w-full flex md:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
       >
-        <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
+        <i
+          v-if="loading || catLoading"
+          class="pi pi-spinner pi-spin text-light"
+        ></i>
         <TopItem
           v-else
           v-for="item in displayedGarments"
@@ -177,7 +184,10 @@ onMounted(() => {
           class="flex gap-4 transition-transform duration-500 ease-in-out px-2"
           :style="{ transform: `translateX(${offset}px)` }"
         >
-          <i v-if="loading || catLoading" class="pi pi-spinner pi-spin"></i>
+          <i
+            v-if="loading || catLoading"
+            class="pi pi-spinner pi-spin text-light"
+          ></i>
           <TopItem
             v-else
             v-for="item in displayedGarments"

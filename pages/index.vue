@@ -4,12 +4,14 @@ const { scrollY } = useScroll();
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen bg-[#E9ECEF] pb-32 overflow-y-auto overflow-x-hidden"
+    class="w-full min-h-screen bg-[#E9ECEF] overflow-y-auto overflow-x-hidden"
   >
     <WelcomePanel />
     <FeaturesText />
     <BestSelling />
     <ClientsReviews />
     <AppSection />
+    <NewsletterSection />
+    <Footer />
   </main>
 </template>

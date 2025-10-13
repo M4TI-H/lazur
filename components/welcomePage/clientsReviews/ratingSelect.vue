@@ -14,7 +14,7 @@ const changeSelected = (id: number) => {
 };
 </script>
 <template>
-  <div class="self-center sm:self-start h-[2.5rem] flex items-center p-1 gap-1">
+  <div class="h-[2.5rem] flex items-center p-1 gap-1">
     <button
       @click="changeSelected(0)"
       class="px-2 h-full rounded-full hover:cursor-pointer text-secondary font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
