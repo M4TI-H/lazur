@@ -38,12 +38,12 @@ function addToCart() {
       <div class="w-full flex items-center justify-between">
         <div>
           <p
-            v-if="itemData?.category"
+            v-if="itemData?.categories?.category"
             class="hidden md:block text-secondary font-thin text-sm"
           >
             {{
-              itemData.category.charAt(0).toUpperCase() +
-              itemData.category.slice(1)
+              itemData.categories?.category.charAt(0).toUpperCase() +
+              itemData.categories?.category.slice(1)
             }}
           </p>
           <p class="text-primary text-sm md:text-lg truncate max-w-full">

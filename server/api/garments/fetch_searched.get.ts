@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
   const limit = parseInt(query.limit as string) || 10;
   const from = (page - 1) * limit;
   const to = page * limit - 1;
+  const search = (query.search as string) || "";
 
   const sort = (query.option as string) || "price";
   const ascending = query.ascending === "true";
@@ -16,17 +17,8 @@ export default defineEventHandler(async (event) => {
   if (sort === "price") {
     const { data, error } = await supabase
       .from("garments")
-      .select(
-        `
-        id,
-        name,
-        price,
-        description,
-        fabrics,
-        gender,
-        categories ( category )
-      `
-      )
+      .select("*")
+      .ilike("name", `%${search}%`)
       .order("price", { ascending: ascending })
       .range(from, to);
 
@@ -38,6 +30,7 @@ export default defineEventHandler(async (event) => {
   } else if (sort === "popularity") {
     const { data, error } = await supabase
       .rpc("garment_popularity")
+      .ilike("name", `%${search}%`)
       .order("total_ordered", { ascending: ascending });
 
     if (error) {
@@ -48,6 +41,7 @@ export default defineEventHandler(async (event) => {
   } else if (sort === "rating") {
     const { data, error } = await supabase
       .rpc("garments_rating")
+      .ilike("name", `%${search}%`)
       .order("avg_rating", { ascending: ascending });
 
     if (error) {

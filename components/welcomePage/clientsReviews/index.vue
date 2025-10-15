@@ -110,15 +110,25 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
     <div
       class="scrollbar-hide w-full flex sm:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
     >
+      <i
+        v-if="loading || ratingLoading"
+        class="pi pi-spinner pi-spin text-light"
+      ></i>
       <Review
         v-for="review in displayedReviews"
         :key="review.id"
         :review="review"
       />
+      <p
+        class="w-full text-center text-secondary text-sm font-semibold"
+        v-if="!loading && !ratingLoading && displayedReviews?.length === 0"
+      >
+        There are no reviews with this rating
+      </p>
     </div>
 
     <!-- arrow buttons slider on desktop -->
-    <div class="w-full h-[20rem] flex items-center justify-between px-16">
+    <div class="w-full flex items-center justify-between px-16">
       <div>
         <button
           v-if="firstVisible > 0"
@@ -136,18 +146,28 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
       </div>
       <div
         ref="carouselRef"
-        class="hidden sm:flex h-full items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
+        class="hidden sm:flex ] h-full items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
       >
         <div
           class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
           :style="{ transform: `translateX(${offset}px)` }"
         >
+          <i
+            v-if="loading || ratingLoading"
+            class="pi pi-spinner pi-spin text-light"
+          ></i>
           <Review
             v-for="review in displayedReviews"
             :key="review.id"
             :review="review"
           />
         </div>
+        <p
+          class="w-full text-center text-secondary text-sm font-semibold"
+          v-if="!loading && !ratingLoading && displayedReviews?.length === 0"
+        >
+          There are no reviews with this rating
+        </p>
       </div>
       <div>
         <button

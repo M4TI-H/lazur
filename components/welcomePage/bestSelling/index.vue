@@ -173,6 +173,12 @@ onMounted(() => {
           :key="item.id"
           :itemData="item"
         />
+        <p
+          class="text-light text-sm font-semibold"
+          v-if="!loading && !catLoading && displayedGarments.length === 0"
+        >
+          There are no items in this category
+        </p>
       </div>
 
       <!-- arrow buttons slider on desktop -->
@@ -196,6 +202,12 @@ onMounted(() => {
           />
         </div>
       </div>
+      <p
+        class="text-light text-sm font-semibold"
+        v-if="!loading && !catLoading && displayedGarments.length === 0"
+      >
+        There are no items in this category.
+      </p>
     </div>
   </section>
 </template>
