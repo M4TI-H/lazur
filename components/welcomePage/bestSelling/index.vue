@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type Garment from "~/types/Garment";
-import { useFetchAnyTrending } from "~/composables/garments/useFetchAnyTrending";
 import { useFetchTrendingCategories } from "~/composables/garments/useFetchTrendingCategories";
 
 const category = ref<string>("any");
@@ -9,29 +7,16 @@ let amountVisible = ref<number>(1);
 const carouselRef = ref<HTMLElement | null>(null);
 const itemWidth = ref<number>(0);
 
-const { garments, loading, refresh } = useFetchAnyTrending();
-const { catGarments, catLoading, catRefresh } =
-  useFetchTrendingCategories(category);
+const { garments, loading, refresh } = useFetchTrendingCategories(category);
 
 onMounted(async () => {
-  if (category.value === "any") await refresh();
-  else await catRefresh();
+  await refresh();
 });
 
 watch(category, async (newVal) => {
   firstVisible.value = 0;
-
-  if (newVal === "any") {
-    await refresh();
-  } else {
-    await catRefresh();
-  }
+  await refresh();
 });
-
-const displayedGarments = computed<(Garment & { total_ordered: number })[]>(
-  () =>
-    category.value === "any" ? garments.value ?? [] : catGarments.value ?? []
-);
 
 function updateItemWidth() {
   if (window.innerWidth >= 1024) itemWidth.value = 336; // lg:w-[20rem]
@@ -41,7 +26,7 @@ function updateItemWidth() {
 
 const calculateAmountVisible = () => {
   nextTick(() => {
-    if (carouselRef.value && displayedGarments.value) {
+    if (carouselRef.value && garments.value) {
       const carouselWidth = carouselRef.value.clientWidth - 16;
       amountVisible.value = Math.max(
         1,
@@ -53,9 +38,9 @@ const calculateAmountVisible = () => {
 
 const offset = computed(() => -(firstVisible.value * itemWidth.value));
 
-watch(displayedGarments, (newVal) => {
+watch(garments, (newVal) => {
   nextTick(() => {
-    if (carouselRef.value && displayedGarments.value) {
+    if (carouselRef.value && garments.value) {
       const carouselWidth = carouselRef.value.clientWidth - 16;
       amountVisible.value = Math.max(
         1,
@@ -66,14 +51,11 @@ watch(displayedGarments, (newVal) => {
 });
 
 function displayNext() {
-  if (!displayedGarments.value) {
+  if (!garments.value) {
     return;
   }
 
-  if (
-    firstVisible.value + amountVisible.value <
-    displayedGarments.value.length
-  ) {
+  if (firstVisible.value + amountVisible.value < garments.value.length) {
     firstVisible.value++;
   }
 }
@@ -122,7 +104,7 @@ onMounted(() => {
         <div class="w-full flex justify-center items-center gap-2">
           <button
             v-if="firstVisible > 0"
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duratio-250"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
             @click="displayPrev()"
           >
             <i class="pi pi-arrow-left text-xs"></i>
@@ -139,11 +121,8 @@ onMounted(() => {
           <CategorySelect v-model="category" />
 
           <button
-            v-if="
-              firstVisible + amountVisible + 1 <
-              (displayedGarments?.length ?? 0)
-            "
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duratio-250"
+            v-if="firstVisible + amountVisible + 1 < (garments?.length ?? 0)"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
             @click="displayNext()"
           >
             <span class="hidden lg:block">Next</span>
@@ -163,19 +142,16 @@ onMounted(() => {
       <div
         class="scrollbar-hide w-full flex md:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
       >
-        <i
-          v-if="loading || catLoading"
-          class="pi pi-spinner pi-spin text-light"
-        ></i>
+        <i v-if="loading" class="pi pi-spinner pi-spin text-light"></i>
         <TopItem
           v-else
-          v-for="item in displayedGarments"
+          v-for="item in garments"
           :key="item.id"
           :itemData="item"
         />
         <p
           class="text-light text-sm font-semibold"
-          v-if="!loading && !catLoading && displayedGarments.length === 0"
+          v-if="!loading && garments?.length === 0"
         >
           There are no items in this category
         </p>
@@ -190,13 +166,10 @@ onMounted(() => {
           class="flex gap-4 transition-transform duration-500 ease-in-out px-2"
           :style="{ transform: `translateX(${offset}px)` }"
         >
-          <i
-            v-if="loading || catLoading"
-            class="pi pi-spinner pi-spin text-light"
-          ></i>
+          <i v-if="loading" class="pi pi-spinner pi-spin text-light"></i>
           <TopItem
             v-else
-            v-for="item in displayedGarments"
+            v-for="item in garments"
             :key="item.id"
             :itemData="item"
           />
@@ -204,7 +177,7 @@ onMounted(() => {
       </div>
       <p
         class="text-light text-sm font-semibold"
-        v-if="!loading && !catLoading && displayedGarments.length === 0"
+        v-if="!loading && garments?.length === 0"
       >
         There are no items in this category.
       </p>

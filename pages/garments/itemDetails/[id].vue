@@ -81,6 +81,7 @@ watch(displayReviews, (val) => {
         <SizeSelection
           v-model="selectedSize"
           :value="selectedSize"
+          :id="garment.id"
           @addToCart="addToCart()"
         />
 

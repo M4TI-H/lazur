@@ -12,7 +12,17 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await supabase
     .from("garments")
-    .select("*")
+    .select(
+      `
+        id,
+        name,
+        price,
+        description,
+        fabrics,
+        gender,
+        categories ( category )
+      `
+    )
     .eq("id", id)
     .maybeSingle();
 

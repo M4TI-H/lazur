@@ -132,7 +132,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
       <div>
         <button
           v-if="firstVisible > 0"
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
           @click="displayPrev()"
         >
           <i class="pi pi-arrow-left"></i>
@@ -174,7 +174,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
           v-if="
             firstVisible + amountVisible + 1 < (displayedReviews?.length ?? 0)
           "
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer"
+          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
           @click="displayNext()"
         >
           <i class="pi pi-arrow-right"></i>

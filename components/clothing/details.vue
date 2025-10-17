@@ -10,7 +10,10 @@ const options = ["description", "category", "fabrics"];
 </script>
 
 <template>
-  <div class="w-full self-center flex flex-col z-20 gap-3 mb-4 md:px-2">
+  <div
+    v-if="garment"
+    class="w-full self-center flex flex-col z-20 gap-3 mb-4 md:px-2"
+  >
     <div class="w-full flex items-center justify-center md:justify-start gap-2">
       <button
         v-for="(option, id) in options"
@@ -29,7 +32,10 @@ const options = ["description", "category", "fabrics"];
 
     <p v-if="selectedOption === 'description'">{{ garment.description }}</p>
     <p v-if="selectedOption === 'category'">
-      {{ garment.category.charAt(0).toUpperCase() + garment.category.slice(1) }}
+      {{
+        garment.categories!.category.charAt(0).toUpperCase() +
+        garment.categories!.category.slice(1)
+      }}
     </p>
     <p v-if="selectedOption === 'fabrics'">{{ garment.fabrics }}</p>
   </div>

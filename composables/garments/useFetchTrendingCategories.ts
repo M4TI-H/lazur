@@ -2,10 +2,10 @@ import type Garment from "~/types/Garment";
 
 export function useFetchTrendingCategories(category: Ref<string>) {
   const {
-    data: catGarments,
-    pending: catLoading,
-    error: catError,
-    refresh: catRefresh,
+    data: garments,
+    pending: loading,
+    error: error,
+    refresh: refresh,
   } = useAsyncData<(Garment & { total_ordered: number })[]>(
     () => `trending-${category.value}-garments`,
     () =>
@@ -15,5 +15,5 @@ export function useFetchTrendingCategories(category: Ref<string>) {
     { watch: [category] }
   );
 
-  return { catGarments, catLoading, catError, catRefresh };
+  return { garments, loading, error, refresh };
 }

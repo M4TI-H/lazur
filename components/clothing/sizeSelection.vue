@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const sizes = ["XS", "S", "M", "L", "XL"];
+import { useFetchSizes } from "~/composables/garments/useFetchSizes";
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
@@ -8,7 +8,10 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   modelValue: string;
+  id: number;
 }>();
+
+const { sizes, loading, refresh } = useFetchSizes(props.id);
 
 const selectSize = (value: string) => {
   if (value === props.modelValue) {
@@ -17,6 +20,12 @@ const selectSize = (value: string) => {
     emit("update:modelValue", value);
   }
 };
+
+onMounted(async () => {
+  if (props.id) {
+    await refresh();
+  }
+});
 </script>
 
 <template>
@@ -27,7 +36,7 @@ const selectSize = (value: string) => {
       class="w-full max-w-[16rem] flex items-center justify-around md:justify-start md:gap-1 lg:gap-2"
     >
       <button
-        v-for="(size, id) in sizes"
+        v-for="(size, id) in sizes ?? []"
         :key="id"
         @click="selectSize(size)"
         class="size-[2.5rem] rounded-sm border-1 border-[#6a6272] hover:cursor-pointer"
