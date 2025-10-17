@@ -36,9 +36,9 @@ export default defineEventHandler(async (event) => {
 
     return data as Garment[];
   } else if (sort === "popularity") {
-    const { data, error } = await supabase
-      .rpc("garment_popularity")
-      .order("total_ordered", { ascending: ascending });
+    const { data, error } = await supabase.rpc("garments_popularity", {
+      ascending: ascending,
+    });
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });
@@ -46,9 +46,9 @@ export default defineEventHandler(async (event) => {
 
     return data as (Garment & { total_ordered: number })[];
   } else if (sort === "rating") {
-    const { data, error } = await supabase
-      .rpc("garments_rating")
-      .order("avg_rating", { ascending: ascending });
+    const { data, error } = await supabase.rpc("garments_rating", {
+      ascending: ascending,
+    });
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });

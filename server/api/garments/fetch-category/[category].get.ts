@@ -1,5 +1,6 @@
 import type Garment from "~/types/Garment";
 import { serverSupabaseClient } from "#supabase/server";
+import { categories } from "@vueuse/core/metadata.mjs";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
@@ -9,6 +10,18 @@ export default defineEventHandler(async (event) => {
   if (!category) {
     throw createError({ statusCode: 400, statusMessage: "Invalid category" });
   }
+
+  const { data: categoryData, error: catError } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("category", category)
+    .single();
+
+  if (catError) {
+    throw createError({ statusCode: 500, statusMessage: catError.message });
+  }
+
+  const category_id = categoryData.id;
 
   const query = getQuery(event);
   const page = parseInt(query.page as string) || 1;
@@ -22,8 +35,18 @@ export default defineEventHandler(async (event) => {
   if (sort === "price") {
     const { data, error } = await supabase
       .from("garments")
-      .select("*")
-      .eq("category", category)
+      .select(
+        `
+        id,
+        name,
+        price,
+        description,
+        fabrics,
+        gender,
+        categories ( category )
+      `
+      )
+      .eq("category", category_id)
       .order("price", { ascending: ascending })
       .range(from, to);
 
@@ -33,9 +56,10 @@ export default defineEventHandler(async (event) => {
 
     return data as Garment[];
   } else if (sort === "popularity") {
-    const { data, error } = await supabase
-      .rpc("garments_category_popularity", { cat: category })
-      .order("total_ordered", { ascending: ascending });
+    const { data, error } = await supabase.rpc("garments_category_popularity", {
+      cat: category_id,
+      ascending: ascending,
+    });
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });
@@ -43,9 +67,10 @@ export default defineEventHandler(async (event) => {
 
     return data as (Garment & { total_ordered: number })[];
   } else if (sort === "rating") {
-    const { data, error } = await supabase
-      .rpc("garments_category_rating", { cat: category })
-      .order("avg_rating", { ascending: ascending });
+    const { data, error } = await supabase.rpc("garments_category_rating", {
+      cat: category_id,
+      ascending: ascending,
+    });
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });
