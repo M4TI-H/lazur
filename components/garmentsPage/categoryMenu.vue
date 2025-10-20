@@ -5,6 +5,10 @@ const emit = defineEmits<{
   (e: "selectedCategory", category: string): void;
 }>();
 
+const { gender } = defineProps<{
+  gender: string;
+}>();
+
 const { categories, loading, refresh } = useFetchCategories();
 
 onMounted(async () => {
@@ -15,10 +19,10 @@ onMounted(async () => {
 <template>
   <div
     v-if="categories"
-    class="scrollbar-hide w-full h-[4rem] md:h-[5rem] flex md:justify-center items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
+    class="scrollbar-hide w-full max-w-[48rem] h-[4rem] md:h-[5rem] flex md:justify-center items-center px-3 gap-2 overflow-x-auto whitespace-nowrap"
   >
     <NuxtLink
-      to="/garments"
+      :to="`/garments/${gender}`"
       class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
     >
       All
@@ -26,7 +30,7 @@ onMounted(async () => {
     <NuxtLink
       v-for="(category, id) in categories"
       :key="id"
-      :to="`/garments/category/${category}`"
+      :to="`/garments/${gender}/category/${category}`"
       class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
     >
       {{ category.charAt(0).toUpperCase() + category.slice(1) }}

@@ -7,6 +7,8 @@ const { scrollY } = defineProps<{
 
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
+
+const expandGender = ref<boolean>(false);
 </script>
 
 <template>
@@ -18,7 +20,7 @@ cartStore.loadFromStorage();
     <div class="flex items-center gap-4 md:gap-8">
       <NuxtLink
         to="/"
-        class="group size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        class="size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
         :class="
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
         "
@@ -29,18 +31,34 @@ cartStore.loadFromStorage();
         </p>
       </NuxtLink>
 
-      <NuxtLink
-        to="/garments"
-        class="group size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
-        :class="
-          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
-        "
+      <div
+        @mouseenter="expandGender = true"
+        @mouseleave="expandGender = false"
+        class="relative size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        :class="scrollY < 50 ? 'hover:bg-[#1F1D20]/30' : ''"
       >
+        <div class="absolute -bottom-1 left-0 w-full h-2"></div>
         <Icon icon="tabler:shirt" class="text-2xl text-light sm:hidden" />
         <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
           Garments
         </p>
-      </NuxtLink>
+        <div
+          @mouseenter="expandGender = true"
+          class="absolute w-full top-[2.5rem] flex-col gap-1"
+          :class="[expandGender ? 'flex' : 'hidden']"
+        >
+          <NuxtLink
+            to="/garments/Men"
+            class="size-[2rem] sm:size-auto sm:px-4 sm:py-1 bg-[#1F1D20]/30 hover:bg-[#1F1D20]/80 active:bg-[#1F1D20]/80 text-center text-sm md:text-lg text-light font-thin hidden sm:block rounded-full"
+            >Men</NuxtLink
+          >
+          <NuxtLink
+            to="/garments/Women"
+            class="size-[2rem] sm:size-auto sm:px-4 sm:py-1 bg-[#1F1D20]/30 hover:bg-[#1F1D20]/80 active:bg-[#1F1D20]/80 text-center text-sm md:text-lg text-light font-thin hidden sm:block rounded-full"
+            >Women</NuxtLink
+          >
+        </div>
+      </div>
 
       <NuxtLink
         to="/aboutus"

@@ -3,8 +3,9 @@ import { Icon } from "@iconify/vue";
 import type Garment from "~/types/Garment";
 import { useFetchRating } from "~/composables/reviews/item/useFetchRating";
 
-const { itemData } = defineProps<{
+const { itemData, gender } = defineProps<{
   itemData: Garment;
+  gender: string;
 }>();
 
 const { rating, ratingLoading, ratingRefresh } = useFetchRating(itemData.id!);
@@ -24,34 +25,34 @@ function addToCart() {
 <template>
   <NuxtLink
     v-if="itemData"
-    :to="`/garments/itemDetails/${itemData.id}`"
-    class="w-[8rem] md:w-[20rem] lg:w-[24rem] h-[12rem] md:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-md overflow-hidden"
+    :to="`/garments/${gender}/itemDetails/${itemData.id}`"
+    class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-md overflow-hidden"
   >
     <img
       src="https://freepngimg.com/save/2135-dress-shirt-png-image/757x1204"
-      class="h-[8rem] md:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto"
+      class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto"
       draggable="false"
     />
     <div
-      class="w-full h-full flex flex-col items-center md:items-start p-2 py-2 md:px-4 bg-[#eee] md:bg-[#F8F9FA] rounded-b-xl"
+      class="relativew-full h-full flex flex-col items-centersm:items-start p-2 py-2 bg-[#F8F9FA] rounded-b-xl"
     >
       <div class="w-full flex items-center justify-between">
-        <div>
+        <div class="w-full max-w-[96%] sm:max-w-full">
           <p
             v-if="itemData?.categories?.category"
-            class="hidden md:block text-secondary font-thin text-sm"
+            class="hidden sm:block text-secondary font-thin text-sm"
           >
             {{
               itemData.categories?.category.charAt(0).toUpperCase() +
               itemData.categories?.category.slice(1)
             }}
           </p>
-          <p class="text-primary text-sm md:text-lg truncate max-w-full">
-            {{ itemData.name }}
+          <p class="text-primary sm:text-lg truncate">
+            {{ itemData.name }} / {{ itemData.gender }}
           </p>
         </div>
         <div
-          class="hidden md:flex items-center justify-center md:justify-start"
+          class="hidden sm:flex items-center justify-center sm:justify-start"
         >
           <Icon
             v-for="i in 5"
@@ -63,17 +64,26 @@ function addToCart() {
       </div>
 
       <div
-        class="w-full flex flex-col md:flex-row items-center justify-end md:justify-between gap-1 py-2"
+        class="w-full flex flex-col sm:flex-row sm:items-center justify-end sm:justify-between gap-1 sm:py-2"
       >
-        <p v-if="itemData?.price" class="text-primary text-sm md:text-lg">
-          ${{ itemData.price.toFixed(2) }}
-        </p>
+        <div class="w-full sm:w-auto flex items-center justify-between">
+          <p v-if="itemData?.price" class="text-primary sm:text-lg">
+            ${{ itemData.price.toFixed(2) }}
+          </p>
+          <span
+            class="flex sm:hidden items-center gap-1"
+            v-if="rating && rating > 0"
+          >
+            {{ rating.toFixed(1) }}
+            <Icon icon="tabler:star-filled" class="text-[#445388]" />
+          </span>
+        </div>
 
-        <div class="hidden md:flex items-center gap-4">
+        <div class="flex items-center gap-4">
           <select
             v-model="selectedSize"
             @click.stop.prevent
-            class="w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center outline-0"
+            class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center outline-0"
           >
             <option class="text-primary text-center">-</option>
             <option class="text-primary text-center">XS</option>
@@ -85,10 +95,9 @@ function addToCart() {
 
           <button
             @click.stop.prevent="addToCart"
-            class="hidden w-[2.5rem] h-[2.5rem] bg-[#445388] rounded-full md:flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer transition-colors ease-in-out duration-250"
+            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-[#445388] rounded-full flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer transition-colors ease-in-out duration-250"
           >
-            <p class="text-light text-sm md:hidden">Add to cart</p>
-            <i class="pi pi-shopping-bag text-sm md:text-lg text-light" />
+            <i class="pi pi-shopping-bag text-sm sm:text-lg text-light" />
           </button>
         </div>
       </div>

@@ -4,10 +4,10 @@
   <section
     class="w-full h-[24rem] bg-[#ccc] flex flex-col items-center justify-center px-2"
   >
-    <h2 class="font-semibold text-xl sm:text-2xl lg:text-3xl mb-4">
+    <h2 class="font-semibold text-2xl sm:text-2xl lg:text-3xl mb-4">
       Lazur mobile app
     </h2>
-    <p class="text-center text-lg mb-8 whitespace-nowrap">
+    <p class="text-center mb-8 whitespace-nowrap">
       -10% off your first order and early <br class="flex sm:hidden" />access to
       sales and promotions.
     </p>

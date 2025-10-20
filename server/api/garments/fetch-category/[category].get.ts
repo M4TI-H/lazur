@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
   const limit = parseInt(query.limit as string) || 10;
   const from = (page - 1) * limit;
   const to = page * limit - 1;
+  const gender = query.gender;
 
   const sort = (query.option as string) || "price";
   const ascending = query.ascending === "true";
@@ -47,6 +48,7 @@ export default defineEventHandler(async (event) => {
       `
       )
       .eq("category", category_id)
+      .or(`gender.eq.${gender},gender.eq.Unisex`)
       .order("price", { ascending: ascending })
       .range(from, to);
 
@@ -56,10 +58,12 @@ export default defineEventHandler(async (event) => {
 
     return data as Garment[];
   } else if (sort === "popularity") {
-    const { data, error } = await supabase.rpc("garments_category_popularity", {
-      cat: category_id,
-      ascending: ascending,
-    });
+    const { data, error } = await supabase
+      .rpc("garments_category_popularity", {
+        cat: category_id,
+        ascending: ascending,
+      })
+      .or(`gender.eq.${gender},gender.eq.Unisex`);
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });
@@ -67,10 +71,12 @@ export default defineEventHandler(async (event) => {
 
     return data as (Garment & { total_ordered: number })[];
   } else if (sort === "rating") {
-    const { data, error } = await supabase.rpc("garments_category_rating", {
-      cat: category_id,
-      ascending: ascending,
-    });
+    const { data, error } = await supabase
+      .rpc("garments_category_rating", {
+        cat: category_id,
+        ascending: ascending,
+      })
+      .or(`gender.eq.${gender},gender.eq.Unisex`);
 
     if (error) {
       throw createError({ statusCode: 500, statusMessage: error.message });

@@ -16,7 +16,9 @@ onMounted(async () => {
     <div
       class="w-full flex flex-wrap sm:flex-nowrap sm:items-center justify-between"
     >
-      <div class="w-[10rem] sm:w-[12rem] min-h-[8rem] mb-2 flex flex-col gap-1">
+      <div
+        class="w-1/2 md:w-1/4 min-h-[8rem] mb-2 flex flex-col items-center gap-1"
+      >
         <h2 class="text-light text-3xl font-semibold">Lazur</h2>
         <p class="text-light font-semibold">Premium clothing</p>
         <span class="flex items-center gap-2 mt-8 text-light text-sm">
@@ -32,7 +34,9 @@ onMounted(async () => {
           Gdansk, Złota 10
         </span>
       </div>
-      <div class="w-[10rem] sm:w-[12rem] min-h-[8rem] mb-2 flex flex-col gap-1">
+      <div
+        class="w-1/2 md:w-1/4 min-h-[8rem] mb-2 flex flex-col items-center gap-1"
+      >
         <h2 class="text-light text-lg font-semibold">Clothing</h2>
         <a
           v-for="(cat, id) in categories"
@@ -42,7 +46,9 @@ onMounted(async () => {
           {{ cat.charAt(0).toUpperCase() + cat.slice(1) }}
         </a>
       </div>
-      <div class="w-[10rem] sm:w-[12rem] min-h-[8rem] flex flex-col gap-1">
+      <div
+        class="w-1/2 md:w-1/4 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
+      >
         <h2 class="text-light text-lg font-semibold">Pages</h2>
         <a class="text-light text-sm font-semibold hover:cursor-pointer"
           >Home</a
@@ -58,7 +64,9 @@ onMounted(async () => {
           >Cart</a
         >
       </div>
-      <div class="w-[10rem] sm:w-[12rem] min-h-[8rem] flex flex-col gap-1">
+      <div
+        class="w-1/2 md:w-1/4 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
+      >
         <h2 class="text-light text-lg font-semibold">Useful</h2>
         <a class="text-light text-sm font-semibold hover:cursor-pointer"
           >Privacy policy</a

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const route = useRoute();
-const category = route.params.category as string;
+const gender = route.params.gender as "Men" | "Women";
 
 const { scrollY } = useScroll();
 </script>
+
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
+    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto gap-4"
   >
     <section class="w-full h-[40vh] relative flex flex-col items-center">
       <img
@@ -24,8 +25,14 @@ const { scrollY } = useScroll();
         </h1>
       </div>
     </section>
-    <CategoryMenu />
-    <Sorting />
-    <CategoryDisplay :category="category" />
+
+    <section
+      class="relative w-full flex flex-col sm:flex-row sm:items-center justify-between px-4 lg:px-24"
+    >
+      <CategoryMenu :gender="gender" />
+      <Sorting :gender="gender" />
+    </section>
+
+    <ClothesDisplay :gender="gender" />
   </main>
 </template>

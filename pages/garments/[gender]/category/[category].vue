@@ -1,7 +1,10 @@
 <script setup lang="ts">
+const route = useRoute();
+const category = route.params.category as string;
+const gender = route.params.gender as "Men" | "Women";
+
 const { scrollY } = useScroll();
 </script>
-
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
@@ -22,8 +25,18 @@ const { scrollY } = useScroll();
         </h1>
       </div>
     </section>
-    <CategoryMenu />
-    <Sorting />
-    <ClothesDisplay />
+
+    <section
+      class="relative w-full flex flex-col sm:flex-row sm:items-center justify-between px-4 lg:px-24"
+    >
+      <CategoryMenu :gender="gender" />
+      <Sorting />
+    </section>
+    <div class="w-full h-[4rem] flex items-center justify-center my-4">
+      <h2 class="text-secondary text-2xl lg:text-3xl font-thin">
+        {{ category.toUpperCase() }}
+      </h2>
+    </div>
+    <CategoryDisplay :category="category" :gender="gender" />
   </main>
 </template>
