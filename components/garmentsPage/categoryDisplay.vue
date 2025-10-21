@@ -40,7 +40,7 @@ watch(
 <template>
   <div
     ref="listEl"
-    class="w-full max-w-[100vw] flex flex-wrap items-start justify-center gap-4 md:gap-8 px-4 md:px-8 mx-auto"
+    class="w-full max-w-[100vw] flex flex-wrap items-start justify-center gap-4 md:gap-8 px-4 md:px-8 pb-4 md:pb-8 mx-auto"
   >
     <i v-if="loading" class="pi pi-spinner pi-spin text-2xl text-black"></i>
     <Item

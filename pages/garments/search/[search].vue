@@ -29,4 +29,5 @@ const { scrollY } = useScroll();
     <Sorting />
     <SearchedDisplay :search="search" />
   </main>
+  <Footer />
 </template>

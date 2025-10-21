@@ -122,4 +122,5 @@ watch(displayReviews, (val) => {
 
     <ItemSuggestions />
   </main>
+  <Footer />
 </template>

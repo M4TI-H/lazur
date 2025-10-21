@@ -17,11 +17,14 @@ onMounted(async () => {
       class="w-full flex flex-wrap sm:flex-nowrap sm:items-center justify-between"
     >
       <div
-        class="w-1/2 md:w-1/4 min-h-[8rem] mb-2 flex flex-col items-center gap-1"
+        class="w-full sm:w-1/3 min-h-[8rem] mb-2 flex flex-col items-center gap-1"
       >
-        <h2 class="text-light text-3xl font-semibold">Lazur</h2>
-        <p class="text-light font-semibold">Premium clothing</p>
-        <span class="flex items-center gap-2 mt-8 text-light text-sm">
+        <div class="flex sm:flex-col items-baseline gap-4">
+          <h2 class="text-light text-3xl font-semibold">Lazur</h2>
+          <p class="text-light font-semibold">Premium clothing</p>
+        </div>
+
+        <span class="flex items-center gap-2 mt-2 sm:mt-4 text-light text-sm">
           <i class="pi pi-phone text-light text-xs"></i>
           +11 123 456 789
         </span>
@@ -34,20 +37,9 @@ onMounted(async () => {
           Gdansk, Złota 10
         </span>
       </div>
+
       <div
-        class="w-1/2 md:w-1/4 min-h-[8rem] mb-2 flex flex-col items-center gap-1"
-      >
-        <h2 class="text-light text-lg font-semibold">Clothing</h2>
-        <a
-          v-for="(cat, id) in categories"
-          :key="id"
-          class="text-light text-sm font-semibold hover:cursor-pointer"
-        >
-          {{ cat.charAt(0).toUpperCase() + cat.slice(1) }}
-        </a>
-      </div>
-      <div
-        class="w-1/2 md:w-1/4 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
+        class="w-1/2 sm:w-1/3 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
       >
         <h2 class="text-light text-lg font-semibold">Pages</h2>
         <a class="text-light text-sm font-semibold hover:cursor-pointer"
@@ -65,7 +57,7 @@ onMounted(async () => {
         >
       </div>
       <div
-        class="w-1/2 md:w-1/4 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
+        class="w-1/2 sm:w-1/3 min-h-[8rem] flex flex-col items-center mt-2 md:mt-0 gap-1"
       >
         <h2 class="text-light text-lg font-semibold">Useful</h2>
         <a class="text-light text-sm font-semibold hover:cursor-pointer"

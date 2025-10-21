@@ -39,4 +39,5 @@ const { scrollY } = useScroll();
     </div>
     <CategoryDisplay :category="category" :gender="gender" />
   </main>
+  <Footer />
 </template>

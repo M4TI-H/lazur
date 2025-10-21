@@ -35,4 +35,5 @@ const { scrollY } = useScroll();
 
     <ClothesDisplay :gender="gender" />
   </main>
+  <Footer />
 </template>
