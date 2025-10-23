@@ -4,8 +4,11 @@ import { serverSupabaseClient } from "#supabase/server";
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
 
-  const query = getQuery(event);
-  const category = query.category;
+  const category = event.context.params!.category;
+
+  if (!category) {
+    throw createError({ statusCode: 400, statusMessage: "Invalid category" });
+  }
 
   if (category === "any") {
     const { data, error } = await supabase
@@ -17,9 +20,26 @@ export default defineEventHandler(async (event) => {
     }
 
     return data as (Garment & { total_ordered: number })[];
-  } else {
+  }
+
+  const { data: categoryData, error: catError } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("category", category)
+    .single();
+
+  if (catError) {
+    throw createError({ statusCode: 500, statusMessage: catError.message });
+  }
+
+  const category_id = categoryData.id;
+
+  if (category !== "any") {
     const { data, error } = await supabase
-      .rpc("garments_category_popularity", { cat: category, ascending: false })
+      .rpc("garments_category_popularity", {
+        cat: category_id,
+        ascending: false,
+      })
       .limit(10);
 
     if (error) {

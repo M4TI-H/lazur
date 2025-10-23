@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const rating = Number(query.rating);
 
   const { data, error } = await supabase
-    .from("review")
+    .from("reviews")
     .select("*")
     .eq("general_rating", rating)
     .limit(10);

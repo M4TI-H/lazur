@@ -24,7 +24,7 @@ function addToCart() {
 <template>
   <NuxtLink
     v-if="itemData"
-    :to="`/garments/itemDetails/${itemData.id}`"
+    :to="`/garments/${itemData.gender}/itemDetails/${itemData.id}`"
     class="flex-shrink-0 w-[14rem] sm:w-[16rem] lg:w-[20rem] h-[20rem] lg:h-[28rem] bg-[#DEE2E6] rounded-md overflow-hidden"
   >
     <img
@@ -41,6 +41,7 @@ function addToCart() {
             v-if="itemData?.categories?.category"
             class="text-secondary font-thin text-sm"
           >
+            {{ itemData.gender }} |
             {{
               itemData.categories?.category.charAt(0).toUpperCase() +
               itemData.categories?.category.slice(1)

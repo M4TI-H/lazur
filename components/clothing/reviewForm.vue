@@ -59,7 +59,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
 <template>
   <form
     @submit="onSubmit"
-    class="wfull flex flex-col gap-4 p-4 rounded-lg bg-[#eee]"
+    class="w-full max-w-[18rem] flex flex-col gap-4 p-4 rounded-lg bg-[#eee]"
   >
     <h3 class="text-lg">Write your review</h3>
 

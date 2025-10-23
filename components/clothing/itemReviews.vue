@@ -8,16 +8,15 @@ const emit = defineEmits<{
 
 <template>
   <div
-    class="bg-white w-[36rem] max-h-[44rem] rounded-lg flex flex-col gap-2 z-20 p-4 overscroll-y-auto"
+    class="bg-white w-full max-w-[18rem] max-h-[44rem] rounded-lg flex flex-col gap-2 z-20 p-4 overscroll-y-auto"
   >
     <span class="flex items-center justify-between px-1">
-      <h2 class="text-3xl">All reviews</h2>
+      <h3 class="text-lg">All reviews</h3>
       <button @click="emit('close')">
         <i class="pi pi-times text-lg hover:cursor-pointer"></i>
       </button>
     </span>
     <div class="w-full flex flex-col px-4 py-2 gap-2 my-1">
-      <div class="w-full h-[1px] bg-[#1f1d20]"></div>
       <div class="flex items-center justify-between">
         <span class="flex items-center">
           <Icon

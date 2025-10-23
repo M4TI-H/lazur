@@ -38,6 +38,16 @@ const { scrollY } = useScroll();
       </h2>
     </div>
     <CategoryDisplay :category="category" :gender="gender" />
+    <div
+      class="w-full h-[12rem] bg-[#ccc] flex flex-col items-center justify-center gap-2"
+    >
+      <h3 class="text-xl md:text-2xl font-semibold">That is all for now</h3>
+      <p
+        class="max-w-[14rem] md:text-lg md:max-w-[16rem] text-center text-secondary"
+      >
+        Stay tuned for our offer updates on our social media.
+      </p>
+    </div>
   </main>
   <Footer />
 </template>

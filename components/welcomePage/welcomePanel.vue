@@ -40,7 +40,7 @@ const searchItem = () => {
             @click="searchItem"
             class="absolute right-3 bg-[#445388] size-[2rem] rounded-full flex items-center justify-center z-20 hover:cursor-pointer"
           >
-            <Icon icon="tabler:search" class="text-[#DEE2E6] text-lg" />
+            <i class="pi pi-search text-light text-sm"></i>
           </button>
           <input
             v-model="search"

@@ -9,9 +9,7 @@ export function useFetchTrendingCategories(category: Ref<string>) {
   } = useAsyncData<(Garment & { total_ordered: number })[]>(
     () => `trending-${category.value}-garments`,
     () =>
-      $fetch("/api/garments/main/fetch_category_trending", {
-        params: { category: category.value },
-      }),
+      $fetch(`/api/garments/main/fetch_category_trending/${category.value}`),
     { watch: [category] }
   );
 

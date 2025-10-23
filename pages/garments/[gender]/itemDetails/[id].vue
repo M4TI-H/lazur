@@ -28,8 +28,8 @@ onMounted(async () => {
   await ratingRefresh();
 });
 
-watch(displayReviews, (val) => {
-  if (val) {
+watch([displayReviews, displayForm], ([reviews, form]) => {
+  if (reviews || form) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "";
@@ -104,23 +104,27 @@ watch(displayReviews, (val) => {
             <Icon v-if="displayForm" icon="tabler:chevron-down" />
           </button>
         </div>
-
-        <ReviewForm
-          v-if="displayForm"
-          @close="displayForm = false"
-          :item_id="itemid"
-        />
       </div>
     </div>
 
     <div
-      v-if="displayReviews"
-      class="absolute top-0 w-screen h-screen bg-[#1f1d20]/50 flex items-center justify-center z-20"
+      v-if="displayForm"
+      class="fixed inset-0 w-screen min-h-screen bg-[#1f1d20]/50 flex items-center justify-center z-50"
     >
-      <ItemReviews @close="displayReviews = false" />
+      <div class="absolute inset-0" @click="displayForm = false"></div>
+      <div class="relative z-10">
+        <ReviewForm @close="displayForm = false" :item_id="itemid" />
+      </div>
     </div>
-
-    <ItemSuggestions />
+    <div
+      v-if="displayReviews"
+      class="fixed inset-0 w-screen min-h-screen bg-[#1f1d20]/50 flex items-center justify-center z-50"
+    >
+      <div class="absolute inset-0" @click="displayForm = false"></div>
+      <div class="w-full relative z-10 flex justify-center">
+        <ItemReviews @close="displayReviews = false" />
+      </div>
+    </div>
   </main>
   <Footer />
 </template>

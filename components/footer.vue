@@ -11,7 +11,7 @@ onMounted(async () => {
 
 <template>
   <section
-    class="relative w-full min-h-[18rem] bg-[#000]/90 flex flex-col items-center py-8 px-4 md:px-16"
+    class="relative w-full min-h-[12rem] bg-[#000]/90 flex flex-col items-center py-8 px-4 md:px-16"
   >
     <div
       class="w-full flex flex-wrap sm:flex-nowrap sm:items-center justify-between"

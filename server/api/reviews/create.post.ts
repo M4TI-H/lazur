@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   ).toFixed();
 
   const { data: newReview, error: newOrderError } = await supabase
-    .from("review")
+    .from("reviews")
     .insert({
       name: body.name,
       review: body.review,

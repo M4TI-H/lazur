@@ -1,6 +1,5 @@
 import type Garment from "~/types/Garment";
 import { serverSupabaseClient } from "#supabase/server";
-import { categories } from "@vueuse/core/metadata.mjs";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);

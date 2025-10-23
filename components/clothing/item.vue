@@ -42,6 +42,7 @@ function addToCart() {
             v-if="itemData?.categories?.category"
             class="hidden sm:block text-secondary font-thin text-sm"
           >
+            {{ itemData.gender }} |
             {{
               itemData.categories?.category.charAt(0).toUpperCase() +
               itemData.categories?.category.slice(1)
