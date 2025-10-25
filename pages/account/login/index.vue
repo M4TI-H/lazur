@@ -1,0 +1,146 @@
+<script setup lang="ts">
+import { useField, useForm } from "vee-validate";
+import { z } from "zod";
+import { toTypedSchema } from "@vee-validate/zod";
+const supabase = useSupabaseClient();
+const loading = ref<boolean>(false);
+
+const userStore = useUserStore();
+userStore.loadFromStorage();
+
+onMounted(() => {
+  if (userStore.isLoggedIn) {
+    navigateTo("/");
+  }
+});
+
+const validationSchema = toTypedSchema(
+  z.object({
+    login: z.email(),
+    password: z.string().min(1, "Password is required"),
+  })
+);
+const { handleSubmit, meta } = useForm({
+  validationSchema,
+  initialValues: {
+    login: "",
+    password: "",
+  },
+});
+
+const { value: login, errorMessage: loginError } = useField<string>("login");
+const { value: password, errorMessage: passwordError } =
+  useField<string>("password");
+
+const handleLogin = async () => {
+  try {
+    await userStore.signIn(login.value, password.value);
+    navigateTo("/");
+  } catch (error: any) {
+    console.error(error);
+  }
+};
+
+const onSubmit = handleSubmit(handleLogin);
+</script>
+
+<template>
+  <main
+    class="max-w-screen w-full min-h-screen flex items-center justify-center bg-[#bbb] py-8"
+  >
+    <form
+      @submit.prevent="onSubmit"
+      class="relative bg-[#dee2e6] w-[90%] sm:w-full min-w-[18rem] max-w-[22rem] sm:max-w-[24rem] h-[32rem] py-4 px-8 flex flex-col items-center rounded-xl gap-2 z-30"
+    >
+      <div class="w-full flex items-center justify-between">
+        <h1 class="self-start text-xl !text-[#445388] font-bold">Lazur</h1>
+        <NuxtLink to="/" class="text-sm text-secondary">Back</NuxtLink>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-center mt-4">
+        Sign in with email
+      </h2>
+      <p class="text-sm text-secondary font-semibold text-center max-w-[22rem]">
+        Enter your details below and
+        <br class="sm:hidden" />
+        continue your
+        <br class="hidden sm:block" />
+        journey into
+        <br class="sm:hidden" />
+        modernminimalism.
+      </p>
+      <div
+        class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col mt-8"
+      >
+        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
+          <i
+            class="pi pi-user absolute text-secondary text-lg left-3 top-1/2 -translate-y-1/2"
+          ></i>
+          <input
+            type="text"
+            v-model="login"
+            placeholder="Login"
+            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+          />
+        </div>
+        <p v-if="loginError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
+          {{ loginError }}
+        </p>
+      </div>
+      <div
+        class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col mb-4"
+      >
+        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
+          <i
+            class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
+          ></i>
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+          />
+        </div>
+        <p v-if="passwordError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
+          {{ passwordError }}
+        </p>
+        <NuxtLink
+          to="/account/login/changePassword"
+          class="text-sm md:text-md text-secondary font-semibold hover:cursor-pointer hover:underline self-end mt-1"
+        >
+          Forgot password?
+        </NuxtLink>
+      </div>
+
+      <button
+        type="submit"
+        v-if="!loading && meta.valid"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
+      >
+        Confirm
+      </button>
+      <button
+        type="submit"
+        v-if="!loading && !meta.valid"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#8088a3] text-light rounded-md"
+      >
+        Confirm
+      </button>
+      <button
+        v-if="loading && meta.valid"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md"
+      >
+        <i class="pi pi-spin pi-spinner"></i>
+      </button>
+
+      <span class="mt-auto text-sm text-secondary text-center"
+        >Not registered yet?
+        <br class="sm:hidden" />
+        <NuxtLink
+          to="/account/register"
+          class="!text-[#445388] hover:cursor-pointer hover:underline"
+          >Create an account</NuxtLink
+        >.</span
+      >
+    </form>
+  </main>
+</template>

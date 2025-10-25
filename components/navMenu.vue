@@ -8,6 +8,8 @@ const { scrollY } = defineProps<{
 
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
+const userStore = useUserStore();
+userStore.loadFromStorage();
 
 const expandGender = ref<boolean>(false);
 const isMobile = useMediaQuery("(max-width: 767px)");
@@ -103,6 +105,20 @@ const isMobile = useMediaQuery("(max-width: 767px)");
           About Us
         </p>
       </NuxtLink>
+
+      <NuxtLink
+        :to="userStore.isLoggedIn ? '/account' : '/account/login'"
+        :class="[
+          'size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
+          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
+        ]"
+      >
+        <i v-if="isMobile" class="pi pi-user text-xl text-light"></i>
+        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
+          Account
+        </p>
+      </NuxtLink>
+
       <NuxtLink
         to="/cart"
         :class="
