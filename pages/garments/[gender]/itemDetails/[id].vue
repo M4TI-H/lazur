@@ -7,6 +7,8 @@ const itemid = Number(route.params.id);
 
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
+const userStore = useUserStore();
+userStore.loadFromStorage();
 
 const { garment, loading, refresh } = useFetchSingleGarment(itemid);
 const { rating, ratingLoading, ratingRefresh } = useFetchRating(itemid);
@@ -113,7 +115,34 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
     >
       <div class="absolute inset-0" @click="displayForm = false"></div>
       <div class="relative z-10">
-        <ReviewForm @close="displayForm = false" :item_id="itemid" />
+        <ReviewForm
+          v-if="userStore.isLoggedIn"
+          @close="displayForm = false"
+          :item_id="itemid"
+        />
+        <div
+          v-if="!userStore.isLoggedIn"
+          class="w-[18rem] md:w-[32rem] flex flex-col gap-2 md:gap-4 p-4 rounded-lg bg-[#eee]"
+        >
+          <h2 class="text-xl md:text-2xl font-semibold">Please sign in</h2>
+          <p class="text-sm md:text-lg text-secondary">
+            Only registered users can leave reviews.
+          </p>
+          <div class="w-full h-[2.5rem] flex items-center justify-between">
+            <button
+              @click="displayForm = false"
+              class="text-sm text-secondary ml-4 hover:cursor-pointer"
+            >
+              Back
+            </button>
+            <NuxtLink
+              to="/account/login"
+              class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light flex items-center justify-center rounded-md mt-4 self-end hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
+            >
+              Sign in
+            </NuxtLink>
+          </div>
+        </div>
       </div>
     </div>
     <div

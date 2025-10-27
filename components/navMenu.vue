@@ -12,6 +12,7 @@ const userStore = useUserStore();
 userStore.loadFromStorage();
 
 const expandGender = ref<boolean>(false);
+const expandAccount = ref<boolean>(false);
 const isMobile = useMediaQuery("(max-width: 767px)");
 </script>
 
@@ -20,9 +21,9 @@ const isMobile = useMediaQuery("(max-width: 767px)");
     :class="[
       scrollY > 50
         ? 'bg-[#1F1D20]/90'
-        : expandGender
-        ? ['flex', 'md:bg-none', 'bg-[#1F1D20]/90', 'transition-none']
-        : ['bg-none', 'transition-colors', 'duration-500'],
+        : expandGender || expandAccount
+        ? ['flex', 'md:bg-none', 'bg-[#1F1D20]/90']
+        : ['bg-none'],
     ]"
     class="fixed w-full h-[4rem] z-40 flex items-center justify-between pl-4 pr-2 md:px-8"
   >
@@ -30,13 +31,13 @@ const isMobile = useMediaQuery("(max-width: 767px)");
     <div class="flex items-center gap-4 md:gap-8">
       <NuxtLink
         to="/"
-        class="size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        class="size-[2rem] md:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
         :class="
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
         "
       >
         <i v-if="isMobile" class="pi pi-home text-xl text-light"></i>
-        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
+        <p v-if="!isMobile" class="text-sm md:text-lg text-light font-thin">
           Home
         </p>
       </NuxtLink>
@@ -44,78 +45,153 @@ const isMobile = useMediaQuery("(max-width: 767px)");
       <div
         @mouseenter="expandGender = true"
         @mouseleave="expandGender = false"
-        @click="isMobile ? (expandGender = !expandGender) : ''"
-        class="relative size-[2rem] sm:w-[6rem] sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        @click="expandGender = !expandGender"
+        class="relative size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        :class="
+          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
+        "
       >
         <div class="absolute -bottom-4 left-0 w-full h-6"></div>
         <Icon v-if="isMobile" icon="tabler:shirt" class="text-2xl text-light" />
-        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
+        <p v-if="!isMobile" class="text-sm md:text-lg text-light font-thin">
           Garments
         </p>
 
         <!-- bigger screen buttons-->
         <div
-          @mouseenter="expandGender = true"
-          @click="expandGender = true"
-          class="absolute top-[3rem] hidden flex-col items-center gap-1"
-          :class="[expandGender ? 'md:flex' : 'hidden']"
+          v-if="!isMobile"
+          class="w-full absolute top-[3rem] flex-col items-center gap-1"
+          :class="expandGender ? 'flex' : 'hidden'"
         >
           <NuxtLink
             to="/garments/Men"
-            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex flex-col items-center justify-center z-20"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
             >Men</NuxtLink
           >
           <NuxtLink
             to="/garments/Women"
-            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex flex-col items-center justify-center z-20"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
             >Women</NuxtLink
           >
         </div>
       </div>
 
-      <!-- mobile buttons -->
       <div
         @mouseenter="expandGender = true"
         @mouseleave="expandGender = false"
         @click="expandGender = true"
-        class="flex-col absolute left-0 top-[4rem] w-full h-[5rem] bg-[#1F1D20]/90 overflow-hidden"
-        :class="[expandGender ? 'flex' : 'hidden']"
+        class="flex-col absolute left-0 top-[4rem] w-full h-[5rem] overflow-hidden bg-[#1F1D20]/90"
+        :class="expandGender ? 'flex' : 'hidden'"
       >
         <NuxtLink
+          v-if="isMobile"
           to="/garments/Men"
-          class="w-full h-[2.5rem] sm:hidden active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex items-center justify-center z-20"
           >Men</NuxtLink
         >
         <NuxtLink
+          v-if="isMobile"
           to="/garments/Women"
-          class="w-full h-[2.5rem] sm:hidden active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex items-center justify-center z-20"
           >Women</NuxtLink
+        >
+      </div>
+
+      <div
+        @mouseenter="expandAccount = true"
+        @mouseleave="expandAccount = false"
+        @click="expandAccount = !expandAccount"
+        class="relative size-[2rem] md:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out"
+        :class="
+          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : ''
+        "
+      >
+        <div class="absolute -bottom-4 left-0 w-full h-6"></div>
+        <i v-if="isMobile" class="pi pi-user text-lg text-light"></i>
+        <p v-if="!isMobile" class="text-sm md:text-lg text-light font-thin">
+          Account
+        </p>
+
+        <div
+          v-if="!isMobile"
+          class="absolute top-[3rem] flex-col items-center gap-1"
+          :class="expandAccount ? 'flex' : 'hidden'"
+        >
+          <NuxtLink
+            v-if="userStore.isLoggedIn"
+            to="/account"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
+            >Settings</NuxtLink
+          >
+          <NuxtLink
+            v-if="userStore.isLoggedIn"
+            to="/account/order-history"
+            class="w-[8.5rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
+            >Order history</NuxtLink
+          >
+          <button
+            v-if="userStore.isLoggedIn"
+            @click="userStore.signOut()"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
+          >
+            Sign out
+          </button>
+          <NuxtLink
+            v-if="!userStore.isLoggedIn"
+            to="/account/login"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex flex-col items-center justify-center z-20"
+            >Sign in</NuxtLink
+          >
+        </div>
+      </div>
+
+      <div
+        @mouseenter="expandAccount = true"
+        @mouseleave="expandAccount = false"
+        @click="expandAccount = true"
+        class="flex-col absolute left-0 top-[4rem] w-full overflow-hidden bg-[#1F1D20]/90"
+        :class="[
+          expandAccount ? 'flex' : 'hidden',
+          userStore.isLoggedIn ? 'h-[7.5rem]' : 'h-[3rem]',
+        ]"
+      >
+        <NuxtLink
+          v-if="userStore.isLoggedIn && isMobile"
+          to="/account"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+          >Settings</NuxtLink
+        >
+        <NuxtLink
+          v-if="userStore.isLoggedIn && isMobile"
+          to="/account/order-history"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+          >Order history</NuxtLink
+        >
+        <button
+          v-if="userStore.isLoggedIn && isMobile"
+          @click="userStore.signOut()"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+        >
+          Sign out
+        </button>
+        <NuxtLink
+          v-if="!userStore.isLoggedIn && isMobile"
+          to="/account/login"
+          class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
+          >Sign in</NuxtLink
         >
       </div>
 
       <NuxtLink
         to="/aboutus"
         :class="[
-          'size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
+          'size-[2rem] md:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
           scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
         ]"
       >
-        <i v-if="isMobile" class="pi pi-info-circle text-xl text-light"></i>
-        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
+        <i v-if="isMobile" class="pi pi-info-circle text-lg text-light"></i>
+        <p v-if="!isMobile" class="text-sm md:text-lg text-light font-thin">
           About Us
-        </p>
-      </NuxtLink>
-
-      <NuxtLink
-        :to="userStore.isLoggedIn ? '/account' : '/account/login'"
-        :class="[
-          'size-[2rem] sm:size-auto sm:px-4 sm:py-1 rounded-full flex items-center justify-center hover:cursor-pointer transition duration-300 ease-in-out',
-          scrollY < 50 ? 'hover:bg-[#1F1D20]/30 active:bg-[#1F1D20]/30' : '',
-        ]"
-      >
-        <i v-if="isMobile" class="pi pi-user text-xl text-light"></i>
-        <p class="text-sm md:text-lg text-light font-thin hidden sm:block">
-          Account
         </p>
       </NuxtLink>
 

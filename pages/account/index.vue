@@ -9,6 +9,15 @@ onMounted(() => {
     navigateTo("/account/login");
   }
 });
+
+watch(
+  () => userStore.isLoggedIn,
+  (loggedIn) => {
+    if (!loggedIn) {
+      navigateTo("/account/login");
+    }
+  }
+);
 </script>
 
 <template>
@@ -31,35 +40,36 @@ onMounted(() => {
         </h1>
       </div>
     </section>
-    <div class="w-full flex flex-col lg:flex-row">
-      <section class="w-full lg:w-[50%] flex flex-col px-4 py-2 gap-4">
-        <div class="w-full flex flex-col gap-2">
-          <div class="flex gap-2">
-            <h3 class="text-xl font-semibold">Your data</h3>
-            <button
-              class="text-lg flex items-center justify-center p-1 rounded-lg hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
-            >
-              <i class="pi pi-pencil"></i>
-            </button>
-          </div>
-          <UserData />
+    <section class="w-full flex flex-col px-4 py-2 gap-4">
+      <div class="w-full flex flex-col gap-2">
+        <div class="flex gap-2">
+          <h3 class="text-xl lg:text-2xl font-semibold">Your data</h3>
+          <button
+            class="flex items-center justify-center gap-2 p-1 rounded-lg text-[#888] font-semibold border-2 border-[#ccc] hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+          >
+            <i class="pi pi-pencil text-lg"></i>
+            Modify
+          </button>
         </div>
-        <div class="w-full flex flex-col gap-2">
-          <div class="flex gap-2">
-            <h3 class="text-xl font-semibold">Address book</h3>
-            <button
-              class="text-lg flex items-center justify-center p-1 rounded-lg hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
-            >
-              <i class="pi pi-file-plus"></i>
-            </button>
-          </div>
-          <AddressBook />
+        <UserData />
+      </div>
+      <div class="flex items-center gap-4">
+        <p class="text-secondary">Subscribe to the newsletter</p>
+        <input type="checkbox" class="size-[1rem]" />
+      </div>
+      <div class="w-full flex flex-col gap-2">
+        <div class="flex gap-2">
+          <h3 class="text-xl lg:text-2xl font-semibold">Address book</h3>
+          <button
+            class="flex items-center justify-center gap-2 p-1 rounded-lg text-[#888] font-semibold border-2 border-[#ccc] hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+          >
+            <i class="pi pi-file-plus text-lg"></i>
+            Add new
+          </button>
         </div>
-      </section>
-      <section class="w-full lg:w-[50%] flex flex-col px-4 py-2">
-        <h3 class="text-xl font-semibold">Order history</h3>
-      </section>
-    </div>
+        <AddressBook />
+      </div>
+    </section>
   </main>
   <Footer />
 </template>

@@ -39,7 +39,7 @@ onMounted(async () => {
         v-for="(size, id) in sizes ?? []"
         :key="id"
         @click="selectSize(size)"
-        class="size-[2.5rem] rounded-sm border-1 border-[#6a6272] hover:cursor-pointer"
+        class="min-w-[2.5rem] h-[2.5rem] p-1 rounded-sm border-1 border-[#6a6272] hover:cursor-pointer"
         :class="[
           props.modelValue !== null && props.modelValue === size
             ? ['bg-[#445388]', 'text-light']

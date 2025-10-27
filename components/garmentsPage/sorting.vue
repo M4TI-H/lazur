@@ -34,7 +34,10 @@ const expandSorting = ref<boolean>(false);
         @click="expandSorting = !expandSorting"
         class="flex items-center justify-between min-w-[8rem] px-2 gap-2 h-[2.5rem] bg-[#eee] text-sm rounded-lg outline-0 font-semibold hover:cursor-pointer truncate hover:bg-[#ddd]"
       >
-        Sorting by {{ sortStore.option }}
+        Sorting by
+        {{
+          sortStore.option.charAt(0).toUpperCase() + sortStore.option.slice(1)
+        }}
         <Icon
           v-if="!expandSorting"
           icon="tabler:caret-right-filled"
