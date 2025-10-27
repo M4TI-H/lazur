@@ -1,11 +1,11 @@
 export default interface Order {
   id: number;
-  name: string;
-  surname: string;
-  address: string;
+  created_at: string;
+  address: number;
   email: string;
   phone: string;
   delivery: number;
   total: number;
-  created_at: string;
+  name_surname: string;
+  user_id: number;
 }

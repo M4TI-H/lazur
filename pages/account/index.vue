@@ -4,6 +4,8 @@ const { scrollY } = useScroll();
 const userStore = useUserStore();
 userStore.loadFromStorage();
 
+const showAddressForm = ref<boolean>(false);
+
 onMounted(() => {
   if (!userStore.isLoggedIn) {
     navigateTo("/account/login");
@@ -61,6 +63,7 @@ watch(
         <div class="flex gap-2">
           <h3 class="text-xl lg:text-2xl font-semibold">Address book</h3>
           <button
+            @click="showAddressForm = true"
             class="flex items-center justify-center gap-2 p-1 rounded-lg text-[#888] font-semibold border-2 border-[#ccc] hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
           >
             <i class="pi pi-file-plus text-lg"></i>
@@ -70,6 +73,13 @@ watch(
         <AddressBook />
       </div>
     </section>
+    <div
+      v-if="showAddressForm"
+      class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+    >
+      <div class="absolute inset-0" @click="showAddressForm = false"></div>
+      <AddressForm />
+    </div>
   </main>
   <Footer />
 </template>

@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { useMediaQuery } from "@vueuse/core";
-import Item from "~/components/account/orderHistory/item.vue";
+import { useFetchUserOrders } from "~/composables/orders/useFetchUserOrders";
 const { scrollY } = useScroll();
 
 const userStore = useUserStore();
 userStore.loadFromStorage();
 
-onMounted(() => {
+const { orders, loading, refresh } = useFetchUserOrders();
+
+onMounted(async () => {
   if (!userStore.isLoggedIn) {
     navigateTo("/account/login");
   }
+  await refresh();
 });
 
 watch(
@@ -47,9 +50,10 @@ const isMobile = useMediaQuery("(max-width: 767px)");
     <section
       class="w-full md:w-[48rem] lg:w-[64rem] flex flex-col px-4 py-8 gap-8 md:gap-4"
     >
-      <Item
-        v-for="(order, id) in 5"
+      <OrderInfo
+        v-for="(order, id) in orders"
         :key="id"
+        :order="order"
         @click="isMobile ? console.log('rozwin') : ''"
       />
     </section>
