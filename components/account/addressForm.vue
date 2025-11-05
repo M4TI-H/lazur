@@ -1,77 +1,184 @@
 <script setup lang="ts">
 // @ts-ignore
 import { getNames } from "country-list";
+import { useField, useForm } from "vee-validate";
+import { z } from "zod";
+import { toTypedSchema } from "@vee-validate/zod";
+import { useCreateAddress } from "~/composables/users/addresses/useCreateAddress";
+
 const countries = getNames();
 
-const selectedCountry = ref<string>();
+const emit = defineEmits<{
+  (e: "close"): void;
+  (e: "refresh"): void;
+}>();
+
+const { createAddress, loading } = useCreateAddress();
+
+const validationSchema = toTypedSchema(
+  z.object({
+    country: z.string().min(1, "Please select your country."),
+    city: z.string().min(1, "Please provide your country."),
+    postal: z.string().min(1, "Please provide your country."),
+    street: z.string().min(1, "Please provide your street name."),
+    building: z.string().min(1, "Please provide your building number."),
+    flat: z.string().min(1, "Please provide your flat number."),
+  })
+);
+
+const { handleSubmit, meta } = useForm({
+  validationSchema,
+  initialValues: {
+    country: "",
+    city: "",
+    postal: "",
+    street: "",
+    building: "",
+    flat: "",
+  },
+});
+
+const { value: country, errorMessage: countryError } =
+  useField<string>("country");
+const { value: city, errorMessage: cityError } = useField<string>("city");
+const { value: postal, errorMessage: postalError } = useField<string>("postal");
+const { value: street, errorMessage: streetError } = useField<string>("street");
+const { value: building, errorMessage: buildingError } =
+  useField<string>("building");
+const { value: flat, errorMessage: flatError } = useField<string>("flat");
+
+const error = computed(() => {
+  return (
+    countryError.value ||
+    cityError.value ||
+    postalError.value ||
+    streetError.value ||
+    buildingError.value ||
+    flatError.value ||
+    ""
+  );
+});
+
+const handleSubmitAddress = async () => {
+  console.log("essaa");
+  const addressData = {
+    id: 0,
+    country: country.value,
+    city: city.value,
+    postal_code: postal.value,
+    street: street.value,
+    building_num: building.value,
+    flat_num: flat.value,
+    is_displayed: true,
+  };
+
+  await createAddress(addressData);
+
+  emit("close");
+  emit("refresh");
+};
+
+const onSubmit = handleSubmit(handleSubmitAddress);
 </script>
 
 <template>
-  <div
-    class="w-full min-w-[12rem] max-w-[18rem] md:max-w-[24rem] xl:max-w-[28rem] h-[32rem] p-4 gap-8 flex flex-col bg-[#eee] rounded-lg"
+  <form
+    @submit.prevent="onSubmit"
+    class="fixed w-full min-w-[14rem] max-w-[90%] sm:max-w-[24rem] xl:max-w-[28rem] min-h-[32rem] p-4 gap-4 sm:gap-8 flex flex-col bg-[#eee] border-4 border-[#ccc] rounded-lg overflow-y-auto"
   >
-    <h2 class="text-xl font-semibold">New address</h2>
-    <div class="w-full flex items-center justify-between px-4">
+    <div class="w-full flex items-center justify-between">
+      <h2 class="text-xl font-semibold">New address</h2>
+      <button
+        @click="emit('close')"
+        class="text-sm flex items-center justify-center p-1 rounded-lg hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    <div
+      v-if="error"
+      class="bg-[#f5bfbf] border-2 border-[#9e0f0f] rounded-md px-2 py-1"
+    >
+      <p class="!text-[#9e0f0f] text-sm">{{ error }}</p>
+    </div>
+    <div
+      class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    >
       <p class="text-sm text-secondary">Country</p>
       <select
-        v-model="selectedCountry"
-        class="w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+        v-model="country"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
       >
-        <option disabled value="">Select a country</option>
         <option v-for="country in countries" :key="country" :value="country">
           {{ country }}
         </option>
       </select>
     </div>
 
-    <div class="w-full flex items-center justify-between px-4">
+    <div
+      class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    >
       <p class="text-sm text-secondary">City</p>
       <input
+        v-model="city"
         type="text"
-        class="w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
       />
     </div>
-    <div class="w-full flex items-center justify-between px-4">
+    <div
+      class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    >
       <p class="text-sm text-secondary">Postal code</p>
       <input
+        v-model="postal"
         type="text"
-        class="w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
       />
     </div>
-    <div class="w-full flex items-center justify-between px-4">
+    <div
+      class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    >
       <p class="text-sm text-secondary">Street name</p>
       <input
+        v-model="street"
         type="text"
-        class="w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
       />
     </div>
-    <div class="w-full flex items-center justify-between px-4">
+    <div
+      class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    >
       <p class="text-sm text-secondary">Building / Apt.</p>
-      <div class="w-[16rem] flex justify-between">
+      <div class="w-full sm:w-[14rem] xl:w-[16rem] flex justify-between">
         <input
+          v-model="building"
           type="text"
-          class="w-[7.5rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
         />
         <input
+          v-model="flat"
           type="text"
-          class="w-[7.5rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
+          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-white text-lg px-2 rounded-md"
         />
       </div>
     </div>
     <button
-      class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
+      v-if="!loading && meta.valid"
+      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
     >
       Confirm
     </button>
     <button
-      class="hidden w-[80%] max-w-[24rem] h-[2.5rem] bg-[#445388]/80 text-light rounded-md self-center mt-auto"
+      v-if="!loading && !meta.valid"
+      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388]/80 text-light rounded-md self-center mt-auto"
     >
       Confirm
     </button>
     <button
-      class="hidden w-[80%] max-w-[24rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
+      v-if="loading && meta.valid"
+      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
     >
       <i class="pi pi-spin pi-spinner"></i>
     </button>
-  </div>
+  </form>
 </template>

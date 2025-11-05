@@ -1,4 +1,4 @@
-export function useFetchRating(id: number) {
+export function useFetchItemRating(id: number) {
   const rating = ref<number>();
   const ratingLoading = ref<boolean>(false);
   const ratingError = ref<string>();

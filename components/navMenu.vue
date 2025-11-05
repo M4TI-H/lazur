@@ -132,7 +132,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
           <button
             v-if="userStore.isLoggedIn"
             @click="userStore.signOut()"
-            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
+            class="w-[6rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20 hover:cursor-pointer"
           >
             Sign out
           </button>

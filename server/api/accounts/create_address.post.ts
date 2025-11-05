@@ -1,4 +1,4 @@
-import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
+import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
@@ -12,20 +12,24 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody<{
-    item_id: number;
-    review: string;
-    rating: number;
+    country: string;
+    city: string;
+    postal_code: string;
+    street: string;
+    building_num: string;
+    flat_num: string;
   }>(event);
 
-  const dateNow = new Date();
-
   const { data, error } = await supabase
-    .from("item_reviews")
+    .from("addresses")
     .insert({
+      country: body.country,
+      city: body.city,
+      postal_code: body.postal_code,
+      street: body.street,
+      building_num: body.building_num,
+      flat_num: body.flat_num,
       user_id: user.id,
-      review: body.review,
-      rating: body.rating,
-      item_id: body.item_id,
     })
     .select("id")
     .single();
@@ -37,5 +41,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return { review_id: data.id };
+  return { address_id: data.id };
 });

@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import type Garment from "~/types/Garment";
-import { useFetchRating } from "~/composables/reviews/item/useFetchRating";
+import { useFetchItemRating } from "~/composables/reviews/item/useFetchItemRating";
 
 const { itemData } = defineProps<{
   itemData: Garment;
 }>();
 
-const { rating, ratingLoading, ratingRefresh } = useFetchRating(itemData.id!);
+const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(
+  itemData.id!
+);
 
 const selectedSize = ref<string>("-");
 

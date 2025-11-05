@@ -1,15 +1,28 @@
 <script setup lang="ts">
 const { scrollY } = useScroll();
+import { useFetchUserAddresses } from "~/composables/users/addresses/useFetchAddresses";
+import { useFetchPersonalData } from "~/composables/users/personalData/useFetchPersonalData";
 
 const userStore = useUserStore();
 userStore.loadFromStorage();
 
-const showAddressForm = ref<boolean>(false);
+const { addresses, addressesLoading, addressesRefresh } =
+  useFetchUserAddresses();
+const { personalData, personalDataLoading, personalDataRefresh } =
+  useFetchPersonalData();
 
-onMounted(() => {
+const showAddressForm = ref<boolean>(false);
+const showDataForm = ref<boolean>(false);
+
+const refreshAddresses = async () => await addressesRefresh();
+const refreshPersonalData = async () => await personalDataRefresh();
+
+onMounted(async () => {
   if (!userStore.isLoggedIn) {
     navigateTo("/account/login");
   }
+  await refreshAddresses();
+  await personalDataRefresh();
 });
 
 watch(
@@ -47,22 +60,24 @@ watch(
         <div class="flex gap-2">
           <h3 class="text-xl lg:text-2xl font-semibold">Your data</h3>
           <button
+            @click="showDataForm = true"
             class="flex items-center justify-center gap-2 p-1 rounded-lg text-[#888] font-semibold border-2 border-[#ccc] hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
           >
             <i class="pi pi-pencil text-lg"></i>
             Modify
           </button>
         </div>
-        <UserData />
+        <UserData :personalData="personalData" />
       </div>
-      <div class="flex items-center gap-4">
-        <p class="text-secondary">Subscribe to the newsletter</p>
-        <input type="checkbox" class="size-[1rem]" />
-      </div>
-      <div class="w-full flex flex-col gap-2">
-        <div class="flex gap-2">
+
+      <div v-if="addresses" class="w-full flex flex-col gap-2">
+        <div class="flex items-end gap-4">
           <h3 class="text-xl lg:text-2xl font-semibold">Address book</h3>
+          <p class="text-sm text-secondary font-semibold">
+            ({{ addresses.length }} / 5 added)
+          </p>
           <button
+            v-if="addresses.length < 5"
             @click="showAddressForm = true"
             class="flex items-center justify-center gap-2 p-1 rounded-lg text-[#888] font-semibold border-2 border-[#ccc] hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
           >
@@ -70,15 +85,39 @@ watch(
             Add new
           </button>
         </div>
-        <AddressBook />
+        <div class="w-full flex flex-wrap gap-4">
+          <AddressCard
+            v-for="address in addresses"
+            :key="address.id"
+            :addressData="address"
+            @refresh="refreshAddresses"
+          />
+        </div>
       </div>
     </section>
     <div
       v-if="showAddressForm"
-      class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
     >
-      <div class="absolute inset-0" @click="showAddressForm = false"></div>
-      <AddressForm />
+      <div class="fixed inset-0" @click="showAddressForm = false"></div>
+      <AddressForm
+        class="z-50"
+        @close="showAddressForm = false"
+        @refresh="refreshAddresses"
+      />
+    </div>
+
+    <div
+      v-if="showDataForm"
+      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+    >
+      <div class="fixed inset-0" @click="showDataForm = false"></div>
+      <DataForm
+        class="z-50"
+        :personalData="personalData"
+        @close="showDataForm = false"
+        @refresh="refreshPersonalData"
+      />
     </div>
   </main>
   <Footer />

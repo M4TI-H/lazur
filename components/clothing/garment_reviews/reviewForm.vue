@@ -2,12 +2,13 @@
 import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-import { useCreateReview } from "~/composables/reviews/item/useCreateReview";
+import { useCreateItemReview } from "~/composables/reviews/item/useCreateItemReview";
 
-const { createReview, loading } = useCreateReview();
+const { createItemReview, loading } = useCreateItemReview();
 
-const { item_id } = defineProps<{
+const { item_id, item_name } = defineProps<{
   item_id: number;
+  item_name: string;
 }>();
 
 const emit = defineEmits<{
@@ -17,7 +18,6 @@ const emit = defineEmits<{
 const validationSchema = toTypedSchema(
   z.object({
     review: z.string().min(1, "Please write a review."),
-    name: z.string().min(1, "Provide your credentials to us."),
     rating: z.number().min(1, "Please leave a rating"),
   })
 );
@@ -26,29 +26,17 @@ const { handleSubmit, meta } = useForm({
   validationSchema,
   initialValues: {
     review: "",
-    name: "",
     rating: 0,
   },
 });
 
 const { value: review } = useField<string>("review");
-const { value: name } = useField<string>("name");
 const { value: rating } = useField<number>("rating");
 
 const handleReviewSubmit = async () => {
-  const reviewData = {
-    id: 0,
-    item_id: item_id,
-    review: review.value,
-    name: name.value,
-    rating: rating.value,
-    created_at: "",
-  };
-
-  await createReview(reviewData);
+  await createItemReview(item_id, review.value, rating.value);
 
   review.value = "";
-  name.value = "";
   rating.value = 0;
   emit("close");
 };
@@ -61,12 +49,17 @@ const onSubmit = handleSubmit(handleReviewSubmit);
     @submit="onSubmit"
     class="w-[18rem] md:w-[36rem] min-h-[18rem] flex flex-col gap-4 p-4 rounded-lg bg-[#eee]"
   >
-    <h3 class="text-lg">Write your review</h3>
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl md:text-2xl font-semibold">
+        Reviewing {{ item_name }}
+      </h2>
+      <button @click="emit('close')">
+        <i class="pi pi-times text-lg hover:cursor-pointer"></i>
+      </button>
+    </div>
 
-    <div class="w-full flex items-center justify-between">
-      <p class="text-sm md:text-lg text-secondary">
-        How do you rate this product?
-      </p>
+    <div class="w-full flex items-center gap-8">
+      <p class="text-sm md:text-lg text-secondary">Your rating</p>
       <StarReview v-model="rating" />
     </div>
 

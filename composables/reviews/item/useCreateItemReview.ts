@@ -1,10 +1,14 @@
 import type ItemReview from "~/types/ItemReview";
 
-export function useCreateReview() {
+export function useCreateItemReview() {
   const loading = ref<boolean>(false);
   const error = ref<Error | null>(null);
 
-  const createReview = async (data: ItemReview) => {
+  const createItemReview = async (
+    item_id: number,
+    review: string,
+    rating: number
+  ) => {
     loading.value = true;
     const { error } = await fetchData<ItemReview>("/api/reviews/item/create", {
       method: "POST",
@@ -12,10 +16,9 @@ export function useCreateReview() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        item_id: data.item_id,
-        name: data.name,
-        review: data.review,
-        rating: data.rating,
+        item_id: item_id,
+        review: review,
+        rating: rating,
       }),
     });
 
@@ -30,6 +33,6 @@ export function useCreateReview() {
   return {
     loading,
     error,
-    createReview,
+    createItemReview,
   };
 }
