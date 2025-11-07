@@ -51,7 +51,7 @@ function addToCart() {
             }}
           </p>
           <p class="text-primary sm:text-lg truncate">
-            {{ itemData.name }} / {{ itemData.gender }}
+            {{ itemData.name }}
           </p>
         </div>
         <div
@@ -60,7 +60,11 @@ function addToCart() {
           <Icon
             v-for="i in 5"
             :key="i"
-            :icon="i <= (rating ?? 0) ? 'tabler:star-filled' : 'tabler:star'"
+            :icon="
+              i <= (rating?.avg_rating ?? 0)
+                ? 'tabler:star-filled'
+                : 'tabler:star'
+            "
             class="text-[#445388]"
           />
         </div>
@@ -75,9 +79,9 @@ function addToCart() {
           </p>
           <span
             class="flex sm:hidden items-center gap-1"
-            v-if="rating && rating > 0"
+            v-if="rating && rating.avg_rating > 0"
           >
-            {{ rating.toFixed(1) }}
+            {{ rating.avg_rating.toFixed(1) }}
             <Icon icon="tabler:star-filled" class="text-[#445388]" />
           </span>
         </div>

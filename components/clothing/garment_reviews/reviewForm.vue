@@ -17,8 +17,11 @@ const emit = defineEmits<{
 
 const validationSchema = toTypedSchema(
   z.object({
-    review: z.string().min(1, "Please write a review."),
-    rating: z.number().min(1, "Please leave a rating"),
+    review: z
+      .string()
+      .min(1, "Please, write a review.")
+      .max(50, "Your review is too long"),
+    rating: z.number().min(1, "Please, leave a rating"),
   })
 );
 
@@ -30,8 +33,12 @@ const { handleSubmit, meta } = useForm({
   },
 });
 
-const { value: review } = useField<string>("review");
-const { value: rating } = useField<number>("rating");
+const { value: review, errorMessage: reviewError } = useField<string>("review");
+const { value: rating, errorMessage: ratingError } = useField<number>("rating");
+
+const error = computed(() => {
+  return reviewError.value || ratingError.value || "";
+});
 
 const handleReviewSubmit = async () => {
   await createItemReview(item_id, review.value, rating.value);
@@ -47,15 +54,25 @@ const onSubmit = handleSubmit(handleReviewSubmit);
 <template>
   <form
     @submit="onSubmit"
-    class="w-[18rem] md:w-[36rem] min-h-[18rem] flex flex-col gap-4 p-4 rounded-lg bg-[#eee]"
+    class="w-[18rem] md:w-[36rem] min-h-[18rem] flex flex-col gap-4 p-4 rounded-lg bg-white border-2 border-[#ccc]"
   >
     <div class="flex items-center justify-between">
       <h2 class="text-xl md:text-2xl font-semibold">
         Reviewing {{ item_name }}
       </h2>
-      <button @click="emit('close')">
-        <i class="pi pi-times text-lg hover:cursor-pointer"></i>
+      <button
+        @click="emit('close')"
+        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+      >
+        <i class="pi pi-times"></i>
       </button>
+    </div>
+
+    <div
+      v-if="error"
+      class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
+    >
+      <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
     </div>
 
     <div class="w-full flex items-center gap-8">
@@ -63,26 +80,25 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       <StarReview v-model="rating" />
     </div>
 
-    <textarea
-      v-model="review"
-      placeholder="Describe your experience with this product"
-      class="w-full h-[6rem] md:h-[10rem] text-sm md:text-lg outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
-    ></textarea>
+    <div class="relative w-full h-[6rem] md:h-[10rem]">
+      <textarea
+        v-model="review"
+        placeholder="Describe your experience with this product"
+        class="w-full h-full text-sm md:text-lg outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
+      ></textarea>
+      <p class="absolute bottom-2 right-4 text-sm text-secondary">
+        {{ review.length }}/500
+      </p>
+    </div>
 
     <button
       type="submit"
-      v-if="!loading && meta.valid"
+      v-if="!loading"
       class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
     >
       Confirm
     </button>
-    <button
-      type="submit"
-      v-if="!loading && !meta.valid"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-[#8088a3] text-light rounded-md mt-auto self-end"
-    >
-      Confirm
-    </button>
+
     <button
       v-if="loading && meta.valid"
       class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end"

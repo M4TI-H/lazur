@@ -80,10 +80,7 @@ onMounted(() => {
   <section
     class="relative w-full h-[42rem] md:h-[56rem] flex flex-col bg-[#F8F9FA]"
   >
-    <img
-      class="w-full h-full object-cover z-10"
-      src="https://images.unsplash.com/photo-1696392322523-37379e6808ca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    />
+    <img class="w-full h-full object-cover z-10" src="/trendingBg.jpeg" />
     <div
       class="absolute bg-[#1F1D20]/70 w-full h-full z-20 gap-8 flex flex-col items-center pt-16"
     >

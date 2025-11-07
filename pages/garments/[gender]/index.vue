@@ -11,10 +11,7 @@ const { scrollY } = useScroll();
     class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto gap-4"
   >
     <section class="w-full h-[40vh] relative flex flex-col items-center">
-      <img
-        class="w-full h-full object-cover z-10"
-        src="https://images.unsplash.com/photo-1664095885291-80e42e5692ae?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      />
+      <img class="w-full h-full object-cover z-10" src="/garmentsBg.jpeg" />
       <div
         class="absolute bg-[#1F1D20]/70 w-full h-full z-20 flex items-center justify-center"
       >

@@ -99,7 +99,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
     <div
       class="relative w-full flex flex-col items-center justify-between px-3 sm:px-12 gap-2 sm:gap-2"
     >
-      <h2 class="text-2xl md:text-3xl font-semibold">Trending</h2>
+      <h2 class="text-2xl md:text-3xl font-semibold">Reviews</h2>
       <p class="text-sm sm:text-md md:text-lg sm:text-center">
         See what other customers think of Lazur
       </p>

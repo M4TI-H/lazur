@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-
 const search = ref<string>("");
 
 const searchItem = () => {
@@ -12,10 +10,7 @@ const searchItem = () => {
 
 <template>
   <section class="relative w-full h-screen flex flex-col items-center">
-    <img
-      class="w-full h-full object-cover z-10"
-      src="https://images.unsplash.com/photo-1610275504335-f2b494fbe239?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    />
+    <img class="w-full h-full object-cover z-10" src="/welcomeBg.jpeg" />
     <div
       class="absolute bg-[#1F1D20]/70 w-full h-full z-20 flex items-center justify-center"
     >

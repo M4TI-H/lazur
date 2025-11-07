@@ -8,10 +8,7 @@ const { scrollY } = useScroll();
     class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto overflow-x-hidden"
   >
     <section class="relative w-full h-[32rem] flex flex-col items-center">
-      <img
-        class="w-full h-full object-cover z-10"
-        src="https://images.unsplash.com/photo-1736248434061-2f5edd04a423?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880"
-      />
+      <img class="w-full h-full object-cover z-10" src="/gdansk.jpeg" />
       <div
         class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
       >

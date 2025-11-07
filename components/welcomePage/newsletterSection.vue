@@ -2,10 +2,7 @@
 
 <template>
   <section class="w-full h-[36rem] flex flex-col items-center justify-center">
-    <img
-      class="w-full h-full object-cover z-10"
-      src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
-    />
+    <img class="w-full h-full object-cover z-10" src="/newsletterBg.jpeg" />
     <div
       class="absolute bg-[#1F1D20]/70 w-full h-[36rem] z-20 gap-16 flex flex-col items-center pt-32 px-2"
     >

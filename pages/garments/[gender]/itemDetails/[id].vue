@@ -67,7 +67,9 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
                   v-for="i in 5"
                   :key="i"
                   :icon="
-                    i <= (rating ?? 0) ? 'tabler:star-filled' : 'tabler:star'
+                    i <= (rating?.avg_rating ?? 0)
+                      ? 'tabler:star-filled'
+                      : 'tabler:star'
                   "
                   class="text-[#445388]"
                 />
@@ -102,8 +104,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
             class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2"
           >
             Write a review
-            <Icon v-if="!displayForm" icon="tabler:chevron-right" />
-            <Icon v-if="displayForm" icon="tabler:chevron-down" />
+            <Icon icon="tabler:chevron-right" />
           </button>
         </div>
       </div>
@@ -131,9 +132,9 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
       v-if="displayReviews"
       class="fixed inset-0 w-screen min-h-screen bg-[#1f1d20]/50 flex items-center justify-center z-50"
     >
-      <div class="absolute inset-0" @click="displayForm = false"></div>
       <div class="w-full relative z-10 flex justify-center">
-        <ItemReviews @close="displayReviews = false" />
+        <div class="absolute inset-0" @click="displayReviews = false"></div>
+        <ItemReviews @close="displayReviews = false" :item_id="itemid" />
       </div>
     </div>
   </main>

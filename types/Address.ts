@@ -4,7 +4,7 @@ export default interface Address {
   city: string;
   street: string;
   building_num: string;
-  flat_num: string;
+  flat_num: string | null;
   postal_code: string;
   is_displayed: boolean;
 }

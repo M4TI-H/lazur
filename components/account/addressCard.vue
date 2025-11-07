@@ -31,7 +31,7 @@ const handleDelete = async () => {
     <p class="text-secondary text-xs">Address</p>
     <p class="font-semibold truncate max-w-full">
       {{ addressData.street }}, {{ addressData.building_num
-      }}{{ addressData.flat_num ? `/${addressData.flat_num}` : "essa" }}
+      }}{{ addressData.flat_num ? `/${addressData.flat_num}` : "" }}
     </p>
     <p class="text-secondary text-xs">City</p>
     <p class="font-semibold truncate max-w-full">

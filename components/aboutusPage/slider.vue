@@ -4,36 +4,31 @@ const sliderContent = [
     id: 0,
     header: "Redefining Urban Elegance",
     desc: "Lazur was founded with a single purpose — to create clothing that merges urban confidence with refined minimalism. We believe true style isn't about excess it's about balance, precision, and authenticity. Each piece we design reflects the rhythm of the city — bold yet understated, modern yet timeless.",
-    image:
-      "https://images.unsplash.com/photo-1760564704843-07b22892b0bf?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880",
+    image: "/slider/1.jpeg",
   },
   {
     id: 1,
     header: "Craftsmanship Meets Modern Design",
     desc: "Every Lazur garment begins with meticulous attention to detail. From carefully selected fabrics to clean silhouettes, we focus on quality that speaks for itself. Our designers collaborate with experienced artisans to ensure every seam, button, and texture contributes to a seamless whole. We don't just make clothes — we build experiences through design.",
-    image:
-      "https://images.unsplash.com/photo-1580981433573-c5804ced20ad?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880",
+    image: "/slider/2.jpeg",
   },
   {
     id: 2,
     header: "Sustainability in Simplicity",
     desc: "We are committed to responsible production and thoughtful consumption. By creating versatile essentials built to last, we minimize waste and encourage mindful choices. Fewer pieces, better made — that's the Lazur way. Our minimalist philosophy extends beyond aesthetics — it's a statement about living consciously in a fast-paced world.",
-    image:
-      "https://images.unsplash.com/photo-1617117501418-93383b0fcb29?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=831",
+    image: "/slider/3.jpeg",
   },
   {
     id: 3,
     header: "A Vision for Every Individual",
     desc: "At Lazur, we design for people who move with purpose. Our collections are intentionally neutral, allowing every individual to define their own expression through simplicity. Whether you're walking through the city, working, or unwinding — our pieces adapt effortlessly to your life and movement.It's not fashion that defines you; it's how you wear it.",
-    image:
-      "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880",
+    image: "/slider/4.jpeg",
   },
   {
     id: 4,
     header: "Lazur Today",
     desc: "What began as a small studio project has evolved into a growing community of modern creators and thinkers. We continue to challenge the boundaries of urban fashion by exploring new materials, innovative cuts, and timeless proportions. With every collection, we aim to elevate essentials into statements of quiet confidence.",
-    image:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+    image: "/slider/5.jpeg",
   },
 ];
 

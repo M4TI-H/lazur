@@ -54,7 +54,11 @@ function addToCart() {
           <Icon
             v-for="i in 5"
             :key="i"
-            :icon="i <= (rating ?? 0) ? 'tabler:star-filled' : 'tabler:star'"
+            :icon="
+              i <= (rating?.avg_rating ?? 0)
+                ? 'tabler:star-filled'
+                : 'tabler:star'
+            "
             class="text-[#445388]"
           />
         </div>

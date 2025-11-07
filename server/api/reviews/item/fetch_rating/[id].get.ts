@@ -16,5 +16,5 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, statusMessage: error.message });
   }
 
-  return data ?? 0;
+  return (data as { avg_rating: number & { review_count: number } }) ?? 0;
 });
