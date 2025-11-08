@@ -82,11 +82,20 @@ const handleSwipe = () => {
         :src="sliderContent[idCounter].image"
         class="w-full h-full object-cover md:rounded-lg"
       />
-      <p
-        class="absolute top-2 right-2 text-light font-semibold text-sm block md:hidden bg-[#1F1D20]/60 px-2 py-1 rounded-xl"
+      <button
+        v-if="idCounter < sliderContent.length - 1"
+        @click="nextID"
+        class="z-20 absolute top-2 right-2 text-light font-semibold text-sm block md:hidden bg-[#1F1D20]/60 px-2 py-1 rounded-xl hover:cursor-pointer"
       >
-        Swipe to see next
-      </p>
+        Next
+      </button>
+      <button
+        v-if="idCounter > 0"
+        @click="prevID"
+        class="z-20 absolute top-2 left-2 text-light font-semibold text-sm block md:hidden bg-[#1F1D20]/60 px-2 py-1 rounded-xl hover:cursor-pointer"
+      >
+        Prev
+      </button>
     </div>
 
     <div
@@ -141,12 +150,14 @@ const handleSwipe = () => {
         <h2 class="text-light font-semibold">
           {{ sliderContent[idCounter].header }}
         </h2>
-        <button v-if="!showDesc">
-          <i class="pi pi-chevron-right text-light text-xs"></i>
-        </button>
-        <button v-if="showDesc" class="size-[1.5rem] rounded-full">
-          <i class="pi pi-chevron-down text-light text-xs"></i>
-        </button>
+        <i
+          v-if="!showDesc"
+          class="pi pi-chevron-right text-light text-xs hover:cursor-pointer"
+        ></i>
+        <i
+          v-if="showDesc"
+          class="pi pi-chevron-down text-light text-xs hover:cursor-pointer"
+        ></i>
       </div>
       <Transition
         v-if="showDesc"

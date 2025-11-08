@@ -35,7 +35,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
     <section class="relative w-full h-[24rem] flex flex-col items-center">
       <img class="w-full h-full object-cover z-10" src="/ordersBg.jpg" />
       <div
-        class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+        class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center"
       >
         <h1
           class="text-2xl sm:text-3xl lg:text-4xl text-center text-light font-bold whitespace-nowrap"
@@ -45,7 +45,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
       </div>
     </section>
     <section
-      class="w-full md:w-[48rem] lg:w-[64rem] flex flex-col px-4 py-8 gap-8 md:gap-4"
+      class="w-full md:w-[48rem] lg:w-[64rem] flex flex-col px-8 py-6 gap-8 md:gap-4"
     >
       <OrderInfo
         v-for="(order, id) in orders"

@@ -15,7 +15,9 @@ export const useCartStore = defineStore("cart", {
         (p) => p.id === product.id && p.size === size
       );
       if (isInCart) {
-        isInCart.quantity++;
+        if (isInCart.quantity < 10) {
+          isInCart.quantity++;
+        }
       } else {
         this.cart.items.push({ ...product, quantity: 1, size });
       }
@@ -35,7 +37,7 @@ export const useCartStore = defineStore("cart", {
         (i) => i.id === id && i.size === size
       );
 
-      if (product && product.quantity < 99) {
+      if (product && product.quantity < 10) {
         product.quantity++;
         this.updateTotal();
         this.saveToStorage();

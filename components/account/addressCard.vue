@@ -20,7 +20,7 @@ const handleDelete = async () => {
 
 <template>
   <div
-    class="relative w-full sm:w-[14rem] h-[9rem] flex flex-col border-2 border-[#ccc] rounded-lg p-2"
+    class="relative w-full sm:w-[16rem] h-[9rem] flex flex-col border-2 border-[#ccc] rounded-lg p-2 mx-auto lg:mx-0"
   >
     <button
       @click="handleDelete"

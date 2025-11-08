@@ -10,61 +10,54 @@ cartStore.loadFromStorage();
 </script>
 
 <template>
-  <section class="w-[full] flex flex-col" v-if="itemData">
-    <div
-      class="w-full h-[16rem] md:h-[12rem] flex flex-col md:flex-row items-center"
+  <div
+    class="relative w-full h-[10rem] md:h-[15rem] flex items-center p-2 md:p-4 bg-white border-1 border-[#ccc] rounded-lg"
+  >
+    <button
+      @click="cartStore.removeFromCart(itemData.id, itemData.size)"
+      class="absolute top-4 right-2 md:right-4 p-1 md:p-2 flex items-center justify-center rounded-full hover:bg-[#ccc]/50 active:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
     >
-      <div class="w-1/10 h-full hidden md:flex items-center justify-center">
+      <i class="pi pi-trash text-secondary text-sm md:text-lg"></i>
+    </button>
+    <NuxtLink
+      :to="`/garments/${itemData.gender}/itemDetails/${itemData.id}`"
+      draggable="false"
+    >
+      <img
+        draggable="false"
+        src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
+        class="h-[9rem] md:h-[13rem] w-[8rem] md:w-[12rem] bg-[#ddd] rounded-lg"
+      />
+    </NuxtLink>
+    <div
+      class="h-full flex flex-col justify-evenly md:justify-start md:gap-2 ml-2 md:ml-4"
+    >
+      <p class="text-sm md:text-lg text-secondary font-semibold">
+        Size | {{ itemData.size }}
+      </p>
+      <p class="md:text-xl text-primary font-semibold truncate">
+        {{ itemData.name }}
+      </p>
+      <p class="md:text-xl font-semibold">${{ itemData.price.toFixed(2) }}</p>
+      <div
+        class="w-[5rem] h-[2rem] flex items-center border-1 border-[#ccc] rounded-md"
+      >
         <button
-          @click="cartStore.removeFromCart(itemData.id, itemData.size)"
-          class="size-[2rem] flex items-center justify-center rounded-md hover:bg-[#ddd] hover:cursor-pointer"
+          @click="cartStore.decrementQuantity(itemData.id, itemData.size)"
+          class="w-[1.5rem] h-full hover:bg-[#ccc]/50 active:bg-[#ccc]/50 text-primary rounded-l-md hover:cursor-pointer"
         >
-          <i class="pi pi-times text-lg text-primary"></i>
+          <i class="pi pi-minus text-xs text-secondary"></i>
+        </button>
+        <p class="w-[2rem] text-primary text-sm font-semibold text-center">
+          {{ itemData.quantity }}
+        </p>
+        <button
+          @click="cartStore.incrementQuantity(itemData.id, itemData.size)"
+          class="w-[1.5rem] h-full hover:bg-[#ddd] active:bg-[#ddd] text-primary rounded-r-md hover:cursor-pointer"
+        >
+          <i class="pi pi-plus text-xs text-secondary"></i>
         </button>
       </div>
-      <div class="w-full md:w-2/5 h-full flex md:items-center gap-4">
-        <NuxtLink
-          :to="`/garments/itemDetails/${itemData.id}`"
-          draggable="false"
-        >
-          <img
-            draggable="false"
-            src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-            class="w-[8rem] md:w-[12rem] h-full bg-[#ddd]"
-          />
-        </NuxtLink>
-
-        <p class="text-xl text-primary font-semibold">{{ itemData.name }}</p>
-      </div>
-      <div class="w-full md:w-1/10 h-full flex items-center justify-center">
-        <p class="text-xl text-primary font-semibold">{{ itemData.size }}</p>
-      </div>
-      <div class="w-full md:w-1/5 h-full flex items-center justify-center">
-        <div class="w-[9rem] h-[2.5rem] flex items-center border-1 rounded-md">
-          <button
-            :disabled="itemData.quantity === 1"
-            @click="cartStore.decrementQuantity(itemData.id, itemData.size)"
-            class="w-[3rem] h-full hover:bg-[#ddd] active:bg-[#ddd] text-primary rounded-l-md hover:cursor-pointer"
-          >
-            <i class="pi pi-minus"></i>
-          </button>
-          <p class="w-[3rem] text-primary text-lg font-semibold text-center">
-            {{ itemData.quantity }}
-          </p>
-          <button
-            :disabled="itemData.quantity === 99"
-            @click="cartStore.incrementQuantity(itemData.id, itemData.size)"
-            class="w-[3rem] h-full hover:bg-[#ddd] active:bg-[#ddd] text-primary rounded-r-md hover:cursor-pointer"
-          >
-            <i class="pi pi-plus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="w-full md:w-1/5 h-full flex items-center justify-center">
-        <p class="text-xl text-primary font-semibold">
-          ${{ itemData.price.toFixed(2) }}
-        </p>
-      </div>
     </div>
-  </section>
+  </div>
 </template>

@@ -7,15 +7,13 @@ cartStore.loadFromStorage();
 
 <template>
   <NavMenu :scrollY="scrollY" />
-  <main
-    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
-  >
+  <main class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA]">
     <section
-      class="w-full h-[28vh] lg:h-[40vh] relative flex flex-col items-center"
+      class="w-full h-[10rem] md:h-[24rem] relative flex flex-col items-center"
     >
       <img
         class="w-full h-full object-cover z-10"
-        src="https://static.vecteezy.com/system/resources/thumbnails/039/653/479/small_2x/ai-generated-stylish-blue-shopping-bags-against-a-matching-blue-background-conveying-a-modern-aesthetic-ai-generated-photo.jpg"
+        src="https://images.unsplash.com/photo-1646586993466-27dedaf81659?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"
       />
       <div
         class="absolute bg-[#1F1D20]/70 w-full h-full z-20 flex items-center justify-center"
@@ -27,21 +25,16 @@ cartStore.loadFromStorage();
         </h1>
       </div>
     </section>
-    <div
-      class="w-full flex flex-col lg:flex-row items-center lg:items-start px-2"
+    <section
+      class="w-full flex flex-col md:flex-row px-2 md:px-8 pb-[12rem] py-4 overflow-y-auto md:py-4"
     >
-      <div class="lg:w-[70vw] flex flex-col p-2 gap-2">
-        <div class="w-full hidden lg:flex py-2 bg-[#ddd] rounded-md">
-          <p class="w-1/10 text-secondary font-semibold text-center">Remove</p>
-          <p class="w-2/5 text-secondary font-semibold px-2 text-center">
-            Product
-          </p>
-          <p class="w-1/10 text-secondary font-semibold text-center">Size</p>
-          <p class="w-1/5 text-secondary font-semibold text-center">Quantity</p>
-          <p class="w-1/5 text-secondary font-semibold text-center">
-            Unit price
-          </p>
-        </div>
+      <div class="w-full md:w-[70%] flex flex-col gap-4 md:pr-8">
+        <p
+          v-if="cartStore.cart.items.length === 0"
+          class="text-secondary text-sm font-semibold text-center"
+        >
+          The cart is empty.
+        </p>
         <CartItem
           v-for="(item, id) in cartStore.cart.items"
           :key="id"
@@ -49,6 +42,7 @@ cartStore.loadFromStorage();
         />
       </div>
       <CartSummary />
-    </div>
+    </section>
   </main>
+  <Footer class="hidden md:block" />
 </template>
