@@ -5,11 +5,12 @@ export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
   const user = await serverSupabaseUser(event);
 
-  if (!user)
+  if (!user) {
     throw createError({
       statusCode: 401,
       statusMessage: "User not authenticated",
     });
+  }
 
   const { data, error } = await supabase.rpc("orders_with_item_count", {
     userid: user.id,

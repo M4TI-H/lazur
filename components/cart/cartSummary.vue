@@ -4,7 +4,7 @@ import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 
-const { deliveries, deliveryLoading, deliveryRrefresh } = useFetchDelivery();
+const { deliveries, deliveryLoading, deliveryRefresh } = useFetchDelivery();
 
 const cheapestDeliveryCost = computed(() => {
   if (!deliveries.value?.length) return 0;
@@ -12,14 +12,18 @@ const cheapestDeliveryCost = computed(() => {
 });
 
 onMounted(async () => {
-  await deliveryRrefresh();
+  await deliveryRefresh();
 });
 </script>
 
 <template>
   <div
-    class="w-full md:w-[30%] h-[13rem] md:h-[18rem] fixed bottom-0 md:relative flex flex-col px-4 py-2 md:py-4 gap-2 md:gap-4 bg-white border-t-1 md:border-1 border-[#ccc] md:rounded-lg"
+    class="w-full md:w-[30%] h-[16rem] md:h-[22rem] fixed bottom-0 md:relative flex flex-col px-4 py-2 md:py-4 gap-2 md:gap-4 bg-white border-t-1 md:border-1 border-[#ccc] md:rounded-lg"
   >
+    <div class="w-full hidden md:flex justify-center items-center gap-2">
+      <i class="pi pi-shopping-cart text-2xl xl:text-3xl"></i>
+      <h1 class="text-xl xl:text-2xl font-semibold">Your cart</h1>
+    </div>
     <div class="w-full flex justify-between items-center">
       <h2 class="text-lg md:text-xl font-semibold">Summary</h2>
       <p class="md:text-lg text-secondary">{{ cartStore.itemCount }} Items</p>
@@ -46,10 +50,11 @@ onMounted(async () => {
         }}
       </p>
     </div>
-    <button
-      class="w-[80%] max-w-[24rem] h-[2rem] md:h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:bg-[#212842] hover:cursor-pointer transition-color ease-in-out duration-200"
+    <NuxtLink
+      to="cart/order"
+      class="w-[80%] max-w-[24rem] h-[2rem] md:h-[2.5rem] flex items-center justify-center bg-[#445388] text-light rounded-md self-center mt-auto hover:bg-[#212842] hover:cursor-pointer transition-color ease-in-out duration-200"
     >
       Continue
-    </button>
+    </NuxtLink>
   </div>
 </template>

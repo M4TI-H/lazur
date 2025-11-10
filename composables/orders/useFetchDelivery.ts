@@ -5,10 +5,10 @@ export function useFetchDelivery() {
     data: deliveries,
     pending: deliveryLoading,
     error: deliveryError,
-    refresh: deliveryRrefresh,
+    refresh: deliveryRefresh,
   } = useAsyncData<Delivery[]>("delivery", () =>
     $fetch(`/api/orders/fetch_delivery`)
   );
 
-  return { deliveries, deliveryLoading, deliveryError, deliveryRrefresh };
+  return { deliveries, deliveryLoading, deliveryError, deliveryRefresh };
 }

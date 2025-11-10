@@ -10,7 +10,7 @@ const countries = getNames();
 
 const emit = defineEmits<{
   (e: "close"): void;
-  (e: "refresh"): void;
+  (e: "refresh", newAddress: number): void;
 }>();
 
 const { createAddress, loading } = useCreateAddress();
@@ -73,10 +73,12 @@ const handleSubmitAddress = async () => {
     is_displayed: true,
   };
 
-  await createAddress(addressData);
+  const newAddress = await createAddress(addressData);
 
-  emit("close");
-  emit("refresh");
+  if (newAddress) {
+    emit("close");
+    emit("refresh", newAddress);
+  }
 };
 
 const onSubmit = handleSubmit(handleSubmitAddress);

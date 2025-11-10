@@ -1,16 +1,23 @@
-import { serverSupabaseClient } from "#supabase/server";
+import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
+  const user = await serverSupabaseUser(event);
+
+  if (!user) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: "User not authenticated",
+    });
+  }
 
   const body = await readBody<{
     name: string;
-    surname: string;
-    address: string;
     email: string;
     phone: string;
-    delivery: string;
     total: number;
+    address_id: number;
+    delivery_id: number;
     items: {
       product_id: number;
       quantity: number;
@@ -23,12 +30,12 @@ export default defineEventHandler(async (event) => {
     .from("orders")
     .insert({
       name: body.name,
-      surname: body.surname,
-      address: body.address,
+      address_id: body.address_id,
       email: body.email,
       phone: body.phone,
-      delivery: body.delivery,
+      delivery_id: body.delivery_id,
       total: body.total,
+      user_id: user.id,
     })
     .select("id")
     .single();

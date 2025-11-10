@@ -4,56 +4,103 @@ import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
 import { useCreateOrder } from "~/composables/orders/useCreateOrder";
+import { useFetchPersonalData } from "~/composables/users/personalData/useFetchPersonalData";
+import { useFetchUserAddresses } from "~/composables/users/addresses/useFetchAddresses";
 
-const { scrollY } = useScroll();
+const { addresses, addressesLoading, addressesRefresh } =
+  useFetchUserAddresses();
+const { personalData, personalDataLoading, personalDataRefresh } =
+  useFetchPersonalData();
+const { deliveries, deliveryLoading, deliveryRefresh } = useFetchDelivery();
 
-const { deliveries, delivery_loading, delivery_refresh } = useFetchDelivery();
 const { createOrder, loading } = useCreateOrder();
+
+const showError = ref<boolean>(false);
+const displayAddressForm = ref<boolean>(false);
 
 const orderStore = useOrderStore();
 orderStore.loadFromStorage();
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
+const userStore = useUserStore();
+userStore.loadFromStorage();
 
 const validationSchema = toTypedSchema(
   z.object({
-    address: z.string().min(1, "Address is required."),
-    delivery: z.number(),
+    name: z.string().min(1, "Your name is required."),
+    phone: z.string().min(1, "Phone number is required."),
+    email: z.email("Wrong email format.").min(1, "Email is required."),
+    address: z.number().min(1, "Address is required."),
+    delivery: z.number().min(1, "Delivery type is required."),
   })
 );
 
-const { handleSubmit, meta } = useForm({
+const { handleSubmit, meta, setValues } = useForm({
   validationSchema,
   initialValues: {
-    address: "",
-    delivery: 1,
+    name: "",
+    phone: "",
+    email: "",
+    address: 0,
+    delivery: 0,
   },
 });
-
+const { value: name, errorMessage: nameError } = useField<string>("name");
+const { value: phone, errorMessage: phoneError } = useField<string>("phone");
+const { value: email, errorMessage: emailError } = useField<string>("email");
 const { value: delivery, errorMessage: deliveryError } =
   useField<number>("delivery");
-
 const { value: address, errorMessage: addressError } =
-  useField<string>("address");
+  useField<number>("address");
+
+watch(personalData, (data) => {
+  if (data) {
+    setValues({
+      name: data.name ?? "",
+      phone: data.phone ?? "",
+      email: data.email ?? "",
+      address: 0,
+      delivery: 0,
+    });
+  }
+});
+
+const error = computed(() => {
+  return (
+    nameError.value ||
+    phoneError.value ||
+    emailError.value ||
+    deliveryError.value ||
+    addressError.value ||
+    ""
+  );
+});
 
 const handleSubmitOrder = async () => {
-  const totalOrderData = {
-    ...orderStore.orderData,
-    total: Number(totalCost.value),
+  const orderData = {
     id: 0,
-    address: address.value,
-    delivery: delivery.value,
     created_at: "",
+    email: email.value,
+    phone: phone.value,
+    total: cartStore.cart.total,
+    user_id: 0,
+    address_id: address.value,
+    delivery_id: delivery.value,
+    name: name.value,
   };
 
-  const result = await createOrder(totalOrderData, cartStore.cart.items);
-  if (result && result != "error") {
-    orderStore.setOrderData({ id: result });
-    navigateTo("/cart/confirmation");
-  }
+  const result = await createOrder(orderData, cartStore.cart.items);
 };
 
-const onSubmit = handleSubmit(handleSubmitOrder);
+const onSubmit = handleSubmit(
+  async () => {
+    showError.value = true;
+    await handleSubmitOrder();
+  },
+  () => {
+    showError.value = true;
+  }
+);
 
 const deliveryCost = computed(() => {
   if (!deliveries.value || deliveries.value.length === 0) {
@@ -65,19 +112,29 @@ const deliveryCost = computed(() => {
   return selectedDelivery?.cost ?? 0;
 });
 
-const totalCost = computed(() => {
-  return deliveryCost.value + Number(cartStore.totalPrice);
-});
+const newAddressAdded = async (id: number) => {
+  await addressesRefresh();
+  address.value = id;
+};
 
-onMounted(() => {
-  delivery_refresh();
+watch(
+  () => userStore.isLoggedIn,
+  (loggedIn) => {
+    if (!loggedIn) {
+      navigateTo("/account/login");
+    }
+  }
+);
+
+onMounted(async () => {
+  await deliveryRefresh();
+  await addressesRefresh();
 });
 </script>
 
 <template>
-  <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen flex flex-col items-center justify-center bg-[#F8F9FA] overflow-hidden"
+    class="w-full min-h-screen flex flex-col items-center justify-center bg-[#F8F9FA]"
   >
     <section class="absolute z-10 w-full h-full">
       <img
@@ -89,31 +146,36 @@ onMounted(() => {
 
     <form
       @submit="onSubmit"
-      class="lg:w-[30vw] max-w-[90vw] max-h-[40rem] h-min flex flex-col bg-[#ddd] px-4 lg:px-8 py-4 gap-4 rounded-md z-10"
+      class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[36rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-[#ccc] sm:rounded-lg overflow-y-auto z-10"
     >
-      <h2 class="text-2xl font-semibold">Shipping</h2>
-
-      <div class="w-full">
-        <p class="text-sm text-secondary">Name & Surname</p>
-        <p class="text-lg">
-          {{ orderStore.orderData.name }} {{ orderStore.orderData.surname }}
-        </p>
+      <div class="w-full flex items-center justify-between">
+        <h2 class="text-xl font-semibold">Shipping details</h2>
+        <NuxtLink
+          to="/cart"
+          class="text-sm text-secondary hover:cursor-pointer hover:underline"
+        >
+          Cancel
+        </NuxtLink>
       </div>
-      <div class="w-full">
-        <p class="text-sm text-secondary">Email</p>
-        <p class="text-lg">{{ orderStore.orderData.email }}</p>
+      <div
+        v-if="showError && error"
+        class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
+      >
+        <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
       </div>
-      <div class="w-full">
-        <p class="text-sm text-secondary">Phone number</p>
-        <p class="text-lg">{{ orderStore.orderData.phone }}</p>
-      </div>
+      <EditableOrderField v-model="name" label="Name" />
+      <EditableOrderField v-model="phone" label="Phone number" />
+      <EditableOrderField v-model="email" label="Email address" />
 
-      <div class="w-full self-center h-[2px] bg-[#444] my-2"></div>
+      <div class="w-full border-t-1 border-[#ccc]"></div>
 
-      <div class="flex flex-col gap-1">
+      <div
+        class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+      >
+        <p class="text-sm text-secondary">Delivery type</p>
         <select
           v-model="delivery"
-          class="w-full h-[2.5rem] bg-white text-lg px-2 rounded-md"
+          class="w-full sm:w-[12rem] xl:w-[14rem] h-[2rem] bg-[#eee] px-2 rounded-md"
         >
           <option v-for="type in deliveries" :key="type.id" :value="type.id">
             {{ type.name }} | {{ type.cost == 0 ? "Free" : `$${type.cost}` }}
@@ -121,52 +183,43 @@ onMounted(() => {
         </select>
       </div>
 
-      <div class="w-full">
-        <input
-          type="text"
-          v-model="address"
-          placeholder="Shipping address"
-          class="w-full h-[2.5rem] bg-white text-lg px-2 rounded-md"
-        />
-        <p v-if="addressError" class="h-[1rem] text-sm !text-red-500 pl-1 mt-1">
-          {{ addressError }}
-        </p>
-      </div>
+      <AddressSelector
+        v-model="address"
+        :addresses="addresses ?? []"
+        @addNew="displayAddressForm = true"
+      />
 
-      <div class="w-full self-center h-[2px] bg-[#444] mt-2"></div>
+      <div class="w-full border-t-1 border-[#ccc]"></div>
+
       <span class="w-full flex justify-between items-center px-2">
-        <p>Subtotal</p>
-        <p>${{ cartStore.totalPrice }}</p>
-      </span>
-      <span class="w-full flex justify-between items-center px-2">
-        <p>Shipping</p>
-        <p>
-          {{ deliveryCost === 0 ? "Free" : `$${deliveryCost}` }}
+        <p class="text-secondary md:text-lg font-semibold">Total</p>
+        <p class="font-semibold md:text-lg">
+          ${{ (deliveryCost + Number(cartStore.totalPrice)).toFixed(2) }}
         </p>
-      </span>
-      <span class="w-full flex justify-between items-center px-2">
-        <p class="text-2xl font-semibold">Total</p>
-        <p class="text-2xl font-semibold">${{ totalCost.toFixed(2) }}</p>
       </span>
 
       <button
-        v-if="!loading && meta.valid"
-        class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#444] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#222] transition-color ease-in-out duration-200"
+        v-if="!loading"
+        class="w-[80%] max-w-[16rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
       >
-        Place order
+        Confirm
       </button>
-      <button
-        v-if="!loading && !meta.valid"
-        class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#666] text-light rounded-md self-center mt-auto"
-      >
-        Place order
-      </button>
+
       <button
         v-if="loading && meta.valid"
-        class="w-[80%] max-w-[24rem] h-[2.5rem] bg-[#444] text-light rounded-md self-center mt-auto"
+        class="w-[80%] max-w-[16rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
       >
         <i class="pi pi-spin pi-spinner"></i>
       </button>
     </form>
+    <div
+      v-if="displayAddressForm"
+      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+    >
+      <AddressForm
+        @close="displayAddressForm = false"
+        @refresh="newAddressAdded"
+      />
+    </div>
   </main>
 </template>
