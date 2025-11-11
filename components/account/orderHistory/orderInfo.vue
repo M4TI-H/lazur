@@ -7,7 +7,7 @@ const { order } = defineProps<{
 }>();
 
 const { address, addressLoading, addressRefresh } = useFetchOneAddress(
-  order.address
+  order.address_id
 );
 
 onMounted(async () => {

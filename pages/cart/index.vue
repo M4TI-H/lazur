@@ -25,24 +25,25 @@ cartStore.loadFromStorage();
         </h1>
       </div>
     </section>
-    <section
-      class="w-full flex flex-col md:flex-row px-2 md:px-8 pb-[12rem] py-4 overflow-y-auto md:py-4"
-    >
-      <div class="w-full md:w-[70%] flex flex-col gap-4 md:pr-8">
-        <p
-          v-if="cartStore.cart.items.length === 0"
-          class="text-secondary text-sm font-semibold text-center"
-        >
-          The cart is empty.
-        </p>
-        <CartItem
-          v-for="(item, id) in cartStore.cart.items"
-          :key="id"
-          :itemData="item"
-        />
-      </div>
-      <CartSummary />
-    </section>
+    <template v-if="cartStore.cart.items.length > 0">
+      <section
+        class="w-full flex flex-col md:flex-row px-2 md:px-8 pb-[12rem] py-4 overflow-y-auto md:py-4"
+      >
+        <div class="w-full md:w-[70%] flex flex-col gap-4 md:pr-8">
+          <CartItem
+            v-for="(item, id) in cartStore.cart.items"
+            :key="id"
+            :itemData="item"
+          />
+        </div>
+        <CartSummary />
+      </section>
+    </template>
+    <template v-else>
+      <p class="text-secondary text-lg font-semibold text-center mt-8">
+        The cart is empty.
+      </p>
+    </template>
   </main>
   <Footer class="hidden md:block" />
 </template>

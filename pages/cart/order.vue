@@ -18,8 +18,6 @@ const { createOrder, loading } = useCreateOrder();
 const showError = ref<boolean>(false);
 const displayAddressForm = ref<boolean>(false);
 
-const orderStore = useOrderStore();
-orderStore.loadFromStorage();
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
@@ -89,7 +87,11 @@ const handleSubmitOrder = async () => {
     name: name.value,
   };
 
-  const result = await createOrder(orderData, cartStore.cart.items);
+  const order_id = await createOrder(orderData, cartStore.cart.items);
+
+  if (order_id) {
+    navigateTo(`/cart/confirmation/${order_id}?address_id=${address.value}`);
+  }
 };
 
 const onSubmit = handleSubmit(
@@ -123,7 +125,18 @@ watch(
     if (!loggedIn) {
       navigateTo("/account/login");
     }
-  }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => cartStore.cart.items.length,
+  (length) => {
+    if (length < 1) {
+      navigateTo("/cart");
+    }
+  },
+  { immediate: true }
 );
 
 onMounted(async () => {
