@@ -29,7 +29,9 @@ cartStore.loadFromStorage();
       <section
         class="w-full flex flex-col md:flex-row px-2 md:px-8 pb-[12rem] py-4 overflow-y-auto md:py-4"
       >
-        <div class="w-full md:w-[70%] flex flex-col gap-4 md:pr-8">
+        <div
+          class="w-full md:w-[70%] flex flex-col gap-4 md:pr-8 overflow-x-hidden"
+        >
           <CartItem
             v-for="(item, id) in cartStore.cart.items"
             :key="id"

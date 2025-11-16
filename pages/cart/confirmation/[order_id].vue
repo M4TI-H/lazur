@@ -15,16 +15,6 @@ const { order, orderLoading, orderRefresh } = useFetchOrder(order_id);
 const { address, addressLoading, addressRefresh } =
   useFetchOneAddress(address_id);
 
-watch(
-  () => userStore.isLoggedIn,
-  (loggedIn) => {
-    if (!loggedIn) {
-      navigateTo("/account/login");
-    }
-  },
-  { immediate: true }
-);
-
 onMounted(async () => {
   cartStore.clearStorage();
   await orderRefresh();

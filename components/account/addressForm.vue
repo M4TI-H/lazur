@@ -5,6 +5,13 @@ import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useCreateAddress } from "~/composables/users/addresses/useCreateAddress";
+import type Address from "~/types/Address";
+
+const userStore = useUserStore();
+userStore.loadFromStorage();
+
+const addressStore = useAddressStore();
+addressStore.loadFromStorage();
 
 const countries = getNames();
 
@@ -73,11 +80,17 @@ const handleSubmitAddress = async () => {
     is_displayed: true,
   };
 
-  const newAddress = await createAddress(addressData);
-
-  if (newAddress) {
-    emit("close");
-    emit("refresh", newAddress);
+  if (userStore.isLoggedIn) {
+    const newAddress = await createAddress(addressData);
+    if (newAddress) {
+      emit("close");
+      emit("refresh", newAddress);
+    }
+  } else {
+    const guestAddress = addressStore.setAddress(addressData);
+    if (guestAddress) {
+      emit("close");
+    }
   }
 };
 

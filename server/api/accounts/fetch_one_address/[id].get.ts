@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     .from("addresses")
     .select("*")
     .eq("id", id)
-    .eq("user_id", user.id)
+    .eq("user_id", user.id || null)
     .single();
 
   if (error) {
