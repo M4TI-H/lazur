@@ -6,6 +6,7 @@ export const useCartStore = defineStore("cart", {
     cart: {
       items: [] as (Garment & { quantity: number; size: string })[],
       total: 0,
+      delivery_cost: 0,
     },
   }),
 
@@ -55,7 +56,11 @@ export const useCartStore = defineStore("cart", {
       }
     },
     updateTotal() {
-      this.cart.total = Number(this.totalPrice);
+      this.cart.total =
+        Number(this.totalPrice) + (this.cart.delivery_cost ?? 0);
+    },
+    updateDelivery(cost: number) {
+      this.cart.delivery_cost = cost;
     },
     saveToStorage() {
       localStorage.setItem("cart", JSON.stringify(this.cart));

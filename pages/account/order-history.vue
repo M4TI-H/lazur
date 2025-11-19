@@ -4,7 +4,6 @@ import { useFetchUserOrders } from "~/composables/orders/useFetchUserOrders";
 const { scrollY } = useScroll();
 
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const { orders, loading, refresh } = useFetchUserOrders();
 

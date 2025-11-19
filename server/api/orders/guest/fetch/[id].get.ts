@@ -1,17 +1,9 @@
-import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
+import { serverSupabaseClient } from "#supabase/server";
 import type Address from "~/types/Address";
 import type Order from "~/types/Order";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
-  const user = await serverSupabaseUser(event);
-
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "User not authenticated",
-    });
-  }
 
   const query = getQuery(event);
   const token = String(query.token);
@@ -25,7 +17,6 @@ export default defineEventHandler(async (event) => {
     .from("orders")
     .select(`*, delivery(name), address:addresses(*)`)
     .eq("id", id)
-    .eq("user_id", user.id)
     .eq("order_token", token)
     .single();
 

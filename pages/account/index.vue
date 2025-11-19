@@ -4,7 +4,6 @@ import { useFetchUserAddresses } from "~/composables/users/addresses/useFetchAdd
 import { useFetchPersonalData } from "~/composables/users/personalData/useFetchPersonalData";
 
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const { addresses, addressesLoading, addressesRefresh } =
   useFetchUserAddresses();

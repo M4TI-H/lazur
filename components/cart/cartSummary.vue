@@ -4,7 +4,6 @@ import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const { deliveries, deliveryLoading, deliveryRefresh } = useFetchDelivery();
 
@@ -48,7 +47,10 @@ onMounted(async () => {
       <p class="text-secondary lg:text-lg font-semibold">Total</p>
       <p class="font-semibold md:text-lg">
         ${{
-          Number(cartStore.totalPrice) + Number(cheapestDeliveryCost.toFixed(2))
+          (
+            Number(cartStore.totalPrice) +
+            Number(cheapestDeliveryCost.toFixed(2))
+          ).toFixed(2)
         }}
       </p>
     </div>

@@ -8,7 +8,6 @@ import { useCreateAddress } from "~/composables/users/addresses/useCreateAddress
 import type Address from "~/types/Address";
 
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const addressStore = useAddressStore();
 addressStore.loadFromStorage();

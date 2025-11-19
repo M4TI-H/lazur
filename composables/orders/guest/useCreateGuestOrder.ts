@@ -13,8 +13,8 @@ export function useCreateGuestOrder() {
     loading.value = true;
     const { data: response, error } = await fetchData<{
       order_id: number;
-      address_id: number;
-    }>("/api/orders/create_guest", {
+      order_token: number;
+    }>("/api/orders/guest/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export function useCreateGuestOrder() {
 
     if (error) {
       console.error(error);
-      return null;
+      return;
     }
 
     return response;

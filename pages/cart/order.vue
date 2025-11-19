@@ -21,7 +21,6 @@ const displayAddressForm = ref<boolean>(false);
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const validationSchema = toTypedSchema(
   z.object({
@@ -87,10 +86,17 @@ const handleSubmitOrder = async () => {
     name: name.value,
   };
 
-  const order_id = await createOrder(orderData, cartStore.cart.items);
+  const result = await createOrder(orderData, cartStore.cart.items);
 
-  if (order_id) {
-    navigateTo(`/cart/confirmation/${order_id}?address_id=${address.value}`);
+  if (!result) {
+    console.error("Order failed");
+    return;
+  }
+
+  if (result.order_id) {
+    navigateTo(
+      `/cart/confirmation/${result.order_id}?token=${result.order_token}`
+    );
   }
 };
 
@@ -104,14 +110,11 @@ const onSubmit = handleSubmit(
   }
 );
 
-const deliveryCost = computed(() => {
-  if (!deliveries.value || deliveries.value.length === 0) {
-    return 0;
-  }
-
-  const selectedDelivery =
-    deliveries.value!.find((d) => d.id === delivery.value) || null;
-  return selectedDelivery?.cost ?? 0;
+watch(delivery, (newValue) => {
+  const selectedDelivery = deliveries.value?.find((d) => d.id === newValue);
+  const cost = selectedDelivery?.cost ?? 0;
+  cartStore.updateDelivery(cost);
+  cartStore.updateTotal();
 });
 
 const newAddressAdded = async (id: number) => {
@@ -158,6 +161,7 @@ onMounted(async () => {
     </section>
 
     <form
+      v-if="!displayAddressForm"
       @submit="onSubmit"
       class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[36rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-[#ccc] sm:rounded-lg overflow-y-auto z-10"
     >
@@ -207,7 +211,7 @@ onMounted(async () => {
       <span class="w-full flex justify-between items-center px-2">
         <p class="text-secondary md:text-lg font-semibold">Total</p>
         <p class="font-semibold md:text-lg">
-          ${{ (deliveryCost + Number(cartStore.totalPrice)).toFixed(2) }}
+          ${{ cartStore.cart.total.toFixed(2) }}
         </p>
       </span>
 

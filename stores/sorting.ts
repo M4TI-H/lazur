@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useSortStore = defineStore("sort", {
   state: () => ({
-    option: "price" as string,
+    option: "popularity" as string,
     ascending: false as boolean,
   }),
 

@@ -8,7 +8,6 @@ const itemid = Number(route.params.id);
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const { garment, loading, refresh } = useFetchSingleGarment(itemid);
 const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(itemid);
@@ -16,6 +15,7 @@ const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(itemid);
 const selectedSize = ref<string>("");
 const displayReviews = ref<boolean>(false);
 const displayForm = ref<boolean>(false);
+const displayAlert = ref<boolean>(false);
 
 function addToCart() {
   if (garment.value && selectedSize.value !== "-") {
@@ -119,12 +119,19 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
         <ReviewForm
           v-if="userStore.isLoggedIn"
           @close="displayForm = false"
+          @closeAlert="
+            displayForm = false;
+            displayAlert = true;
+          "
           :item_id="itemid"
           :item_name="garment?.name"
         />
         <NotLoggedAlert
-          @close="displayForm = false"
-          v-if="!userStore.isLoggedIn"
+          @close="
+            displayForm = false;
+            displayAlert = false;
+          "
+          v-if="!userStore.isLoggedIn || displayAlert"
         />
       </div>
     </div>

@@ -3,7 +3,7 @@ import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
-import { useCreateGuestOrder } from "~/composables/orders/useCreateGuestOrder";
+import { useCreateGuestOrder } from "~/composables/orders/guest/useCreateGuestOrder";
 
 const { deliveries, deliveryLoading, deliveryRefresh } = useFetchDelivery();
 
@@ -73,8 +73,6 @@ const handleSubmitOrder = async () => {
 
   const result = await createGuestOrder(orderData, cartStore.cart.items);
 
-  console.log(result);
-
   if (!result) {
     console.error("Order failed");
     return;
@@ -82,7 +80,7 @@ const handleSubmitOrder = async () => {
 
   if (result.order_id) {
     navigateTo(
-      `/cart/confirmation/${result.order_id}?address_id=${result.address_id}`
+      `/cart/confirmation/${result.order_id}?token=${result.order_token}`
     );
   }
 };
@@ -97,14 +95,11 @@ const onSubmit = handleSubmit(
   }
 );
 
-const deliveryCost = computed(() => {
-  if (!deliveries.value || deliveries.value.length === 0) {
-    return 0;
-  }
-
-  const selectedDelivery =
-    deliveries.value!.find((d) => d.id === delivery.value) || null;
-  return selectedDelivery?.cost ?? 0;
+watch(delivery, (newValue) => {
+  const selectedDelivery = deliveries.value?.find((d) => d.id === newValue);
+  const cost = selectedDelivery?.cost ?? 0;
+  cartStore.updateDelivery(cost);
+  cartStore.updateTotal();
 });
 
 watch(
@@ -135,8 +130,9 @@ onMounted(async () => {
     </section>
 
     <form
+      v-if="!displayAddressForm"
       @submit="onSubmit"
-      class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[36rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-[#ccc] sm:rounded-lg overflow-y-auto z-10"
+      class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[38rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-[#ccc] sm:rounded-lg overflow-y-auto z-10"
     >
       <div class="w-full flex items-center justify-between">
         <h2 class="text-xl font-semibold">Shipping details</h2>
@@ -203,6 +199,13 @@ onMounted(async () => {
           <p class="text-sm font-semibold">
             {{ addressStore.address.country }}
           </p>
+          <button
+            type="button"
+            @click="addressStore.clearStorage()"
+            class="text-sm text-secondary hover:cursor-pointer hover:underline"
+          >
+            Remove
+          </button>
         </div>
       </div>
 
@@ -211,7 +214,7 @@ onMounted(async () => {
       <span class="w-full flex justify-between items-center px-2">
         <p class="text-secondary md:text-lg font-semibold">Total</p>
         <p class="font-semibold md:text-lg">
-          ${{ (deliveryCost + Number(cartStore.totalPrice)).toFixed(2) }}
+          ${{ cartStore.cart.total.toFixed(2) }}
         </p>
       </span>
 
@@ -231,7 +234,7 @@ onMounted(async () => {
     </form>
     <div
       v-if="displayAddressForm"
-      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+      class="fixed z-30 w-full min-h-full flex flex-col items-center justify-center"
     >
       <AddressForm @close="displayAddressForm = false" />
     </div>

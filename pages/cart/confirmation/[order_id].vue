@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { useFetchOrder } from "~/composables/orders/useFetchOrder";
-import { useFetchOneAddress } from "~/composables/users/addresses/useFetchAddress";
 const route = useRoute();
 const order_id = Number(route.params.order_id);
-const address_id = Number(route.query.address_id);
+const token = String(route.query.token);
 const { scrollY } = useScroll();
 
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
-const { order, orderLoading, orderRefresh } = useFetchOrder(order_id);
-const { address, addressLoading, addressRefresh } =
-  useFetchOneAddress(address_id);
+const { order, orderLoading, orderRefresh } = useFetchOrder(
+  order_id,
+  token,
+  userStore.isLoggedIn
+);
 
 onMounted(async () => {
   cartStore.clearStorage();
   await orderRefresh();
-  await addressRefresh();
 });
 </script>
 
@@ -73,17 +72,19 @@ onMounted(async () => {
       <div
         class="w-full flex flex-col sm:flex-row items-start justify-between sm:px-4 gap-1 sm:gap-0"
       >
-        <template v-if="address">
+        <template v-if="order.address">
           <p class="text-sm text-secondary">Delivery address</p>
           <div class="flex flex-col items-end">
             <p class="font-semibold">
-              {{ address.street }} {{ address.building_num
-              }}{{ address.flat_num ? `/${address.flat_num}` : "" }}
+              {{ order.address.street }}
+              {{ order.address.building_num
+              }}{{ order.address.flat_num ? `/${order.address.flat_num}` : "" }}
             </p>
             <p class="font-semibold">
-              {{ address.postal_code }}, {{ address.city }}
+              {{ order.address.postal_code }},
+              {{ order.address.city }}
             </p>
-            <p class="font-semibold">{{ address.country }}</p>
+            <p class="font-semibold">{{ order.address.country }}</p>
           </div>
         </template>
         <template v-else>

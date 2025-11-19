@@ -33,10 +33,7 @@ export const useUserStore = defineStore("user", {
       this.loading = false;
 
       if (error) throw error;
-      if (data.user) {
-        this.user = data.user;
-        this.saveToStorage();
-      }
+      this.user = data.user;
     },
 
     async signUp(email: string, password: string) {
@@ -51,34 +48,13 @@ export const useUserStore = defineStore("user", {
       this.loading = false;
 
       if (error) throw error;
-      if (data.user) {
-        this.user = data.user;
-        this.saveToStorage();
-      }
+      this.user = data.user;
     },
 
     async signOut() {
       const supabase = useSupabaseClient();
       await supabase.auth.signOut();
       this.user = null;
-      this.clearStorage();
-    },
-
-    saveToStorage() {
-      if (this.user) {
-        localStorage.setItem("user", JSON.stringify(this.user));
-      }
-    },
-
-    loadFromStorage() {
-      const data = localStorage.getItem("user");
-      if (data) {
-        this.user = JSON.parse(data);
-      }
-    },
-
-    clearStorage() {
-      localStorage.removeItem("user");
     },
   },
 });

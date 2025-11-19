@@ -41,7 +41,7 @@ const { scrollY } = useScroll();
         class="w-[18rem] sm:w-full sm:max-w-[22rem] md:max-w-[24rem] min-h-[28rem] h-auto md:h-[32rem] bg-[#445388] border-2 border-[1F1D20] flex flex-col items-center p-4 rounded-lg gap-2"
       >
         <div class="w-full md:h-[6rem] flex items-center justify-center gap-4">
-          <i class="pi pi-eye text-light text-3xl"></i>``
+          <i class="pi pi-eye text-light text-3xl"></i>
 
           <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-light">
             Our vision

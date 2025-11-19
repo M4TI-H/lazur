@@ -24,7 +24,7 @@ function saveEdit() {
 
 <template>
   <div
-    class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
+    class="w-full h-[2rem] flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
   >
     <p class="text-sm text-secondary">{{ props.label }}</p>
     <div class="w-full sm:w-auto flex items-center gap-1">

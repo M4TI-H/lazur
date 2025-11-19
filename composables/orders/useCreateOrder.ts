@@ -10,33 +10,33 @@ export function useCreateOrder() {
     cart: (Garment & { quantity: number; size: string })[]
   ) => {
     loading.value = true;
-    const { data: response, error } = await fetchData<{ order_id: number }>(
-      "/api/orders/create",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          items: cart.map((item) => ({
-            product_id: item.id,
-            quantity: item.quantity,
-            size: item.size,
-            price_at_order: item.price,
-          })),
-        }),
-      }
-    );
+    const { data: response, error } = await fetchData<{
+      order_id: number;
+      order_token: number;
+    }>("/api/orders/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        items: cart.map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+          size: item.size,
+          price_at_order: item.price,
+        })),
+      }),
+    });
 
     loading.value = false;
 
     if (error) {
       console.error(error);
-      return "error";
+      return;
     }
 
-    return response?.order_id ?? null;
+    return response;
   };
 
   return {

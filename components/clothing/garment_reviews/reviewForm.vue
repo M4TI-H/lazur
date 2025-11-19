@@ -4,6 +4,8 @@ import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useCreateItemReview } from "~/composables/reviews/item/useCreateItemReview";
 
+const userStore = useUserStore();
+
 const { createItemReview, loading } = useCreateItemReview();
 
 const { item_id, item_name } = defineProps<{
@@ -13,6 +15,7 @@ const { item_id, item_name } = defineProps<{
 
 const emit = defineEmits<{
   (e: "close"): void;
+  (e: "closeAlert"): void;
 }>();
 
 const validationSchema = toTypedSchema(
@@ -41,6 +44,9 @@ const error = computed(() => {
 });
 
 const handleReviewSubmit = async () => {
+  if (!userStore.isLoggedIn) {
+    emit("closeAlert");
+  }
   await createItemReview(item_id, review.value, rating.value);
 
   review.value = "";

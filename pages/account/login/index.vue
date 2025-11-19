@@ -6,7 +6,6 @@ const supabase = useSupabaseClient();
 const loading = ref<boolean>(false);
 
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 onMounted(() => {
   if (userStore.isLoggedIn) {

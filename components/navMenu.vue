@@ -9,7 +9,6 @@ const { scrollY } = defineProps<{
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
 const userStore = useUserStore();
-userStore.loadFromStorage();
 
 const expandGender = ref<boolean>(false);
 const expandAccount = ref<boolean>(false);

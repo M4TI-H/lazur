@@ -1,6 +1,6 @@
 export default interface Review {
   id: number;
-  review: number;
+  review: string;
   price: number;
   quality: number;
   satisfaction: number;

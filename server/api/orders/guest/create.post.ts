@@ -1,4 +1,5 @@
-import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
+import { serverSupabaseClient } from "#supabase/server";
+import { randomUUID } from "crypto";
 
 export default defineEventHandler(async (event) => {
   const supabase = await serverSupabaseClient(event);
@@ -46,6 +47,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const order_token = randomUUID();
+
   const { data: newOrder, error: newOrderError } = await supabase
     .from("orders")
     .insert({
@@ -56,8 +59,9 @@ export default defineEventHandler(async (event) => {
       delivery_id: body.delivery_id,
       total: body.total,
       user_id: null,
+      order_token: order_token,
     })
-    .select("id")
+    .select("id, order_token")
     .single();
 
   if (newOrderError) {
@@ -91,5 +95,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  return { order_id: newOrder.id ?? null, address_id: addressData.id ?? null };
+  return {
+    order_id: newOrder.id ?? null,
+    order_token: newOrder.order_token ?? null,
+  };
 });
