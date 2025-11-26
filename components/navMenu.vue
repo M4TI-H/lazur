@@ -124,7 +124,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
           >
           <NuxtLink
             v-if="userStore.isLoggedIn"
-            to="/account/order-history"
+            to="/account/orderHistory"
             class="w-[8.5rem] px-4 py-1 hover:bg-[#1F1D20] active:bg-[#1F1D20] text-center text-lg text-light font-thin rounded-full flex items-center justify-center z-20"
             >Order history</NuxtLink
           >
@@ -162,7 +162,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
         >
         <NuxtLink
           v-if="userStore.isLoggedIn && isMobile"
-          to="/account/order-history"
+          to="/account/orderHistory"
           class="w-full h-[2.5rem] active:bg-[#1F1D20] text-center text-sm text-light flex flex-col items-center justify-center"
           >Order history</NuxtLink
         >

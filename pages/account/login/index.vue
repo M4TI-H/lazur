@@ -2,16 +2,9 @@
 import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-const supabase = useSupabaseClient();
 const loading = ref<boolean>(false);
 
 const userStore = useUserStore();
-
-onMounted(() => {
-  if (userStore.isLoggedIn) {
-    navigateTo("/");
-  }
-});
 
 const validationSchema = toTypedSchema(
   z.object({
@@ -30,22 +23,49 @@ const { handleSubmit, meta } = useForm({
 const { value: login, errorMessage: loginError } = useField<string>("login");
 const { value: password, errorMessage: passwordError } =
   useField<string>("password");
+const invalidCredentialsError = ref<string | null>(null);
+const showError = ref<boolean>(false);
+
+const error = computed(() => {
+  return (
+    loginError.value ||
+    passwordError.value ||
+    invalidCredentialsError.value ||
+    ""
+  );
+});
 
 const handleLogin = async () => {
+  invalidCredentialsError.value = null;
+
   try {
     await userStore.signIn(login.value, password.value);
     navigateTo("/");
   } catch (error: any) {
-    console.error(error);
+    invalidCredentialsError.value = "Invalid user credentials";
   }
 };
 
-const onSubmit = handleSubmit(handleLogin);
+const onSubmit = handleSubmit(
+  async () => {
+    showError.value = true;
+    await handleLogin();
+  },
+  () => {
+    showError.value = true;
+  }
+);
+
+onMounted(() => {
+  if (userStore.isLoggedIn) {
+    navigateTo("/");
+  }
+});
 </script>
 
 <template>
   <main
-    class="max-w-screen w-full min-h-screen flex items-center justify-center bg-[#bbb] py-8"
+    class="max-w-screen w-full min-h-screen flex items-center justify-center bg-[#aaa] py-8"
   >
     <form
       @submit.prevent="onSubmit"
@@ -67,66 +87,59 @@ const onSubmit = handleSubmit(handleLogin);
         <br class="sm:hidden" />
         modernminimalism.
       </p>
+
       <div
-        class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col mt-8"
+        v-if="showError && error"
+        class="w-full bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
       >
-        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
-          <i
-            class="pi pi-user absolute text-secondary text-lg left-3 top-1/2 -translate-y-1/2"
-          ></i>
-          <input
-            type="text"
-            v-model="login"
-            placeholder="Login"
-            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
-          />
-        </div>
-        <p v-if="loginError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
-          {{ loginError }}
-        </p>
-      </div>
-      <div
-        class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col mb-4"
-      >
-        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
-          <i
-            class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
-          ></i>
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
-          />
-        </div>
-        <p v-if="passwordError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
-          {{ passwordError }}
-        </p>
-        <NuxtLink
-          to="/account/login/changePassword"
-          class="text-sm md:text-md text-secondary font-semibold hover:cursor-pointer hover:underline self-end mt-1"
-        >
-          Forgot password?
-        </NuxtLink>
+        <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
       </div>
 
+      <div
+        class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-4"
+      >
+        <i
+          class="pi pi-user absolute text-secondary text-lg left-3 top-1/2 -translate-y-1/2"
+        ></i>
+        <input
+          type="text"
+          v-model="login"
+          placeholder="Login"
+          class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+        />
+      </div>
+
+      <div
+        class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center mt-4"
+      >
+        <i
+          class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
+        ></i>
+        <input
+          type="password"
+          v-model="password"
+          placeholder="Password"
+          class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+        />
+      </div>
+
+      <NuxtLink
+        to="/account/login/changePassword"
+        class="text-sm md:text-md text-secondary font-semibold hover:cursor-pointer hover:underline self-end mt-1"
+      >
+        Forgot password?
+      </NuxtLink>
+
       <button
-        type="submit"
-        v-if="!loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
+        v-if="!loading"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
       >
         Confirm
       </button>
-      <button
-        type="submit"
-        v-if="!loading && !meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#8088a3] text-light rounded-md"
-      >
-        Confirm
-      </button>
+
       <button
         v-if="loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
       >
         <i class="pi pi-spin pi-spinner"></i>
       </button>

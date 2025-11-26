@@ -3,10 +3,7 @@ export function useFetchCategories() {
     data: categories,
     pending: loading,
     error,
-    refresh,
-  } = useAsyncData<string>("categories", () =>
-    $fetch("/api/garments/fetch_categories")
-  );
-
-  return { categories, loading, error, refresh };
+    refresh: refreshCategories,
+  } = useAsyncData("category", () => $fetch("/api/garments/fetch_categories"));
+  return { categories, loading, error, refreshCategories };
 }

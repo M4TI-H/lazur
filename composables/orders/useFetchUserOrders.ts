@@ -1,12 +1,10 @@
-import type Order from "~/types/Order";
-
 export function useFetchUserOrders() {
   const {
     data: orders,
     pending: loading,
     error,
     refresh,
-  } = useAsyncData<(Order & { item_count: number })[]>("user-orders", () =>
+  } = useAsyncData("user-orders", () =>
     $fetch("/api/orders/fetch_users_orders")
   );
 

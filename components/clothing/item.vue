@@ -22,6 +22,10 @@ function addToCart() {
     cartStore.addToCart(itemData, selectedSize.value);
   }
 }
+
+onMounted(async () => {
+  await ratingRefresh();
+});
 </script>
 
 <template>
@@ -30,11 +34,14 @@ function addToCart() {
     :to="`/garments/${gender}/itemDetails/${itemData.id}`"
     class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-md overflow-hidden"
   >
-    <img
-      src="https://freepngimg.com/save/2135-dress-shirt-png-image/757x1204"
-      class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto"
-      draggable="false"
-    />
+    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-[#ccc]">
+      <img
+        src="https://freepngimg.com/save/2135-dress-shirt-png-image/757x1204"
+        class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto"
+        draggable="false"
+      />
+    </div>
+
     <div
       class="relativew-full h-full flex flex-col items-centersm:items-start p-2 py-2 bg-[#F8F9FA] rounded-b-xl"
     >
@@ -61,7 +68,7 @@ function addToCart() {
             v-for="i in 5"
             :key="i"
             :icon="
-              i <= (rating?.avg_rating ?? 0)
+              i <= Number(rating?.avg_rating ?? 0)
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "
@@ -77,11 +84,12 @@ function addToCart() {
           <p v-if="itemData?.price" class="text-primary sm:text-lg">
             ${{ itemData.price.toFixed(2) }}
           </p>
+
           <span
             class="flex sm:hidden items-center gap-1"
-            v-if="rating && rating.avg_rating > 0"
+            v-if="rating && Number(rating.avg_rating) > 0"
           >
-            {{ rating.avg_rating.toFixed(1) }}
+            {{ Number(rating.avg_rating).toFixed(1) }}
             <Icon icon="tabler:star-filled" class="text-[#445388]" />
           </span>
         </div>

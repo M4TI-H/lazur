@@ -1,6 +1,3 @@
-import type Address from "~/types/Address";
-import type Order from "~/types/Order";
-
 export function useFetchOrder(id: number, token: string, isLoggedIn: boolean) {
   let path = "";
   if (isLoggedIn) {
@@ -14,9 +11,7 @@ export function useFetchOrder(id: number, token: string, isLoggedIn: boolean) {
     pending: orderLoading,
     error: orderError,
     refresh: orderRefresh,
-  } = useAsyncData<
-    Order & { delivery: { name: string } } & { address: Address }
-  >(`order-${id}`, () =>
+  } = useAsyncData(`order-${id}`, () =>
     $fetch(path, {
       params: { token },
     })

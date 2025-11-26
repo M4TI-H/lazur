@@ -56,7 +56,7 @@ watch(
         <h1
           class="text-2xl sm:text-3xl lg:text-4xl text-center text-light font-bold whitespace-nowrap"
         >
-          Account
+          Account settings
         </h1>
       </div>
     </section>
@@ -65,18 +65,9 @@ watch(
     >
       <UserData :personalData="personalData" @modify="showDataForm = true" />
       <AddressBook
-        v-if="addresses"
-        :addresses="addresses"
         @addNew="showAddressForm = true"
         @refresh="refreshAddresses"
       />
-      <span
-        v-if="addressesLoading || personalDataLoading"
-        class="w-full text-center text-secondary font-semibold text-sm"
-      >
-        <i class="pi pi-spin pi-spinner"></i>
-        Loading...
-      </span>
     </section>
 
     <div

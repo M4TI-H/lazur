@@ -5,7 +5,7 @@ export default interface Order {
   phone: string;
   total: number;
   user_id: number;
-  address_id: number;
+  address: number;
   delivery_id: number;
   name: string;
 }

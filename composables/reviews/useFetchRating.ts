@@ -7,7 +7,7 @@ export function useFetchRating(rating: Ref<number>) {
     error: ratingError,
     refresh: ratingRefresh,
   } = useAsyncData<Review[]>(
-    () => `${rating}-star-reviews`,
+    `${rating}-star-reviews`,
     () =>
       $fetch(`/api/reviews/fetch_rating`, {
         params: { rating: rating.value },

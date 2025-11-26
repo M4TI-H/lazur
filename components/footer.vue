@@ -1,13 +1,4 @@
-<script setup lang="ts">
-import { useFetchCategories } from "~/composables/garments/useFetchCategories";
-
-const { categories, loading, refresh } = useFetchCategories();
-
-onMounted(async () => {
-  await refresh();
-  categories.value = categories.value?.slice(0, 5) ?? null;
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <section

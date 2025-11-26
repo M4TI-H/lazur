@@ -19,8 +19,8 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await supabase
     .from("orders")
-    .select("address")
-    .eq("address", id);
+    .select("address_id")
+    .eq("address_id", id);
 
   if (error) {
     throw createError({

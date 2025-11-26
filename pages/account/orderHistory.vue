@@ -22,8 +22,6 @@ watch(
     }
   }
 );
-
-const isMobile = useMediaQuery("(max-width: 767px)");
 </script>
 
 <template>
@@ -46,12 +44,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
     <section
       class="w-full md:w-[48rem] lg:w-[64rem] flex flex-col px-8 py-6 gap-8 md:gap-4"
     >
-      <OrderInfo
-        v-for="(order, id) in orders"
-        :key="id"
-        :order="order"
-        @click="isMobile ? console.log('rozwin') : ''"
-      />
+      <OrderInfo v-for="(order, id) in orders" :key="id" :order="order" />
     </section>
   </main>
   <Footer />

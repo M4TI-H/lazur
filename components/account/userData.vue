@@ -13,7 +13,6 @@ const emit = defineEmits<{
 
 <template>
   <div
-    v-if="personalData"
     class="w-full min-w-[18rem] max-w-[18rem] sm:max-w-[24rem] h-[17rem] sm:h-[15rem] gap-2 sm:gap-4 flex flex-col bg-white border-2 border-[#ccc] rounded-lg overflow-y-auto"
   >
     <div class="w-full flex items-center justify-between bg-[#445388] p-4">
@@ -30,29 +29,37 @@ const emit = defineEmits<{
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between px-2 sm:px-4 gap-1 sm:gap-0"
     >
       <p class="text-sm text-secondary">Name</p>
-      <p class="font-semibold">{{ personalData.name }}</p>
+      <p v-if="personalData && personalData.name" class="font-semibold">
+        {{ personalData.name }}
+      </p>
+      <div v-else class="w-[10rem] h-[1.5rem] bg-[#ccc]"></div>
     </div>
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between px-2 sm:px-4 gap-1 sm:gap-0"
     >
       <p class="text-sm text-secondary">Email address</p>
-      <p class="font-semibold">{{ personalData.email }}</p>
+      <p v-if="personalData && personalData.email" class="font-semibold">
+        {{ personalData.email }}
+      </p>
+      <div v-else class="w-[10rem] h-[1.5rem] bg-[#ccc]"></div>
     </div>
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between px-2 sm:px-4 gap-1 sm:gap-0"
     >
       <p class="text-sm text-secondary">Phone number</p>
-      <p class="font-semibold">
+      <p v-if="personalData && personalData.phone" class="font-semibold">
         {{ personalData.phone ? personalData.phone : "-" }}
       </p>
+      <div v-else class="w-[10rem] h-[1.5rem] bg-[#ccc]"></div>
     </div>
 
-    <p class="px-2 sm:px-4 text-sm text-secondary">
+    <p v-if="personalData" class="px-2 sm:px-4 text-sm text-secondary">
       {{
-        personalData?.newsletter
+        personalData && personalData.newsletter
           ? "Is subscribed to the newsletter."
           : "Is not subscribed to the newsletter."
       }}
     </p>
+    <div v-else class="w-[14rem] h-[1.5rem] bg-[#ccc] ml-[1rem]"></div>
   </div>
 </template>

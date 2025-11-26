@@ -9,7 +9,5 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, statusMessage: error.message });
   }
 
-  const categories = [...new Set((data ?? []).map((row) => row.category))];
-
-  return categories as string[];
+  return data as { category: string }[];
 });

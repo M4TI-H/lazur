@@ -1,14 +1,25 @@
 import type Address from "~/types/Address";
 
-export function useFetchOneAddress(id: number) {
-  const {
-    data: address,
-    pending: addressLoading,
-    error: addressError,
-    refresh: addressRefresh,
-  } = useAsyncData<Address>(`address-${id}`, () =>
-    $fetch(`/api/accounts/fetch_one_address/${id}`)
-  );
+export function useFetchOneAddress() {
+  const addressLoading = ref<boolean>(false);
+  const addressError = ref<Error | null>(null);
+  const address = ref<Address | null>(null);
 
-  return { address, addressLoading, addressError, addressRefresh };
+  const fetchAddress = async (id: number) => {
+    addressLoading.value = true;
+    const { data, error: addressError } = await fetchData<Address>(
+      `/api/accounts/addresses/fetch_one/${id}`
+    );
+
+    addressLoading.value = false;
+
+    if (addressError) {
+      console.error(addressError);
+      return null;
+    }
+
+    address.value = data ?? null;
+  };
+
+  return { address, fetchAddress, addressLoading, addressError };
 }

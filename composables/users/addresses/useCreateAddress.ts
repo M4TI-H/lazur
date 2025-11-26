@@ -7,7 +7,7 @@ export function useCreateAddress() {
   const createAddress = async (addressData: Address) => {
     loading.value = true;
     const { data, error } = await fetchData<{ address_id: number }>(
-      "/api/accounts/create_address",
+      "/api/accounts/addresses/create",
       {
         method: "POST",
         headers: {

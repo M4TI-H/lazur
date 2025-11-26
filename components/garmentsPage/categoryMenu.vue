@@ -9,10 +9,10 @@ const { gender } = defineProps<{
   gender: string;
 }>();
 
-const { categories, loading, refresh } = useFetchCategories();
+const { categories, loading, refreshCategories } = useFetchCategories();
 
 onMounted(async () => {
-  await refresh();
+  await refreshCategories();
 });
 </script>
 
@@ -28,12 +28,12 @@ onMounted(async () => {
       All
     </NuxtLink>
     <NuxtLink
-      v-for="(category, id) in categories"
+      v-for="(cat, id) in categories"
       :key="id"
-      :to="`/garments/${gender}/category/${category}`"
+      :to="`/garments/${gender}/category/${cat.category}`"
       class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
     >
-      {{ category.charAt(0).toUpperCase() + category.slice(1) }}
+      {{ cat.category.charAt(0).toUpperCase() + cat.category.slice(1) }}
     </NuxtLink>
   </div>
 </template>

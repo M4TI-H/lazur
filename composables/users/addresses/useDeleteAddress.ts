@@ -6,15 +6,18 @@ export function useDeleteAddress() {
 
   const deleteAddress = async (id: number) => {
     loading.value = true;
-    const { error } = await fetchData<Address>(`/api/accounts/delete/${id}`, {
-      method: "DELETE",
-    });
+    const { error } = await fetchData<Address>(
+      `/api/accounts/addresses/delete/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     loading.value = false;
 
     if (error) {
       console.error(error);
-      return "error";
+      return;
     }
   };
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Footer from "~/components/footer.vue";
+
 const route = useRoute();
 const gender = route.params.gender as "Men" | "Women";
 

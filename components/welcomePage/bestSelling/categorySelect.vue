@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFetchCategories } from "~/composables/garments/useFetchCategories";
 
-const { categories, loading, refresh } = useFetchCategories();
+const { categories, loading, refreshCategories } = useFetchCategories();
 
 const props = defineProps<{
   modelValue: string;
@@ -16,7 +16,7 @@ const selectCategory = (value: string) => {
 };
 
 onMounted(async () => {
-  await refresh();
+  await refreshCategories();
 });
 </script>
 <template>
@@ -35,17 +35,19 @@ onMounted(async () => {
       Any
     </button>
     <button
-      v-for="(category, id) in categories"
+      v-for="(cat, id) in categories"
       :key="id"
-      @click="selectCategory(category)"
+      @click="selectCategory(cat.category)"
       class="px-2 py-1 rounded-full hover:cursor-pointer text-sm md:text-md text-light font-semibold flex items-center justify-center transiton-color duration-200 ease-in-out"
       :class="[
-        props.modelValue === category
+        props.modelValue === cat.category
           ? 'bg-[#1F1D20]/90'
           : 'hover:bg-[#1F1D20]/60',
       ]"
     >
-      <span>{{ category.charAt(0).toUpperCase() + category.slice(1) }}</span>
+      <span>{{
+        cat.category.charAt(0).toUpperCase() + cat.category.slice(1)
+      }}</span>
     </button>
   </div>
 </template>

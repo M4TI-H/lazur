@@ -15,9 +15,10 @@ export const useUserStore = defineStore("user", {
       const supabase = useSupabaseClient();
       this.loading = true;
 
-      const { data } = await supabase.auth.getSession();
+      const { data, error } = await supabase.auth.getSession();
       this.user = data.session?.user ?? null;
 
+      if (error) return;
       this.loading = false;
     },
 
@@ -32,7 +33,7 @@ export const useUserStore = defineStore("user", {
 
       this.loading = false;
 
-      if (error) throw error;
+      if (error) return;
       this.user = data.user;
     },
 
@@ -47,8 +48,9 @@ export const useUserStore = defineStore("user", {
 
       this.loading = false;
 
-      if (error) throw error;
+      if (error) return;
       this.user = data.user;
+      navigateTo("/account/login");
     },
 
     async signOut() {

@@ -2,8 +2,9 @@
 import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-const supabase = useSupabaseClient();
 const loading = ref<boolean>(false);
+
+const userStore = useUserStore();
 
 const validationSchema = toTypedSchema(
   z
@@ -39,21 +40,19 @@ const { value: password, errorMessage: passwordError } =
   useField<string>("password");
 const { value: confirmPassword, errorMessage: confirmPasswordError } =
   useField<string>("confirmPassword");
+const showError = ref<boolean>(false);
+
+const error = computed(() => {
+  return (
+    loginError.value || passwordError.value || confirmPasswordError.value || ""
+  );
+});
 
 const handleRegister = async () => {
-  loading.value = true;
   try {
-    const { data, error } = await supabase.auth.signUp({
-      email: login.value.trim(),
-      password: password.value,
-    });
-    loading.value = false;
-
-    if (data.user) {
-      navigateTo("/account/login");
-    }
+    await userStore.signUp(login.value, password.value);
   } catch (error: any) {
-    loading.value = false;
+    return;
   }
 };
 
@@ -82,79 +81,64 @@ const onSubmit = handleSubmit(handleRegister);
         <br class="hidden sm:block" />
         with timeless design.
       </p>
+
       <div
-        class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col mt-8"
+        v-if="showError && error"
+        class="w-full bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
       >
-        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
-          <i
-            class="pi pi-user absolute text-secondary text-lg left-3 top-1/2 -translate-y-1/2"
-          ></i>
-          <input
-            type="text"
-            v-model="login"
-            placeholder="Login"
-            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
-          />
-        </div>
-        <p v-if="loginError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
-          {{ loginError }}
-        </p>
+        <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
       </div>
-      <div class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col">
-        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
-          <i
-            class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
-          ></i>
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
-          />
-        </div>
 
-        <p v-if="passwordError" class="h-[1rem] !text-[red] text-sm ml-2 mt-1">
-          {{ passwordError }}
-        </p>
+      <div
+        class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
+      >
+        <i
+          class="pi pi-user absolute text-secondary text-lg left-3 top-1/2 -translate-y-1/2"
+        ></i>
+        <input
+          type="text"
+          v-model="login"
+          placeholder="Login"
+          class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+        />
       </div>
-      <div class="h-[4rem] max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col">
-        <div class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center">
-          <i
-            class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
-          ></i>
-          <input
-            type="password"
-            v-model="confirmPassword"
-            placeholder="Confirm password"
-            class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
-          />
-        </div>
-
-        <p
-          v-if="confirmPasswordError"
-          class="h-[1rem] !text-[red] text-sm ml-2 mt-1"
-        >
-          {{ confirmPassword === password ? "essa" : confirmPasswordError }}
-        </p>
+      <div
+        class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
+      >
+        <i
+          class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
+        ></i>
+        <input
+          type="password"
+          v-model="password"
+          placeholder="Password"
+          class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+        />
+      </div>
+      <div
+        class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center mt-2"
+      >
+        <i
+          class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-secondary"
+        ></i>
+        <input
+          type="password"
+          v-model="confirmPassword"
+          placeholder="Confirm password"
+          class="bg-[#ccc] w-full h-[2.5rem] rounded-lg pl-10 pr-2 focus:outline-2 placeholder:text-secondary outline-none font-semibold"
+        />
       </div>
 
       <button
-        type="submit"
-        v-if="!loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
+        v-if="!loading"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
       >
         Confirm
       </button>
-      <button
-        type="submit"
-        v-if="!loading && !meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#8088a3] text-light rounded-md"
-      >
-        Confirm
-      </button>
+
       <button
         v-if="loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md"
+        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
       >
         <i class="pi pi-spin pi-spinner"></i>
       </button>
