@@ -7,7 +7,8 @@ export function useCreateItemReview() {
   const createItemReview = async (
     item_id: number,
     review: string,
-    rating: number
+    rating: number,
+    newImageUrl: string | null
   ) => {
     loading.value = true;
     const { error } = await fetchData<ItemReview>("/api/reviews/item/create", {
@@ -19,6 +20,7 @@ export function useCreateItemReview() {
         item_id: item_id,
         review: review,
         rating: rating,
+        image_url: newImageUrl,
       }),
     });
 

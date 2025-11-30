@@ -4,5 +4,6 @@ export default interface ItemReview {
   user_id: number;
   review: string;
   rating: number;
+  image_url: string;
   created_at: string;
 }

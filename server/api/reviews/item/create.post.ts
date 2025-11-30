@@ -15,9 +15,8 @@ export default defineEventHandler(async (event) => {
     item_id: number;
     review: string;
     rating: number;
+    image_url: string | null;
   }>(event);
-
-  const dateNow = new Date();
 
   const { data, error } = await supabase
     .from("item_reviews")
@@ -26,6 +25,7 @@ export default defineEventHandler(async (event) => {
       review: body.review,
       rating: body.rating,
       item_id: body.item_id,
+      image_url: body.image_url,
     })
     .select("id")
     .single();
