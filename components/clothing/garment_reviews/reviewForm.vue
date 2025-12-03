@@ -87,10 +87,12 @@ const onSubmit = handleSubmit(handleReviewSubmit);
 <template>
   <form
     @submit.prevent="onSubmit"
-    class="relative mx-auto w-[18rem] md:min-w-[32rem] max-w-[90%] sm:max-w-[28rem] xl:max-w-[32rem] min-h-[18rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-[#ccc] rounded-lg overflow-y-auto"
+    class="relativew-full min-w-[18rem] max-w-[90%] md:max-w-[32rem] max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-[#ccc] rounded-lg overflow-y-auto mx-auto"
   >
     <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">Reviewing {{ item_name }}</h2>
+      <h2 class="sm:text-xl font-semibold truncate">
+        Reviewing {{ item_name }}
+      </h2>
       <button
         @click="emit('close')"
         class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
@@ -106,6 +108,52 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
     </div>
 
+    <div class="w-full mx-auto flex flex-col items-center justify-center">
+      <input
+        type="file"
+        accept="image/*"
+        id="selectimage"
+        @change="handleFileChange"
+        class="hidden"
+      />
+
+      <div
+        class="w-full flex sm:flex-row sm:items-center justify-between sm:px-4"
+        v-if="previewImageUrl"
+      >
+        <button
+          as="button"
+          class="text-secondary text-sm hover:underline cursor-pointer"
+        >
+          Attach image
+        </button>
+        <div class="relative size-40 group">
+          <button
+            type="button"
+            @click="previewImageUrl = null"
+            class="absolute size-full hidden bg-[#000]/40 group-hover:flex cursor-pointer rounded-md items-center justify-center"
+          >
+            <i class="pi pi-trash text-light text-2xl"></i>
+          </button>
+          <img :src="previewImageUrl" class="size-full" />
+        </div>
+      </div>
+
+      <div
+        class="w-full flex sm:items-center justify-center sm:justify-between sm:px-4"
+        v-else
+      >
+        <p class="hidden sm:flex text-secondary text-sm">Attach image</p>
+
+        <label
+          for="selectimage"
+          class="size-40 border-1 border-[#6a6272] rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-[#eee]"
+        >
+          <i class="pi pi-image text-3xl text-secondary"></i>
+        </label>
+      </div>
+    </div>
+
     <div
       class="w-full flex sm:flex-row sm:items-center justify-between sm:px-4"
     >
@@ -119,51 +167,24 @@ const onSubmit = handleSubmit(handleReviewSubmit);
         placeholder="Describe your experience with this product"
         class="w-full h-full text-sm md:text-base outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
       ></textarea>
-      <p class="absolute bottom-1 right-2 text-xs sm:text-sm text-secondary">
+      <p
+        class="absolute bottom-1 right-2 text-xs sm:text-sm text-secondary sm:px-4"
+      >
         {{ review.length }}/500
       </p>
-    </div>
-
-    <div class="size-32 mx-auto flex flex-col items-center justify-center">
-      <input
-        type="file"
-        accept="image/*"
-        id="selectimage"
-        @change="handleFileChange"
-        class="hidden"
-      />
-
-      <div v-if="previewImageUrl">
-        <img :src="previewImageUrl" class="size-30" />
-        <button
-          as="button"
-          class="w-full text-sm text-secondary hover:underline cursor-pointer text-center"
-        >
-          Remove photo
-        </button>
-      </div>
-
-      <label
-        v-else
-        for="selectimage"
-        class="size-full border-2 border-dashed border-[#6a6272] rounded-md flex flex-col items-center justify-center gap-1 mx-auto"
-      >
-        <i class="pi pi-image text-5xl text-secondary"></i>
-        <p class="text-secondary text-sm font-semibold">Attach image</p>
-      </label>
     </div>
 
     <button
       type="submit"
       v-if="!loading"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
+      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200 mx-auto"
     >
       Confirm
     </button>
 
     <button
       v-if="loading && meta.valid"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end"
+      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end mx-auto"
     >
       <i class="pi pi-spin pi-spinner"></i>
     </button>

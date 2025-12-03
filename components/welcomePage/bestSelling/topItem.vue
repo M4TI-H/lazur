@@ -55,7 +55,7 @@ function addToCart() {
             v-for="i in 5"
             :key="i"
             :icon="
-              i <= (rating?.avg_rating ?? 0)
+              i <= (Number(rating?.avg_rating) ?? 0)
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "

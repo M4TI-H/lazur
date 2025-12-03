@@ -42,45 +42,38 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
 <template>
   <NavMenu :scrollY="200" />
   <main
-    class="relative w-full min-h-screen pt-[4rem] flex flex-col items-center justify-center bg-[#F8F9FA]"
+    class="relative w-full min-h-screen flex flex-col items-center bg-white pt-13 overflow-x-hidden"
   >
     <div
       v-if="garment"
-      class="relative py-4 px-8 md:p-16 w-full lg:w-[90vw] xl:w-[80vw] h-full min-h-[36rem] flex flex-col md:flex-row"
+      class="relative py-4 w-full xl:w-[80rem] h-full min-h-[36rem] flex flex-col lg:flex-row"
     >
-      <ImageGallery />
-      <div class="w-full md:w-[40%] p-4 flex flex-col gap-4 bg-[#F8F9FA]">
-        <div class="flex flex-col gap-2 md:gap-4">
-          <div class="flex flex-col">
-            <h3 class="text-xl md:text-3xl font-thin whitespace-nowrap">
-              {{ garment.name }}
-            </h3>
-            <div class="flex items-center gap-4">
-              <h3 class="md:text-xl font-thin">
-                ${{ garment.price.toFixed(2) }}
-              </h3>
-              <button
-                @click="displayReviews = true"
-                class="flex hover:cursor-pointer hover:bg-[#eee] p-1 rounded-md"
-              >
-                <Icon
-                  v-for="i in 5"
-                  :key="i"
-                  :icon="
-                    i <= (rating?.avg_rating ?? 0)
-                      ? 'tabler:star-filled'
-                      : 'tabler:star'
-                  "
-                  class="text-[#445388]"
-                />
-              </button>
-            </div>
-          </div>
+      <ImageGallery :itemid="itemid" />
 
-          <div class="w-full h-[1px] bg-[#1f1d20]"></div>
-
-          <Details :garment="garment" />
+      <div class="w-full flex flex-col items-center sm:items-start gap-2 p-4">
+        <h3 class="text-xl md:text-3xl font-thin whitespace-nowrap">
+          {{ garment.name }}
+        </h3>
+        <div class="flex items-center gap-4">
+          <h3 class="sm:text-xl font-thin">${{ garment.price.toFixed(2) }}</h3>
+          <button
+            @click="displayReviews = true"
+            class="flex hover:cursor-pointer hover:bg-slate-100 p-2 rounded-md"
+          >
+            <Icon
+              v-for="i in 5"
+              :key="i"
+              :icon="
+                i <= (Number(rating?.avg_rating) ?? 0)
+                  ? 'tabler:star-filled'
+                  : 'tabler:star'
+              "
+              class="text-sky-700"
+            />
+          </button>
         </div>
+
+        <div class="w-full min-w-[18rem] h-[1px] bg-slate-700"></div>
 
         <SizeSelection
           v-model="selectedSize"
@@ -88,23 +81,26 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
           :id="garment.id"
           @addToCart="addToCart()"
         />
+        <Details :garment="garment" />
 
-        <div class="w-full h-[1px] bg-[#1f1d20]"></div>
+        <div class="w-full min-w-[18rem] h-[1px] bg-slate-700 my-2"></div>
 
-        <div class="flex flex-col gap-2">
+        <div
+          class="w-full min-w-[18rem] max-w-[24rem] sm:max-w-full flex flex-col sm:flex-row justify-center items-center gap-4"
+        >
           <button
             @click="displayReviews = true"
-            class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2"
+            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-slate-700 cursor-pointer hover:bg-slate-100 text-slate-700 px-2"
           >
+            <i class="pi pi-comments"></i>
             Read reviews
-            <Icon icon="tabler:chevron-right" />
           </button>
           <button
             @click="displayForm = !displayForm"
-            class="w-full h-[2.5rem] flex items-center justify-between text-lg rounded-lg border-1 border-[#6a6272] hover:cursor-pointer self-center hover:bg-black/5 px-2"
+            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-slate-700 cursor-pointer hover:bg-slate-100 text-slate-700 px-2"
           >
+            <i class="pi pi-thumbs-up"></i>
             Write a review
-            <Icon icon="tabler:chevron-right" />
           </button>
         </div>
       </div>
@@ -112,7 +108,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
 
     <div
       v-if="displayForm"
-      class="fixed inset-0 w-screen min-h-screen bg-[#1f1d20]/50 flex items-center justify-center z-50"
+      class="fixed inset-0 w-screen min-h-screen bg-slate-700/50 flex items-center justify-center z-50"
     >
       <div class="absolute inset-0" @click="displayForm = false"></div>
       <div class="relative z-10">
@@ -137,7 +133,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
     </div>
     <div
       v-if="displayReviews"
-      class="fixed inset-0 w-screen min-h-screen bg-[#1f1d20]/50 flex items-center justify-center z-50"
+      class="fixed inset-0 w-screen min-h-screen bg-slate-700/50 flex items-center justify-center z-50"
     >
       <div class="w-full relative z-10 flex justify-center">
         <div class="absolute inset-0" @click="displayReviews = false"></div>
@@ -145,5 +141,4 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
       </div>
     </div>
   </main>
-  <Footer />
 </template>

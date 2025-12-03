@@ -95,5 +95,4 @@ watch(
       />
     </div>
   </main>
-  <Footer />
 </template>

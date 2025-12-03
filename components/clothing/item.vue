@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/vue";
 import type Garment from "~/types/Garment";
 import { useFetchItemRating } from "~/composables/reviews/item/useFetchItemRating";
+import { useFetchCoverImage } from "~/composables/garments/images/useFetchCoverImage";
 
 const { itemData, gender } = defineProps<{
   itemData: Garment;
@@ -9,8 +10,10 @@ const { itemData, gender } = defineProps<{
 }>();
 
 const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(
-  itemData.id!
+  itemData.id
 );
+
+const { cover, coverLoading, refreshCover } = useFetchCoverImage(itemData.id);
 
 const selectedSize = ref<string>("-");
 
@@ -25,6 +28,7 @@ function addToCart() {
 
 onMounted(async () => {
   await ratingRefresh();
+  await refreshCover();
 });
 </script>
 
@@ -36,8 +40,9 @@ onMounted(async () => {
   >
     <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-[#ccc]">
       <img
-        src="https://freepngimg.com/save/2135-dress-shirt-png-image/757x1204"
-        class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto"
+        v-if="cover"
+        :src="cover.url"
+        class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto object-stretch"
         draggable="false"
       />
     </div>
