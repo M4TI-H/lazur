@@ -8,20 +8,12 @@ const { scrollY } = useScroll();
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto"
+    class="w-full min-h-screen flex flex-col items-center bg-white overflow-y-auto"
   >
-    <section class="w-full h-[40vh] relative flex flex-col items-center">
-      <img class="w-full h-full object-cover z-10" src="/garmentsBg.jpeg" />
-      <div
-        class="absolute bg-[#1F1D20]/70 w-full h-full z-20 flex items-center justify-center"
-      >
-        <h1
-          class="text-xl md:text-4xl text-center text-light font-bold whitespace-nowrap"
-        >
-          Discover our world of<br />quality clothing.
-        </h1>
-      </div>
-    </section>
+    <ImageHeader
+      :image="`/garmentsBg.jpeg`"
+      :title="`Discover our world of quality clothing`"
+    />
     <CategoryMenu />
     <Sorting />
     <SearchedDisplay :search="search" />

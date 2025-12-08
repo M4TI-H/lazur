@@ -130,19 +130,7 @@ onMounted(() => {
         Forgot password?
       </NuxtLink>
 
-      <button
-        v-if="!loading"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
-      >
-        Confirm
-      </button>
-
-      <button
-        v-if="loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
-      >
-        <i class="pi pi-spin pi-spinner"></i>
-      </button>
+      <SubmitButton :loading="loading" :valid="meta.valid" />
 
       <span class="mt-auto text-sm text-secondary text-center"
         >Not registered yet?

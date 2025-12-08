@@ -36,9 +36,9 @@ onMounted(async () => {
   <NuxtLink
     v-if="itemData"
     :to="`/garments/${gender}/itemDetails/${itemData.id}`"
-    class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-[#DEE2E6] rounded-md overflow-hidden"
+    class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-white rounded-md overflow-hidden"
   >
-    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-[#ccc]">
+    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-slate-300">
       <img
         v-if="cover"
         :src="cover.url"
@@ -48,13 +48,13 @@ onMounted(async () => {
     </div>
 
     <div
-      class="relativew-full h-full flex flex-col items-centersm:items-start p-2 py-2 bg-[#F8F9FA] rounded-b-xl"
+      class="relativew-full h-full flex flex-col items-center sm:items-start p-2 py-2 bg-white rounded-b-xl"
     >
       <div class="w-full flex items-center justify-between">
         <div class="w-full max-w-[96%] sm:max-w-full">
           <p
             v-if="itemData?.categories?.category"
-            class="hidden sm:block text-secondary font-thin text-sm"
+            class="hidden sm:block text-slate-500 font-thin text-sm"
           >
             {{ itemData.gender }} |
             {{
@@ -62,7 +62,7 @@ onMounted(async () => {
               itemData.categories?.category.slice(1)
             }}
           </p>
-          <p class="text-primary sm:text-lg truncate">
+          <p class="sm:text-lg truncate">
             {{ itemData.name }}
           </p>
         </div>
@@ -77,7 +77,7 @@ onMounted(async () => {
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "
-            class="text-[#445388]"
+            class="text-sky-700"
           />
         </div>
       </div>
@@ -86,7 +86,7 @@ onMounted(async () => {
         class="w-full flex flex-col sm:flex-row sm:items-center justify-end sm:justify-between gap-1 sm:py-2"
       >
         <div class="w-full sm:w-auto flex items-center justify-between">
-          <p v-if="itemData?.price" class="text-primary sm:text-lg">
+          <p v-if="itemData?.price" class="sm:text-lg">
             ${{ itemData.price.toFixed(2) }}
           </p>
 
@@ -95,7 +95,7 @@ onMounted(async () => {
             v-if="rating && Number(rating.avg_rating) > 0"
           >
             {{ Number(rating.avg_rating).toFixed(1) }}
-            <Icon icon="tabler:star-filled" class="text-[#445388]" />
+            <Icon icon="tabler:star-filled" class="text-sky-700" />
           </span>
         </div>
 
@@ -103,21 +103,21 @@ onMounted(async () => {
           <select
             v-model="selectedSize"
             @click.stop.prevent
-            class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center outline-0"
+            class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-slate-300 flex justify-center outline-0"
           >
-            <option class="text-primary text-center">-</option>
-            <option class="text-primary text-center">XS</option>
-            <option class="text-primary text-center">S</option>
-            <option class="text-primary text-center">M</option>
-            <option class="text-primary text-center">L</option>
-            <option class="text-primary text-center">XL</option>
+            <option class="text-center">-</option>
+            <option class="text-center">XS</option>
+            <option class="text-center">S</option>
+            <option class="text-center">M</option>
+            <option class="text-center">L</option>
+            <option class="text-center">XL</option>
           </select>
 
           <button
             @click.stop.prevent="addToCart"
-            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-[#445388] rounded-full flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer transition-colors ease-in-out duration-250"
+            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-sky-700 flex items-center justify-center rounded-full cursor-pointer text-slate-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200"
           >
-            <i class="pi pi-shopping-bag text-sm sm:text-lg text-light" />
+            <i class="pi pi-shopping-bag text-sm text-slate-200" />
           </button>
         </div>
       </div>

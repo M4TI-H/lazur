@@ -26,7 +26,7 @@ const selectStar = (value: number) => {
   <span class="flex items-center">
     <button
       type="button"
-      class="text-lg hover:cursor-pointer"
+      class="text-lg cursor-pointer"
       v-for="value in 5"
       :key="value"
       @mouseenter="setHover(value)"
@@ -40,8 +40,8 @@ const selectStar = (value: number) => {
           (hoveredStar === null &&
             props.modelValue !== null &&
             value <= props.modelValue)
-            ? 'text-[#445388]'
-            : 'text-[#a09fa1]',
+            ? 'text-sky-700'
+            : 'text-slate-500',
         ]"
       />
     </button>

@@ -87,7 +87,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
 <template>
   <form
     @submit.prevent="onSubmit"
-    class="relativew-full min-w-[18rem] max-w-[90%] md:max-w-[32rem] max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-[#ccc] rounded-lg overflow-y-auto mx-auto"
+    class="relative h-full min-h-[30rem] w-full min-w-[18rem] md:min-w-[28rem] lg:min-w-[48rem] max-w-[90%] md:max-w-[32rem] lg:max-w-[64rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-slate-300 rounded-lg overflow-y-auto mx-auto"
   >
     <div class="flex items-center justify-between">
       <h2 class="sm:text-xl font-semibold truncate">
@@ -95,17 +95,14 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       </h2>
       <button
         @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-slate-700/50 hover:cursor-pointer transition-colors duration-150"
       >
         <i class="pi pi-times"></i>
       </button>
     </div>
 
-    <div
-      v-if="error"
-      class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
-    >
-      <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
+    <div v-if="error" class="bg-red-300 border-1 border-red-800 rounded-md p-2">
+      <p class="!text-red-800 text-sm">{{ error }}</p>
     </div>
 
     <div class="w-full mx-auto flex flex-col items-center justify-center">
@@ -123,7 +120,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       >
         <button
           as="button"
-          class="text-secondary text-sm hover:underline cursor-pointer"
+          class="text-slate-500 text-sm hover:underline cursor-pointer"
         >
           Attach image
         </button>
@@ -131,9 +128,9 @@ const onSubmit = handleSubmit(handleReviewSubmit);
           <button
             type="button"
             @click="previewImageUrl = null"
-            class="absolute size-full hidden bg-[#000]/40 group-hover:flex cursor-pointer rounded-md items-center justify-center"
+            class="absolute size-full hidden bg-black/40 group-hover:flex cursor-pointer rounded-md items-center justify-center"
           >
-            <i class="pi pi-trash text-light text-2xl"></i>
+            <i class="pi pi-trash text-slate-200 text-2xl"></i>
           </button>
           <img :src="previewImageUrl" class="size-full" />
         </div>
@@ -143,13 +140,13 @@ const onSubmit = handleSubmit(handleReviewSubmit);
         class="w-full flex sm:items-center justify-center sm:justify-between sm:px-4"
         v-else
       >
-        <p class="hidden sm:flex text-secondary text-sm">Attach image</p>
+        <p class="hidden sm:flex text-slate-500 text-sm">Attach image</p>
 
         <label
           for="selectimage"
-          class="size-40 border-1 border-[#6a6272] rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-[#eee]"
+          class="size-40 border-1 border-slate-300 rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100"
         >
-          <i class="pi pi-image text-3xl text-secondary"></i>
+          <i class="pi pi-image text-3xl text-slate-500"></i>
         </label>
       </div>
     </div>
@@ -157,7 +154,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
     <div
       class="w-full flex sm:flex-row sm:items-center justify-between sm:px-4"
     >
-      <p class="text-sm text-secondary">Your rating</p>
+      <p class="text-sm text-slate-500">Your rating</p>
       <StarReview v-model="rating" />
     </div>
 
@@ -165,28 +162,15 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       <textarea
         v-model="review"
         placeholder="Describe your experience with this product"
-        class="w-full h-full text-sm md:text-base outline-0 p-2 border-1 border-[#6a6272] rounded-md resize-none"
+        class="w-full h-full text-sm md:text-base outline-0 p-2 border-1 border-slate-300 rounded-md resize-none"
       ></textarea>
       <p
-        class="absolute bottom-1 right-2 text-xs sm:text-sm text-secondary sm:px-4"
+        class="absolute bottom-1 right-2 text-xs sm:text-sm text-slate-500 sm:px-4"
       >
         {{ review.length }}/500
       </p>
     </div>
 
-    <button
-      type="submit"
-      v-if="!loading"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200 mx-auto"
-    >
-      Confirm
-    </button>
-
-    <button
-      v-if="loading && meta.valid"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md mt-auto self-end mx-auto"
-    >
-      <i class="pi pi-spin pi-spinner"></i>
-    </button>
+    <SubmitButton :loading="loading" :valid="meta.valid" />
   </form>
 </template>

@@ -112,18 +112,6 @@ const onSubmit = handleSubmit(handleSubmitDataChange);
       <input v-model="newsletter" type="checkbox" class="size-[1rem]" />
     </div>
 
-    <button
-      v-if="!personalDataLoading"
-      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
-    >
-      Confirm
-    </button>
-
-    <button
-      v-if="personalDataLoading && meta.valid"
-      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
-    >
-      <i class="pi pi-spin pi-spinner"></i>
-    </button>
+    <SubmitButton :loading="personalDataLoading" :valid="meta.valid" />
   </form>
 </template>

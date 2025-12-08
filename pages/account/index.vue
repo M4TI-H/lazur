@@ -46,20 +46,9 @@ watch(
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto overflow-x-hidden"
+    class="w-full min-h-screen flex flex-col items-center bg-white overflow-y-auto overflow-x-hidden"
   >
-    <section class="relative w-full h-[24rem] flex flex-col items-center">
-      <img class="w-full h-full object-cover z-10" src="/accountBg.jpeg" />
-      <div
-        class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center"
-      >
-        <h1
-          class="text-2xl sm:text-3xl lg:text-4xl text-center text-light font-bold whitespace-nowrap"
-        >
-          Account settings
-        </h1>
-      </div>
-    </section>
+    <ImageHeader :image="`/accountBg.jpeg`" :title="`Account settings`" />
     <section
       class="w-full flex flex-col md:flex-row items-center md:items-start px-8 py-6 gap-8"
     >
@@ -72,7 +61,7 @@ watch(
 
     <div
       v-if="showAddressForm"
-      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+      class="fixed z-30 w-full min-h-full bg-stone-900/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
     >
       <div class="fixed inset-0" @click="showAddressForm = false"></div>
       <AddressForm
@@ -84,7 +73,7 @@ watch(
 
     <div
       v-if="showDataForm"
-      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+      class="fixed z-30 w-full min-h-full bg-stone-900/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
     >
       <div class="fixed inset-0" @click="showDataForm = false"></div>
       <DataForm

@@ -81,7 +81,7 @@ const handleSubmitOrder = async () => {
     phone: phone.value,
     total: cartStore.cart.total,
     user_id: 0,
-    address_id: address.value,
+    address: address.value,
     delivery_id: delivery.value,
     name: name.value,
   };
@@ -215,19 +215,7 @@ onMounted(async () => {
         </p>
       </span>
 
-      <button
-        v-if="!loading"
-        class="w-[80%] max-w-[16rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
-      >
-        Confirm
-      </button>
-
-      <button
-        v-if="loading && meta.valid"
-        class="w-[80%] max-w-[16rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
-      >
-        <i class="pi pi-spin pi-spinner"></i>
-      </button>
+      <SubmitButton :loading="loading" :valid="meta.valid" />
     </form>
     <div
       v-if="displayAddressForm"

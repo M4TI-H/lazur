@@ -27,15 +27,15 @@ watch(
 <template>
   <NavMenu :scrollY="scrollY" />
   <main
-    class="w-full min-h-screen flex flex-col items-center bg-[#F8F9FA] overflow-y-auto overflow-x-hidden"
+    class="w-full min-h-screen flex flex-col items-center bg-white overflow-y-auto overflow-x-hidden"
   >
     <section class="relative w-full h-[24rem] flex flex-col items-center">
       <img class="w-full h-full object-cover z-10" src="/ordersBg.jpg" />
       <div
-        class="absolute z-30 w-full h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center"
+        class="absolute z-30 w-full h-full bg-black/70 flex flex-col items-center justify-center"
       >
         <h1
-          class="text-2xl sm:text-3xl lg:text-4xl text-center text-light font-bold whitespace-nowrap"
+          class="text-2xl sm:text-3xl lg:text-4xl text-center text-slate-200 font-bold whitespace-nowrap"
         >
           Order history
         </h1>

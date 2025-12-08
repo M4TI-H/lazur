@@ -178,18 +178,6 @@ const onSubmit = handleSubmit(handleSubmitAddress);
         />
       </div>
     </div>
-    <button
-      v-if="!loading"
-      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto hover:cursor-pointer hover:bg-[#212842] transition-color ease-in-out duration-200"
-    >
-      Confirm
-    </button>
-
-    <button
-      v-if="loading && meta.valid"
-      class="w-[80%] max-w-[12rem] h-[2.5rem] bg-[#445388] text-light rounded-md self-center mt-auto"
-    >
-      <i class="pi pi-spin pi-spinner"></i>
-    </button>
+    <SubmitButton :loading="loading" :valid="meta.valid" />
   </form>
 </template>

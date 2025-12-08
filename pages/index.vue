@@ -3,7 +3,7 @@ const { scrollY } = useScroll();
 </script>
 <template>
   <NavMenu :scrollY="scrollY" />
-  <main class="w-full min-h-screen bg-[#eee] overflow-y-auto overflow-x-hidden">
+  <main class="w-full min-h-screen bg-white overflow-y-auto overflow-x-hidden">
     <WelcomePanel />
     <FeaturesText />
     <BestSelling />

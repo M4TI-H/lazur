@@ -42,7 +42,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
 <template>
   <NavMenu :scrollY="200" />
   <main
-    class="relative w-full min-h-screen flex flex-col items-center bg-white pt-13 overflow-x-hidden"
+    class="relative w-full min-h-screen flex flex-col items-center justify-center bg-white pt-13 overflow-x-hidden"
   >
     <div
       v-if="garment"

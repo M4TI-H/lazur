@@ -7,7 +7,7 @@ export function useCreateGuestOrder() {
   const error = ref<Error | null>(null);
 
   const createGuestOrder = async (
-    data: Order & { address: Address },
+    data: Order & { order_address: Address },
     cart: (Garment & { quantity: number; size: string })[]
   ) => {
     loading.value = true;
@@ -25,7 +25,7 @@ export function useCreateGuestOrder() {
         phone: data.phone,
         total: data.total,
         delivery_id: data.delivery_id,
-        address: data.address,
+        address: data.order_address,
         items: cart.map((item) => ({
           product_id: item.id,
           quantity: item.quantity,

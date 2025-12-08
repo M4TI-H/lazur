@@ -68,26 +68,7 @@ const onSubmit = handleSubmit(handleLogin);
         </p>
       </div>
 
-      <button
-        type="submit"
-        v-if="!loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-color ease-in-out duration-200"
-      >
-        Confirm
-      </button>
-      <button
-        type="submit"
-        v-if="!loading && !meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#8088a3] text-light rounded-md"
-      >
-        Confirm
-      </button>
-      <button
-        v-if="loading && meta.valid"
-        class="max-w-[20rem] lg:max-w-[24rem] w-full h-[2.5rem] bg-[#445388] text-light rounded-md"
-      >
-        <i class="pi pi-spin pi-spinner"></i>
-      </button>
+      <SubmitButton :loading="loading" :valid="meta.valid" />
     </form>
   </main>
 </template>
