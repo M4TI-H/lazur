@@ -17,9 +17,9 @@ const changeSelected = (id: number) => {
   <div class="h-[2.5rem] flex items-center p-1 gap-1">
     <button
       @click="changeSelected(0)"
-      class="px-2 h-full rounded-full hover:cursor-pointer text-secondary font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
+      class="px-2 h-full rounded-full cursor-pointer text-gray-500 font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
       :class="[
-        props.modelValue === 0 ? 'bg-[#1F1D20]/20' : 'hover:bg-[#1F1D20]/30',
+        props.modelValue === 0 ? 'bg-stone-800/20' : 'hover:bg-stone-800/30',
       ]"
     >
       <span class="hidden sm:flex">Recent</span>
@@ -29,13 +29,13 @@ const changeSelected = (id: number) => {
       v-for="i in 5"
       :key="i"
       @click="changeSelected(i)"
-      class="px-2 h-full rounded-full hover:cursor-pointer text-secondary font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
+      class="px-2 h-full rounded-full cursor-pointer text-gray-500 font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
       :class="[
-        props.modelValue === i ? 'bg-[#1F1D20]/20' : 'hover:bg-[#1F1D20]/10',
+        props.modelValue === i ? 'bg-stone-800/20' : 'hover:bg-stone-800/10',
       ]"
     >
       <span>{{ i }}</span>
-      <Icon icon="tabler:star-filled" class="text-[#445388]" />
+      <Icon icon="tabler:star-filled" class="text-sky-700" />
     </button>
   </div>
 </template>

@@ -35,7 +35,7 @@ watch(
         class="absolute z-30 w-full h-full bg-black/70 flex flex-col items-center justify-center"
       >
         <h1
-          class="text-2xl sm:text-3xl lg:text-4xl text-center text-slate-200 font-bold whitespace-nowrap"
+          class="text-2xl sm:text-3xl lg:text-4xl text-center text-gray-200 font-bold whitespace-nowrap"
         >
           Order history
         </h1>

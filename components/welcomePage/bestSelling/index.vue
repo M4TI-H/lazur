@@ -77,12 +77,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section
-    class="relative w-full h-[42rem] md:h-[56rem] flex flex-col bg-[#F8F9FA]"
-  >
+  <section class="relative w-full h-[42rem] md:h-[56rem] flex flex-col">
     <img class="w-full h-full object-cover z-10" src="/trendingBg.jpeg" />
     <div
-      class="absolute bg-[#1F1D20]/70 w-full h-full z-20 gap-8 flex flex-col items-center pt-16"
+      class="absolute bg-black/60 w-full h-full z-20 gap-8 flex flex-col items-center pt-16"
     >
       <div
         class="relative w-full flex flex-col sm:items-center justify-between px-3 md:px-6 lg:px-12 gap-4"
@@ -90,10 +88,10 @@ onMounted(() => {
         <div
           class="flex flex-col max-w-[24rem] md:max-w-[32rem] sm:items-center gap-4 self-center"
         >
-          <h2 class="text-light text-2xl md:text-3xl font-semibold">
+          <h2 class="text-gray-200 text-2xl md:text-3xl font-semibold">
             Trending
           </h2>
-          <p class="text-light text-sm sm:text-md md:text-lg sm:text-center">
+          <p class="text-gray-200 text-sm sm:text-md md:text-lg sm:text-center">
             Discover the most popular pieces that define the season's style.
             <br class="hidden lg:block" />
             Handpicked favorites loved by our customers.
@@ -103,7 +101,7 @@ onMounted(() => {
         <div class="w-full flex justify-center items-center gap-2">
           <button
             v-if="firstVisible > 0"
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-700 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
             @click="displayPrev()"
           >
             <i class="pi pi-arrow-left text-xs"></i>
@@ -111,7 +109,7 @@ onMounted(() => {
           </button>
           <button
             v-else
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#7881a3] text-light rounded-full text-sm"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-gray-600 text-gray-200 rounded-full text-sm"
           >
             <i class="pi pi-arrow-left text-xs"></i>
             <span class="hidden lg:block">Previous</span>
@@ -121,7 +119,7 @@ onMounted(() => {
 
           <button
             v-if="firstVisible + amountVisible + 1 < (garments?.length ?? 0)"
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#445388] text-light rounded-full text-sm hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-700 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
             @click="displayNext()"
           >
             <span class="hidden lg:block">Next</span>
@@ -129,7 +127,7 @@ onMounted(() => {
           </button>
           <button
             v-else
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-[#7881a3] text-light rounded-full text-sm"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-gray-600 text-gray-200 rounded-full text-sm"
           >
             <span class="hidden lg:block">Next</span>
             <i class="pi pi-arrow-right text-xs"></i>
@@ -141,7 +139,7 @@ onMounted(() => {
       <div
         class="scrollbar-hide w-full flex md:hidden overflow-x-auto whitespace-nowrap gap-4 px-4"
       >
-        <i v-if="loading" class="pi pi-spinner pi-spin text-light"></i>
+        <i v-if="loading" class="pi pi-spinner pi-spin text-gray-200"></i>
         <TopItem
           v-else
           v-for="item in garments"
@@ -149,7 +147,7 @@ onMounted(() => {
           :itemData="item"
         />
         <p
-          class="text-light text-sm font-semibold"
+          class="text-gray-200 text-sm font-semibold"
           v-if="!loading && garments?.length === 0"
         >
           There are no items in this category
@@ -163,9 +161,9 @@ onMounted(() => {
       >
         <div
           class="flex gap-4 transition-transform duration-500 ease-in-out px-2"
-          :style="{ transform: `translateX(${offset}px)` }"
+          :style="{ transform: `trangrayX(${offset}px)` }"
         >
-          <i v-if="loading" class="pi pi-spinner pi-spin text-light"></i>
+          <i v-if="loading" class="pi pi-spinner pi-spin text-gray-200"></i>
           <TopItem
             v-else
             v-for="item in garments"
@@ -175,7 +173,7 @@ onMounted(() => {
         </div>
       </div>
       <p
-        class="text-light text-sm font-semibold"
+        class="text-gray-200 text-sm font-semibold"
         v-if="!loading && garments?.length === 0"
       >
         There are no items in this category.

@@ -112,7 +112,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
     >
       <i
         v-if="loading || ratingLoading"
-        class="pi pi-spinner pi-spin text-light"
+        class="pi pi-spinner pi-spin text-gray-200"
       ></i>
       <Review
         v-for="review in displayedReviews"
@@ -120,7 +120,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
         :review="review"
       />
       <p
-        class="w-full text-center text-secondary text-sm font-semibold"
+        class="w-full text-center text-gray-500 text-sm font-semibold"
         v-if="!loading && !ratingLoading && displayedReviews?.length === 0"
       >
         There are no reviews with this rating
@@ -132,29 +132,29 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
       <div>
         <button
           v-if="firstVisible > 0"
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
+          class="hidden sm:block size-[2rem] bg-sky-700 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
           @click="displayPrev()"
         >
           <i class="pi pi-arrow-left"></i>
         </button>
         <button
           v-else
-          class="hidden sm:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+          class="hidden sm:block size-[2rem] bg-gray-600 text-gray-200 rounded-full text-xs cursor-pointer"
         >
           <i class="pi pi-arrow-left"></i>
         </button>
       </div>
       <div
         ref="carouselRef"
-        class="hidden sm:flex ] h-full items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
+        class="hidden sm:flex h-full items-center justify-start overflow-hidden w-full sm:max-w-[42rem] md:max-w-[50rem] lg:max-w-[102rem]"
       >
         <div
           class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
-          :style="{ transform: `translateX(${offset}px)` }"
+          :style="{ transform: `trangrayX(${offset}px)` }"
         >
           <i
             v-if="loading || ratingLoading"
-            class="pi pi-spinner pi-spin text-light"
+            class="pi pi-spinner pi-spin text-gray-200"
           ></i>
           <Review
             v-for="review in displayedReviews"
@@ -163,7 +163,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
           />
         </div>
         <p
-          class="w-full text-center text-secondary text-sm font-semibold"
+          class="w-full text-center text-gray-500 text-sm font-semibold"
           v-if="!loading && !ratingLoading && displayedReviews?.length === 0"
         >
           There are no reviews with this rating
@@ -174,14 +174,14 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
           v-if="
             firstVisible + amountVisible + 1 < (displayedReviews?.length ?? 0)
           "
-          class="hidden sm:block size-[2rem] bg-[#445388] text-light rounded-full text-xs hover:cursor-pointer hover:bg-[#212842] active:bg-[#212842] transition-colors ease-in-out duration-250"
+          class="hidden sm:block size-[2rem] bg-sky-700 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-800 active:bg-sky-800transition-colors ease-in-out duration-250"
           @click="displayNext()"
         >
           <i class="pi pi-arrow-right"></i>
         </button>
         <button
           v-else
-          class="hidden sm:block size-[2rem] bg-[#7881a3] text-light rounded-full text-xs hover:cursor-pointer"
+          class="hidden sm:block size-[2rem] bg-gray-600 text-gray-200 rounded-full text-xs cursor-pointer"
         >
           <i class="pi pi-arrow-right"></i>
         </button>

@@ -99,31 +99,29 @@ const onSubmit = handleSubmit(handleSubmitAddress);
 <template>
   <form
     @submit.prevent="onSubmit"
-    class="fixed w-full min-w-[14rem] max-w-[90%] sm:max-w-[24rem] xl:max-w-[28rem] min-h-[32rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-[#ccc] rounded-lg overflow-y-auto"
+    class="fixed w-full min-w-[14rem] max-w-[90%] sm:max-w-[24rem] xl:max-w-[28rem] min-h-[32rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-gray-300 rounded-lg overflow-y-auto"
   >
-    <div class="w-full flex items-center justify-between">
+    <div class="w-full flex items-center justify-between mb-4">
       <h2 class="text-xl font-semibold">New address</h2>
       <button
         @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-[#ccc]/50 hover:cursor-pointer transition-colors duration-150"
+        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-gray-300/50 cursor-pointer transition-colors duration-150"
       >
         <i class="pi pi-times"></i>
       </button>
     </div>
-    <div
-      v-if="error"
-      class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
-    >
-      <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
-    </div>
+    <ErrorMessage v-if="error" :error="error" />
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
     >
-      <p class="text-sm text-secondary">Country</p>
+      <p class="text-sm text-gray-500">Country</p>
       <div
-        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-[#eee] rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 rounded-md"
       >
-        <select v-model="country" class="w-full h-full text-lg px-2 rounded-md">
+        <select
+          v-model="country"
+          class="w-full h-full text-lg px-2 rounded-md outline-gray-300"
+        >
           <option v-for="country in countries" :key="country" :value="country">
             {{ country }}
           </option>
@@ -134,47 +132,47 @@ const onSubmit = handleSubmit(handleSubmitAddress);
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
     >
-      <p class="text-sm text-secondary">City</p>
+      <p class="text-sm text-gray-500">City</p>
       <input
         v-model="city"
         type="text"
-        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-[#eee] text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 text-lg px-2 rounded-md"
       />
     </div>
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
     >
-      <p class="text-sm text-secondary">Postal code</p>
+      <p class="text-sm text-gray-500">Postal code</p>
       <input
         v-model="postal"
         type="text"
-        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-[#eee] text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 text-lg px-2 rounded-md"
       />
     </div>
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
     >
-      <p class="text-sm text-secondary">Street name</p>
+      <p class="text-sm text-gray-500">Street name</p>
       <input
         v-model="street"
         type="text"
-        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-[#eee] text-lg px-2 rounded-md"
+        class="w-full sm:w-[14rem] xl:w-[16rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 text-lg px-2 rounded-md"
       />
     </div>
     <div
       class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
     >
-      <p class="text-sm text-secondary">Building / Apt.</p>
+      <p class="text-sm text-gray-500">Building / Apt.</p>
       <div class="w-full sm:w-[14rem] xl:w-[16rem] flex justify-between">
         <input
           v-model="building"
           type="text"
-          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-[#eee] text-lg px-2 rounded-md"
+          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 text-lg px-2 rounded-md"
         />
         <input
           v-model="flat"
           type="text"
-          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-[#eee] text-lg px-2 rounded-md"
+          class="w-[45%] sm:w-[6.5rem] xl:w-[7.5rem] h-[2.5rem] bg-gray-200 border-1 border-gray-300 text-lg px-2 rounded-md"
         />
       </div>
     </div>

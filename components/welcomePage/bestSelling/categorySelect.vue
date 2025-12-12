@@ -25,11 +25,11 @@ onMounted(async () => {
   >
     <button
       @click="selectCategory('any')"
-      class="px-4 py-1 rounded-full hover:cursor-pointer text-sm md:text-md text-light font-semibold flex items-center justify-center transiton-color duration-200 ease-in-out"
+      class="px-4 py-1 rounded-full cursor-pointer text-sm md:text-md text-gray-200 font-semibold flex items-center justify-center transiton-color duration-200 ease-in-out"
       :class="[
         props.modelValue === 'any'
-          ? 'bg-[#1F1D20]/80'
-          : 'hover:bg-[#1F1D20]/60',
+          ? 'bg-stone-800/70'
+          : 'hover:bg-stone-800/50',
       ]"
     >
       Any
@@ -38,11 +38,11 @@ onMounted(async () => {
       v-for="(cat, id) in categories"
       :key="id"
       @click="selectCategory(cat.category)"
-      class="px-2 py-1 rounded-full hover:cursor-pointer text-sm md:text-md text-light font-semibold flex items-center justify-center transiton-color duration-200 ease-in-out"
+      class="px-2 py-1 rounded-full cursor-pointer text-sm md:text-md text-gray-200 font-semibold flex items-center justify-center transiton-color duration-200 ease-in-out"
       :class="[
         props.modelValue === cat.category
-          ? 'bg-[#1F1D20]/90'
-          : 'hover:bg-[#1F1D20]/60',
+          ? 'bg-stone-800/70'
+          : 'hover:bg-stone-800/50',
       ]"
     >
       <span>{{

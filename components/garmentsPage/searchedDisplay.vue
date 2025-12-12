@@ -44,7 +44,7 @@ watch(
 
 <template>
   <section class="w-full flex flex-col">
-    <p class="w-full text-center text-secondary">
+    <p class="w-full text-center text-gray-500">
       {{ searchedGarments.length }} results for "{{ search }}"
     </p>
 

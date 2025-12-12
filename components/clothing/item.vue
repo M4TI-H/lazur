@@ -38,7 +38,7 @@ onMounted(async () => {
     :to="`/garments/${gender}/itemDetails/${itemData.id}`"
     class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-white rounded-md overflow-hidden"
   >
-    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-slate-300">
+    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-gray-300">
       <img
         v-if="cover"
         :src="cover.url"
@@ -54,7 +54,7 @@ onMounted(async () => {
         <div class="w-full max-w-[96%] sm:max-w-full">
           <p
             v-if="itemData?.categories?.category"
-            class="hidden sm:block text-slate-500 font-thin text-sm"
+            class="hidden sm:block text-gray-500 font-thin text-sm"
           >
             {{ itemData.gender }} |
             {{
@@ -103,7 +103,7 @@ onMounted(async () => {
           <select
             v-model="selectedSize"
             @click.stop.prevent
-            class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-slate-300 flex justify-center outline-0"
+            class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-gray-300 flex justify-center outline-0"
           >
             <option class="text-center">-</option>
             <option class="text-center">XS</option>
@@ -115,9 +115,9 @@ onMounted(async () => {
 
           <button
             @click.stop.prevent="addToCart"
-            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-sky-700 flex items-center justify-center rounded-full cursor-pointer text-slate-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200"
+            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-sky-700 flex items-center justify-center rounded-full cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200"
           >
-            <i class="pi pi-shopping-bag text-sm text-slate-200" />
+            <i class="pi pi-shopping-bag text-sm text-gray-200" />
           </button>
         </div>
       </div>

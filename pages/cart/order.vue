@@ -150,49 +150,44 @@ onMounted(async () => {
 
 <template>
   <main
-    class="w-full min-h-screen flex flex-col items-center justify-center bg-[#F8F9FA]"
+    class="w-full min-h-screen flex flex-col items-center justify-center bg-white"
   >
     <section class="absolute z-10 w-full h-full">
       <img
         class="w-full h-full object-cover"
         src="https://static.vecteezy.com/system/resources/thumbnails/039/653/479/small_2x/ai-generated-stylish-blue-shopping-bags-against-a-matching-blue-background-conveying-a-modern-aesthetic-ai-generated-photo.jpg"
       />
-      <div class="absolute inset-0 bg-[#1F1D20]/70"></div>
+      <div class="absolute inset-0 bg-black/60"></div>
     </section>
 
     <form
       v-if="!displayAddressForm"
       @submit="onSubmit"
-      class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[36rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-[#ccc] sm:rounded-lg overflow-y-auto z-10"
+      class="fixed w-full sm:max-w-[24rem] xl:max-w-[28rem] h-full sm:h-auto sm:min-h-[36rem] sm:max-h-[44rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white sm:border-2 border-gray-300 sm:rounded-lg overflow-y-auto z-10"
     >
       <div class="w-full flex items-center justify-between">
         <h2 class="text-xl font-semibold">Shipping details</h2>
         <NuxtLink
           to="/cart"
-          class="text-sm text-secondary hover:cursor-pointer hover:underline"
+          class="text-sm text-gray-500 cursor-pointer hover:underline"
         >
           Cancel
         </NuxtLink>
       </div>
-      <div
-        v-if="showError && error"
-        class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
-      >
-        <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
-      </div>
+      <ErrorMessage v-if="showError && error" :error="error" />
       <EditableOrderField v-model="name" label="Name" />
       <EditableOrderField v-model="phone" label="Phone number" />
       <EditableOrderField v-model="email" label="Email address" />
 
-      <div class="w-full border-t-1 border-[#ccc]"></div>
+      <div class="w-full border-t-1 border-gray-300"></div>
 
       <div
         class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"
       >
-        <p class="text-sm text-secondary">Delivery type</p>
+        <p class="text-sm text-gray-500">Delivery type</p>
         <select
           v-model="delivery"
-          class="w-full sm:w-[12rem] xl:w-[14rem] h-[2rem] bg-[#eee] px-2 rounded-md"
+          class="w-full sm:w-[12rem] xl:w-[14rem] h-[2rem] bg-gray-200 border-1 border-gray-300 outline-0 px-2 rounded-md"
         >
           <option v-for="type in deliveries" :key="type.id" :value="type.id">
             {{ type.name }} | {{ type.cost == 0 ? "Free" : `$${type.cost}` }}
@@ -206,10 +201,10 @@ onMounted(async () => {
         @addNew="displayAddressForm = true"
       />
 
-      <div class="w-full border-t-1 border-[#ccc]"></div>
+      <div class="w-full border-t-1 border-gray-300"></div>
 
       <span class="w-full flex justify-between items-center px-2">
-        <p class="text-secondary md:text-lg font-semibold">Total</p>
+        <p class="text-gray-500 md:text-lg font-semibold">Total</p>
         <p class="font-semibold md:text-lg">
           ${{ cartStore.cart.total.toFixed(2) }}
         </p>
@@ -219,7 +214,7 @@ onMounted(async () => {
     </form>
     <div
       v-if="displayAddressForm"
-      class="fixed z-30 w-full min-h-full bg-[#1F1D20]/70 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
+      class="fixed z-30 w-full min-h-full bg-black/60 flex flex-col items-center justify-center py-16 gap-2 lg:gap-4"
     >
       <AddressForm
         @close="displayAddressForm = false"

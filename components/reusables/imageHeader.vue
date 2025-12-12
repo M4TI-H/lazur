@@ -12,7 +12,7 @@ const props = defineProps<{
       class="absolute bg-stone-800/70 w-full h-full z-20 flex items-center justify-center"
     >
       <h1
-        class="text-xl md:text-3xl max-w-2/3 md:max-w-[24rem] text-center text-slate-200 font-bold"
+        class="text-xl md:text-3xl max-w-2/3 md:max-w-[24rem] text-center text-gray-200 font-bold"
       >
         {{ props.title }}
       </h1>

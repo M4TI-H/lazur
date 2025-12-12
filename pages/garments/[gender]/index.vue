@@ -26,11 +26,11 @@ const { scrollY } = useScroll();
 
     <ClothesDisplay :gender="gender" />
     <div
-      class="w-full h-[12rem] bg-slate-500 flex flex-col items-center justify-center gap-2"
+      class="w-full h-[12rem] bg-gray-500 flex flex-col items-center justify-center gap-2"
     >
       <h3 class="text-xl md:text-2xl font-semibold">That is all for now</h3>
       <p
-        class="max-w-[14rem] md:text-lg md:max-w-[16rem] text-center text-slate-500"
+        class="max-w-[14rem] md:text-lg md:max-w-[16rem] text-center text-gray-500"
       >
         Stay tuned for our offer updates on our social media.
       </p>

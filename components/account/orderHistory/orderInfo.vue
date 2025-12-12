@@ -16,33 +16,33 @@ onMounted(async () => {
   <OrderSkeleton v-if="addressLoading" />
   <div
     v-else
-    class="w-full min-w-[16rem] h-[20rem] md:h-[15rem] flex flex-col border-2 border-slate-300 rounded-lg"
+    class="w-full min-w-[16rem] h-[20rem] md:h-[15rem] flex flex-col border-2 border-gray-300 rounded-lg"
   >
     <div
       class="w-full flex items-center justify-between bg-sky-700 p-4 rounded-t-lg"
     >
-      <h2 class="text-lg md:text-2xl font-semibold text-slate-200">
+      <h2 class="text-lg md:text-2xl font-semibold text-gray-200">
         Order #{{ order.id }}
       </h2>
-      <p class="text-slate-200 text-sm font-semibold">
+      <p class="text-gray-200 text-sm font-semibold">
         {{ useFormatDate(order.created_at) }}
       </p>
     </div>
 
     <div class="w-full h-full flex flex-col-reverse md:flex-row p-4">
       <div
-        class="w-full md:w-[70%] h-[8rem] md:h-[9rem] flex flex-col items-start gap-2 bg-slate-300 self-end mt-1"
+        class="w-full md:w-[70%] h-[8rem] md:h-[9rem] flex flex-col items-start gap-2 bg-gray-300 self-end mt-1"
       ></div>
       <div class="w-full md:w-[30%] flex flex-row md:flex-col justify-between">
         <div v-if="address" class="flex flex-col items-start md:items-end">
-          <p class="text-sm text-slate-500">
+          <p class="text-sm text-gray-500">
             {{ address.street }} {{ address.building_num
             }}{{ address.flat_num ? `/${address.flat_num}` : "" }}
           </p>
-          <p class="text-sm text-slate-500">
+          <p class="text-sm text-gray-500">
             {{ address.city }}, {{ address.postal_code }}
           </p>
-          <p class="text-sm text-slate-500">{{ address.country }}</p>
+          <p class="text-sm text-gray-500">{{ address.country }}</p>
         </div>
         <div
           class="w-full flex flex-col justify-between md:justify-end items-end gap-2 md:mt-4"

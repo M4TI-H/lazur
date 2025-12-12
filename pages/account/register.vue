@@ -7,60 +7,56 @@ const loading = ref<boolean>(false);
 const userStore = useUserStore();
 
 const validationSchema = toTypedSchema(
-  z.object({
-    login: z.email(),
-    password: z.string().min(1, "Password is required"),
-  })
+  z
+    .object({
+      login: z.email(),
+      password: z
+        .string()
+        .min(1, "Password is required")
+        .min(6, { message: "Password must include at least 6 characters" })
+        .regex(/[!@#$%^&]/, {
+          message: "At least one special character - !@#$%^&",
+        })
+        .regex(/(?=.*[A-Z])/, { message: "At least one capitalized letter" }),
+      confirmPassword: z.string().nonempty({ message: "Password is required" }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords are not the same",
+      path: ["confirmPassword"],
+    })
 );
+
 const { handleSubmit, meta } = useForm({
   validationSchema,
   initialValues: {
     login: "",
     password: "",
+    confirmPassword: "",
   },
 });
 
 const { value: login, errorMessage: loginError } = useField<string>("login");
 const { value: password, errorMessage: passwordError } =
   useField<string>("password");
-const invalidCredentialsError = ref<string | null>(null);
+const { value: confirmPassword, errorMessage: confirmPasswordError } =
+  useField<string>("confirmPassword");
 const showError = ref<boolean>(false);
 
 const error = computed(() => {
   return (
-    loginError.value ||
-    passwordError.value ||
-    invalidCredentialsError.value ||
-    ""
+    loginError.value || passwordError.value || confirmPasswordError.value || ""
   );
 });
 
-const handleLogin = async () => {
-  invalidCredentialsError.value = null;
-
+const handleRegister = async () => {
   try {
-    await userStore.signIn(login.value, password.value);
-    navigateTo("/");
+    await userStore.signUp(login.value, password.value);
   } catch (error: any) {
-    invalidCredentialsError.value = "Invalid user credentials";
+    return;
   }
 };
 
-const onSubmit = handleSubmit(
-  async () => {
-    showError.value = true;
-    await handleLogin();
-  },
-  () => {
-    showError.value = true;
-  }
-);
-
-onMounted(() => {
-  if (userStore.isLoggedIn) {
-    navigateTo("/");
-  }
-});
+const onSubmit = handleSubmit(handleRegister);
 </script>
 
 <template>
@@ -80,19 +76,18 @@ onMounted(() => {
         <h2
           class="text-xl sm:text-2xl font-bold text-center mt-4 text-stone-800"
         >
-          Sign in with email
+          Create new account
         </h2>
         <p
           class="text-sm text-gray-500 font-semibold text-center max-w-[20rem]"
         >
-          Enter your details below and continue your journey into
-          modernminimalism.
+          Join Lazur and redefine your everyday essentials with timeless design.
         </p>
 
-        <ErrorMessage v-if="showError && error" />
+        <ErrorMessage v-if="showError && error" :error="error" />
 
         <div
-          class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-4"
+          class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
         >
           <i
             class="pi pi-user absolute text-gray-500 text-lg left-3 top-1/2 -trangray-y-1/2"
@@ -104,37 +99,42 @@ onMounted(() => {
             class="w-full pl-10 h-[2.5rem] bg-gray-200 border-1 border-gray-300 outline-gray-300 text-sm px-2 rounded-md"
           />
         </div>
-
-        <div class="max-w-[20rem] lg:max-w-[24rem] w-full flex flex-col">
-          <div class="relative w-full self-center mt-4">
-            <i
-              class="pi pi-lock absolute text-gray-500 text-lg left-3 top-1/2 -trangray-y-1/2"
-            ></i>
-            <input
-              type="password"
-              v-model="password"
-              placeholder="Password"
-              class="w-full pl-10 h-[2.5rem] bg-gray-200 border-1 border-gray-300 outline-gray-300 text-sm px-2 rounded-md"
-            />
-          </div>
-
-          <NuxtLink
-            to="/account/login/changePassword"
-            class="text-sm md:text-md text-gray-500 font-semibold cursor-pointer hover:underline self-end mt-1"
-          >
-            Forgot password?
-          </NuxtLink>
+        <div
+          class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
+        >
+          <i
+            class="pi pi-lock-open absolute text-lg left-3 top-1/2 -trangray-y-1/2 text-gray-500"
+          ></i>
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            class="w-full pl-10 h-[2.5rem] bg-gray-200 border-1 border-gray-300 outline-gray-300 text-sm px-2 rounded-md"
+          />
+        </div>
+        <div
+          class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center mt-2"
+        >
+          <i
+            class="pi pi-lock absolute text-lg left-3 top-1/2 -trangray-y-1/2 text-gray-500"
+          ></i>
+          <input
+            type="password"
+            v-model="confirmPassword"
+            placeholder="Confirm password"
+            class="w-full pl-10 h-[2.5rem] bg-gray-200 border-1 border-gray-300 outline-gray-300 text-sm px-2 rounded-md"
+          />
         </div>
 
         <SubmitButton :loading="loading" :valid="meta.valid" />
 
         <span class="mt-auto text-sm text-gray-500 text-center"
-          >Not registered yet?
+          >Already registered?
           <br class="sm:hidden" />
           <NuxtLink
-            to="/account/register"
+            to="/account/login"
             class="!text-sky-700 cursor-pointer hover:underline"
-            >Create an account</NuxtLink
+            >Sign in</NuxtLink
           >.</span
         >
       </form>

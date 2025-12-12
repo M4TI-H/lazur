@@ -85,14 +85,14 @@ const handleSwipe = () => {
       <button
         v-if="idCounter < sliderContent.length - 1"
         @click="nextID"
-        class="z-20 absolute top-2 right-2 text-slate-200 font-semibold text-sm block md:hidden bg-stone-900/60 px-2 py-1 rounded-xl cursor-pointer"
+        class="z-20 absolute top-2 right-2 text-gray-200 font-semibold text-sm block md:hidden bg-stone-900/60 px-2 py-1 rounded-xl cursor-pointer"
       >
         Next
       </button>
       <button
         v-if="idCounter > 0"
         @click="prevID"
-        class="z-20 absolute top-2 left-2 text-slate-200 font-semibold text-sm block md:hidden bg-stone-900/60 px-2 py-1 rounded-xl cursor-pointer"
+        class="z-20 absolute top-2 left-2 text-gray-200 font-semibold text-sm block md:hidden bg-stone-900/60 px-2 py-1 rounded-xl cursor-pointer"
       >
         Prev
       </button>
@@ -101,35 +101,35 @@ const handleSwipe = () => {
     <div
       class="hidden md:flex flex-col absolute size-[24rem] left-0 md:ml-8 bg-sky-700 rounded-lg p-4 gap-4"
     >
-      <h2 class="text-slate-200 md:text-xl font-semibold">
+      <h2 class="text-gray-200 md:text-xl font-semibold">
         {{ sliderContent[idCounter].header }}
       </h2>
-      <p class="text-slate-200">{{ sliderContent[idCounter].desc }}</p>
+      <p class="text-gray-200">{{ sliderContent[idCounter].desc }}</p>
       <div class="absolute flex items-center bottom-4 gap-4">
         <button
           @click="prevID"
-          class="bg-slate-200 size-[2rem] rounded-full text-sky-700 text-xs"
+          class="bg-gray-200 size-[2rem] rounded-full text-sky-700 text-xs"
           :class="[
             idCounter > 0
-              ? ['bg-slate-200', ['cursor-pointer', 'hover:bg-slate-300']]
-              : 'bg-slate-400',
+              ? ['bg-gray-200', ['cursor-pointer', 'hover:bg-gray-300']]
+              : 'bg-gray-400',
           ]"
         >
           <i class="pi pi-chevron-left"></i>
         </button>
         <button
           @click="nextID"
-          class="bg-slate-200 size-[2rem] rounded-full text-sky-700 text-xs"
+          class="bg-gray-200 size-[2rem] rounded-full text-sky-700 text-xs"
           :class="[
             idCounter < sliderContent.length - 1
-              ? ['bg-slate-200', ['cursor-pointer', 'hover:bg-slate-300']]
-              : 'bg-slate-400',
+              ? ['bg-gray-200', ['cursor-pointer', 'hover:bg-gray-300']]
+              : 'bg-gray-400',
           ]"
         >
           <i class="pi pi-chevron-right"></i>
         </button>
       </div>
-      <p class="absolute bottom-4 right-4 text-slate-200 text-sm">
+      <p class="absolute bottom-4 right-4 text-gray-200 text-sm">
         {{ sliderContent[idCounter].id + 1 }} / {{ sliderContent.length }}
       </p>
     </div>
@@ -141,28 +141,28 @@ const handleSwipe = () => {
         @click="showDesc = !showDesc"
         class="flex items-center justify-between w-full h-[2rem] px-2 hover:bg-black/30 cursor-pointer"
       >
-        <h2 class="text-slate-200 font-semibold">
+        <h2 class="text-gray-200 font-semibold">
           {{ sliderContent[idCounter].header }}
         </h2>
         <i
           v-if="!showDesc"
-          class="pi pi-chevron-right text-slate-200 text-xs cursor-pointer"
+          class="pi pi-chevron-right text-gray-200 text-xs cursor-pointer"
         ></i>
         <i
           v-if="showDesc"
-          class="pi pi-chevron-down text-slate-200 text-xs cursor-pointer"
+          class="pi pi-chevron-down text-gray-200 text-xs cursor-pointer"
         ></i>
       </div>
       <Transition
         v-if="showDesc"
         enter-active-class="transition-all duration-300 ease-out"
         leave-active-class="transition-all duration-200 ease-in"
-        enter-from-class="translate-y-full opacity-0"
-        enter-to-class="translate-y-0 opacity-100"
-        leave-from-class="translate-y-0 opacity-100"
-        leave-to-class="translate-y-full opacity-0"
+        enter-from-class="trangray-y-full opacity-0"
+        enter-to-class="trangray-y-0 opacity-100"
+        leave-from-class="trangray-y-0 opacity-100"
+        leave-to-class="trangray-y-full opacity-0"
       >
-        <p v-if="showDesc" class="text-slate-200 text-sm px-2 pb-2">
+        <p v-if="showDesc" class="text-gray-200 text-sm px-2 pb-2">
           {{ sliderContent[0].desc }}
         </p>
       </Transition>

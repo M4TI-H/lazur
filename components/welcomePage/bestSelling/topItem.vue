@@ -27,7 +27,7 @@ function addToCart() {
   <NuxtLink
     v-if="itemData"
     :to="`/garments/${itemData.gender}/itemDetails/${itemData.id}`"
-    class="flex-shrink-0 w-[14rem] sm:w-[16rem] lg:w-[20rem] h-[20rem] lg:h-[28rem] bg-[#DEE2E6] rounded-md overflow-hidden"
+    class="flex-shrink-0 w-[14rem] sm:w-[16rem] lg:w-[20rem] h-[20rem] lg:h-[28rem] bg-gray-200 rounded-md overflow-hidden"
   >
     <img
       src="https://freepngimg.com/save/2135-dress-shirt-png-image/757x1204"
@@ -35,13 +35,13 @@ function addToCart() {
       draggable="false"
     />
     <div
-      class="w-full h-full flex flex-col items-center md:items-start p-2 py-2 md:px-4 bg-[#eee] md:bg-[#F8F9FA] rounded-b-xl"
+      class="w-full h-full flex flex-col items-center md:items-start p-2 py-2 md:px-4 bg-gray-200 md:bg-white rounded-b-xl"
     >
       <div class="w-full flex items-center justify-between">
         <div>
           <p
             v-if="itemData?.categories?.category"
-            class="text-secondary font-thin text-sm"
+            class="text-gray-500 font-thin text-sm"
           >
             {{ itemData.gender }} |
             {{
@@ -59,7 +59,7 @@ function addToCart() {
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "
-            class="text-[#445388]"
+            class="text-sky-700"
           />
         </div>
       </div>
@@ -75,7 +75,7 @@ function addToCart() {
           <select
             v-model="selectedSize"
             @click.stop.prevent
-            class="w-[4rem] md:w-[6rem] h-[2.5rem] rounded-lg bg-[#d9d9d9] flex justify-center outline-0"
+            class="w-[4rem] md:w-[6rem] h-[2.5rem] rounded-lg bg-gray-300 flex justify-center outline-0"
           >
             <option class="text-center">-</option>
             <option class="text-center">XS</option>
@@ -87,9 +87,9 @@ function addToCart() {
 
           <button
             @click.stop.prevent="addToCart"
-            class="w-[2.5rem] h-[2.5rem] bg-[#445388] rounded-full md:flex items-center justify-center gap-1 hover:bg-[#212842] active:bg-[#212842] hover:cursor-pointer"
+            class="w-[2.5rem] h-[2.5rem] bg-sky-700 rounded-full md:flex items-center justify-center gap-1 text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer"
           >
-            <i class="pi pi-shopping-bag text-sm md:text-lg text-light" />
+            <i class="pi pi-shopping-bag text-sm text-gray-200" />
           </button>
         </div>
       </div>

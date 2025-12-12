@@ -30,10 +30,10 @@ watch(localValue, (newVal) => {
     <div
       class="w-full flex flex-col sm:flex-row sm:items-center justify-between"
     >
-      <p class="text-sm text-secondary">Delivery address</p>
+      <p class="text-sm text-gray-500">Delivery address</p>
       <select
         v-model="localValue"
-        class="w-full sm:w-[12rem] xl:w-[14rem] h-[2rem] bg-[#eee] px-2 rounded-md"
+        class="w-full sm:w-[12rem] xl:w-[14rem] h-[2rem] bg-gray-200 border-1 border-gray-300 outline-0 px-2 rounded-md"
       >
         <option
           v-for="(address, index) in addresses"
@@ -50,7 +50,7 @@ watch(localValue, (newVal) => {
     <button
       type="button"
       @click="emit('addNew')"
-      class="text-sm text-secondary flex items-center gap-1 ml-auto mr-1 hover:cursor-pointer hover:underline"
+      class="text-sm text-gray-500 flex items-center gap-1 ml-auto mr-1 mt-1 cursor-pointer hover:underline"
     >
       Add new address
     </button>

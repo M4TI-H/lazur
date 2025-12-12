@@ -23,7 +23,7 @@ onMounted(async () => {
   >
     <NuxtLink
       :to="`/garments/${gender}`"
-      class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
+      class="mx-2 lg:mx-4 cursor-pointer text-gray-500 md:text-lg font-semibold flex items-center justify-center"
     >
       All
     </NuxtLink>
@@ -31,7 +31,7 @@ onMounted(async () => {
       v-for="(cat, id) in categories"
       :key="id"
       :to="`/garments/${gender}/category/${cat.category}`"
-      class="mx-2 lg:mx-4 hover:cursor-pointer text-secondary md:text-lg font-semibold flex items-center justify-center"
+      class="mx-2 lg:mx-4 cursor-pointer text-gray-500 md:text-lg font-semibold flex items-center justify-center"
     >
       {{ cat.category.charAt(0).toUpperCase() + cat.category.slice(1) }}
     </NuxtLink>

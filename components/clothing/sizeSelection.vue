@@ -35,11 +35,11 @@ onMounted(async () => {
         v-for="(size, id) in sizes ?? []"
         :key="id"
         @click="selectSize(size)"
-        class="min-w-[3rem] h-[3rem] p-1 rounded-md border border-slate-300 cursor-pointer text-lg"
+        class="min-w-[3rem] h-[3rem] p-1 rounded-md border border-gray-300 cursor-pointer text-lg"
         :class="[
           props.modelValue !== null && props.modelValue === size
-            ? ['bg-slate-200', 'text-slate-700']
-            : ['bg-none', 'hover:bg-slate-100', 'text-slate-500'],
+            ? ['bg-gray-200', 'text-gray-500']
+            : ['bg-none', 'hover:bg-gray-100', 'text-gray-500'],
         ]"
       >
         {{ size }}
@@ -48,7 +48,7 @@ onMounted(async () => {
 
     <button
       @click="emit('addToCart')"
-      class="w-full h-[3rem] min-w-[18rem] max-w-[24rem] bg-sky-700 rounded-lg flex items-center justify-center gap-2 text-slate-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer"
+      class="w-full h-[3rem] min-w-[18rem] max-w-[24rem] bg-sky-700 rounded-lg flex items-center justify-center gap-2 text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer"
     >
       <i class="pi pi-shopping-cart text-xl" />
       Add to cart

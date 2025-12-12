@@ -19,7 +19,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="w-full md:w-[30%] h-[16rem] md:h-[22rem] fixed bottom-0 md:relative flex flex-col px-4 py-2 md:py-4 gap-2 md:gap-4 bg-white border-t-1 md:border-1 border-[#ccc] md:rounded-lg"
+    class="w-full md:w-[30%] h-[16rem] md:h-[22rem] fixed bottom-0 md:relative flex flex-col px-4 py-2 md:py-4 gap-2 md:gap-4 bg-white border-t-1 md:border-1 border-gray-300 md:rounded-lg"
   >
     <div class="w-full hidden md:flex justify-center items-center gap-2">
       <i class="pi pi-shopping-cart text-2xl"></i>
@@ -27,24 +27,24 @@ onMounted(async () => {
     </div>
     <div class="w-full flex justify-between items-center">
       <h2 class="text-lg lg:text-xl font-semibold">Summary</h2>
-      <p class="md:text-lg text-secondary">{{ cartStore.itemCount }} Items</p>
+      <p class="md:text-lg text-gray-500">{{ cartStore.itemCount }} Items</p>
     </div>
-    <div class="w-full border-t-1 border-[#ccc]"></div>
+    <div class="w-full border-t-1 border-gray-300"></div>
     <div class="w-full flex justify-between items-center px-1 mt-auto">
-      <p class="text-secondary lg:text-lg">Subtotal</p>
+      <p class="text-gray-500 lg:text-lg">Subtotal</p>
       <p class="font-semibold md:text-lg">${{ cartStore.totalPrice }}</p>
     </div>
     <div class="w-full flex justify-between items-center px-1">
-      <p class="text-secondary lg:text-lg">Delivery</p>
+      <p class="text-gray-500 lg:text-lg">Delivery</p>
       <p class="font-semibold md:text-lg">
-        <span class="text-secondary text-xs md:text-sm">from </span>${{
+        <span class="text-gray-500 text-xs md:text-sm">from </span>${{
           cheapestDeliveryCost.toFixed(2)
         }}
       </p>
     </div>
-    <div class="w-full border-t-1 border-[#ccc]"></div>
+    <div class="w-full border-t-1 border-gray-300"></div>
     <div class="w-full flex justify-between items-center px-1 mt-auto">
-      <p class="text-secondary lg:text-lg font-semibold">Total</p>
+      <p class="text-gray-500 lg:text-lg font-semibold">Total</p>
       <p class="font-semibold md:text-lg">
         ${{
           (
@@ -57,14 +57,14 @@ onMounted(async () => {
     <NuxtLink
       v-if="userStore.isLoggedIn"
       to="cart/order"
-      class="w-[80%] max-w-[24rem] h-[2rem] md:h-[2.5rem] flex items-center justify-center bg-[#445388] text-light rounded-md self-center mt-auto hover:bg-[#212842] hover:cursor-pointer transition-color ease-in-out duration-200"
+      class="max-w-[12rem] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
     >
       Continue
     </NuxtLink>
     <NuxtLink
       v-if="!userStore.isLoggedIn"
       to="cart/guest/order"
-      class="w-[80%] max-w-[24rem] h-[2rem] md:h-[2.5rem] flex items-center justify-center bg-[#445388] text-light rounded-md self-center mt-auto hover:bg-[#212842] hover:cursor-pointer transition-color ease-in-out duration-200"
+      class="max-w-[[12rem]] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
     >
       Continue
     </NuxtLink>

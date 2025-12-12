@@ -16,15 +16,15 @@ const expandSorting = ref<boolean>(false);
     <div class="flex">
       <button
         @click="sortStore.setDirection(true)"
-        class="size-[2.5rem] flex items-center justify-center rounded-l-lg hover:bg-[#ddd] hover:cursor-pointer"
-        :class="[sortStore.ascending === true ? 'bg-[#ddd]' : 'bg-[#eee]']"
+        class="size-[2.5rem] flex items-center justify-center rounded-l-lg hover:bg-gray-300 cursor-pointer"
+        :class="[sortStore.ascending === true ? 'bg-gray-300' : 'bg-gray-200']"
       >
         <Icon icon="tabler:sort-ascending" />
       </button>
       <button
         @click="sortStore.setDirection(false)"
-        class="size-[2.5rem] flex items-center justify-center rounded-r-lg hover:bg-[#ddd] hover:cursor-pointer"
-        :class="[sortStore.ascending === false ? 'bg-[#ddd]' : 'bg-[#eee]']"
+        class="size-[2.5rem] flex items-center justify-center rounded-r-lg hover:bg-gray-300 cursor-pointer"
+        :class="[sortStore.ascending === false ? 'bg-gray-300' : 'bg-gray-200']"
       >
         <Icon icon="tabler:sort-descending" />
       </button>
@@ -32,7 +32,7 @@ const expandSorting = ref<boolean>(false);
     <div class="relative flex flex-col items-center">
       <button
         @click="expandSorting = !expandSorting"
-        class="flex items-center justify-between min-w-[8rem] px-2 gap-2 h-[2.5rem] bg-[#eee] text-sm rounded-lg outline-0 font-semibold hover:cursor-pointer truncate hover:bg-[#ddd]"
+        class="flex items-center justify-between min-w-[8rem] px-2 gap-2 h-[2.5rem] bg-gray-200 text-sm rounded-lg outline-0 font-semibold cursor-pointer truncate hover:bg-gray-300"
       >
         Sorting by
         {{
@@ -51,15 +51,17 @@ const expandSorting = ref<boolean>(false);
       </button>
       <div
         v-if="expandSorting"
-        class="absolute top-[3rem] z-20 bg-[#eee] w-[10rem] rounded-lg self-start"
+        class="absolute top-[3rem] z-20 bg-essa-200 w-[10rem] rounded-lg self-start"
       >
         <button
           @click="
             sortStore.setOption('popularity');
             expandSorting = false;
           "
-          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer rounded-t-lg font-semibold gap-2"
-          :class="[sortStore.option === 'popularity' ? 'bg-[#ddd]' : 'bg-none']"
+          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-gray-300 cursor-pointer rounded-t-lg font-semibold gap-2"
+          :class="[
+            sortStore.option === 'popularity' ? 'bg-gray-300' : 'bg-none',
+          ]"
         >
           <Icon icon="tabler:chart-bar-popular" />
           Popularity
@@ -69,8 +71,8 @@ const expandSorting = ref<boolean>(false);
             sortStore.setOption('price');
             expandSorting = false;
           "
-          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer font-semibold gap-2"
-          :class="[sortStore.option === 'price' ? 'bg-[#ddd]' : 'bg-none']"
+          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-gray-300 cursor-pointer font-semibold gap-2"
+          :class="[sortStore.option === 'price' ? 'bg-gray-300' : 'bg-none']"
         >
           <Icon icon="tabler:coins" />
           Price
@@ -80,8 +82,8 @@ const expandSorting = ref<boolean>(false);
             sortStore.setOption('rating');
             expandSorting = false;
           "
-          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-[#ddd] hover:cursor-pointer rounded-b-lg font-semibold gap-2"
-          :class="[sortStore.option === 'rating' ? 'bg-[#ddd]' : 'bg-none']"
+          class="w-full h-[2.5rem] flex items-center px-2 hover:bg-gray-300 cursor-pointer rounded-b-lg font-semibold gap-2"
+          :class="[sortStore.option === 'rating' ? 'bg-gray-300' : 'bg-none']"
         >
           <Icon icon="tabler:star" />
           Rating

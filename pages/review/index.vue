@@ -88,14 +88,6 @@ const onSubmit = handleSubmit(
   <main
     class="w-full min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden"
   >
-    <section class="absolute z-10 w-full h-full">
-      <img
-        class="w-full h-full object-cover"
-        src="https://static.vecteezy.com/system/resources/thumbnails/039/653/479/small_2x/ai-generated-stylish-blue-shopping-bags-against-a-matching-blue-background-conveying-a-modern-aesthetic-ai-generated-photo.jpg"
-      />
-      <div class="absolute inset-0 bg-[#1F1D20]/70"></div>
-    </section>
-
     <form
       v-if="!confirmReview"
       @submit="onSubmit"
@@ -105,17 +97,13 @@ const onSubmit = handleSubmit(
         <h2 class="text-xl font-semibold">Review</h2>
         <NuxtLink
           to="/"
-          class="text-sm text-secondary hover:cursor-pointer hover:underline"
+          class="text-sm text-secondary :cursor-pointer hover:underline"
         >
           Cancel
         </NuxtLink>
       </div>
-      <div
-        v-if="showError && error"
-        class="bg-[#f8d8d8] border-1 border-[#b14e4e] rounded-md p-2"
-      >
-        <p class="!text-[#b14e4e] text-sm">{{ error }}</p>
-      </div>
+
+      <ErrorMessage v-if="showError && error" />
       <div class="pl-1 text-secondary flex flex-col gap-2">
         <div
           class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between sm:px-4 gap-1 sm:gap-0"

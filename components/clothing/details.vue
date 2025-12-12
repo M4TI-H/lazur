@@ -19,11 +19,11 @@ const options = ["description", "category", "fabrics"];
         v-for="(option, id) in options"
         :key="id"
         @click="selectedOption = option"
-        class="h-[2rem] px-2 sm:text-sm text-slate-500 cursor-pointer rounded-md border border-slate-300 hover:bg-slate-100 hover:border-slate-200"
+        class="h-[2rem] px-2 sm:text-sm text-gray-500 cursor-pointer rounded-md border border-gray-300 hover:bg-gray-100 hover:border-gray-200"
         :class="[
           option === selectedOption
-            ? ['text-slate-700', 'bg-slate-200']
-            : 'border-slate-400/0',
+            ? ['text-gray-500', 'bg-gray-200']
+            : 'border-gray-400/0',
         ]"
       >
         {{ option.charAt(0).toUpperCase() + option.slice(1) }}

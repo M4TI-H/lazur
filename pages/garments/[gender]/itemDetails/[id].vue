@@ -58,7 +58,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
           <h3 class="sm:text-xl font-thin">${{ garment.price.toFixed(2) }}</h3>
           <button
             @click="displayReviews = true"
-            class="flex hover:cursor-pointer hover:bg-slate-100 p-2 rounded-md"
+            class="flex :cursor-pointer hover:bg-gray-100 p-2 rounded-md"
           >
             <Icon
               v-for="i in 5"
@@ -73,7 +73,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
           </button>
         </div>
 
-        <div class="w-full min-w-[18rem] h-[1px] bg-slate-700"></div>
+        <div class="w-full min-w-[18rem] h-[1px] bg-gray-700"></div>
 
         <SizeSelection
           v-model="selectedSize"
@@ -83,21 +83,21 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
         />
         <Details :garment="garment" />
 
-        <div class="w-full min-w-[18rem] h-[1px] bg-slate-700 my-2"></div>
+        <div class="w-full min-w-[18rem] h-[1px] bg-gray-700 my-2"></div>
 
         <div
           class="w-full min-w-[18rem] max-w-[24rem] sm:max-w-full flex flex-col sm:flex-row justify-center items-center gap-4"
         >
           <button
             @click="displayReviews = true"
-            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-slate-700 cursor-pointer hover:bg-slate-100 text-slate-700 px-2"
+            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-gray-700 cursor-pointer hover:bg-gray-100 text-gray-500 px-2"
           >
             <i class="pi pi-comments"></i>
             Read reviews
           </button>
           <button
             @click="displayForm = !displayForm"
-            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-slate-700 cursor-pointer hover:bg-slate-100 text-slate-700 px-2"
+            class="w-full sm:w-1/2 h-[2.5rem] flex items-center justify-center gap-2 rounded-md border border-gray-700 cursor-pointer hover:bg-gray-100 text-gray-500 px-2"
           >
             <i class="pi pi-thumbs-up"></i>
             Write a review
@@ -108,7 +108,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
 
     <div
       v-if="displayForm"
-      class="fixed inset-0 w-screen min-h-screen bg-slate-700/50 flex items-center justify-center z-50"
+      class="fixed inset-0 w-screen min-h-screen bg-gray-700/50 flex items-center justify-center z-50"
     >
       <div class="absolute inset-0" @click="displayForm = false"></div>
       <div class="relative z-10">
@@ -133,7 +133,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
     </div>
     <div
       v-if="displayReviews"
-      class="fixed inset-0 w-screen min-h-screen bg-slate-700/50 flex items-center justify-center z-50"
+      class="fixed inset-0 w-screen min-h-screen bg-gray-700/50 flex items-center justify-center z-50"
     >
       <div class="w-full relative z-10 flex justify-center">
         <div class="absolute inset-0" @click="displayReviews = false"></div>

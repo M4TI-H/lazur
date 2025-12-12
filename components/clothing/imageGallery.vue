@@ -49,7 +49,7 @@ onMounted(async () => {
       </div>
     </div>
     <div
-      class="relative w-full lg:w-[36rem] h-[28rem] lg:h-[36rem] xl:h-[44rem] bg-slate-100 flex items-center"
+      class="relative w-full lg:w-[36rem] h-[28rem] lg:h-[36rem] xl:h-[44rem] bg-gray-100 flex items-center"
     >
       <div
         class="lg:hidden scrollbar-hide w-full h-[28rem] lg:h-[36rem] xl:h-[44rem] flex flex-row overflow-x-auto whitespace-nowrap snap-x snap-mandatory"
@@ -74,7 +74,7 @@ onMounted(async () => {
         <div
           v-for="image in images"
           :key="image.id"
-          class="size-[1rem] border border-slate-700 bg-white p-0.5"
+          class="size-[1rem] border border-gray-700 bg-white p-0.5"
         >
           <div
             v-if="image.id === featuredImage?.id"
