@@ -68,7 +68,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
                   ? 'tabler:star-filled'
                   : 'tabler:star'
               "
-              class="text-sky-700"
+              class="text-sky-800"
             />
           </button>
         </div>
@@ -108,7 +108,7 @@ watch([displayReviews, displayForm], ([reviews, form]) => {
 
     <div
       v-if="displayForm"
-      class="fixed inset-0 w-screen min-h-screen bg-gray-700/50 flex items-center justify-center z-50"
+      class="fixed inset-0 w-screen min-h-screen bg-black/60 flex items-center justify-center z-50"
     >
       <div class="absolute inset-0" @click="displayForm = false"></div>
       <div class="relative z-10">

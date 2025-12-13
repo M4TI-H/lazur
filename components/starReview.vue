@@ -40,7 +40,7 @@ const selectStar = (value: number) => {
           (hoveredStar === null &&
             props.modelValue !== null &&
             value <= props.modelValue)
-            ? 'text-sky-700'
+            ? 'text-sky-800'
             : 'text-gray-500',
         ]"
       />

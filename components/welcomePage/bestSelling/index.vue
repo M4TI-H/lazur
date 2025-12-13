@@ -101,7 +101,7 @@ onMounted(() => {
         <div class="w-full flex justify-center items-center gap-2">
           <button
             v-if="firstVisible > 0"
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-700 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-800 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-900 active:bg-sky-900 transition-colors ease-in-out duration-250"
             @click="displayPrev()"
           >
             <i class="pi pi-arrow-left text-xs"></i>
@@ -119,7 +119,7 @@ onMounted(() => {
 
           <button
             v-if="firstVisible + amountVisible + 1 < (garments?.length ?? 0)"
-            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-700 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
+            class="hidden md:flex size-[2rem] lg:h-[2rem] lg:w-[6rem] items-center justify-center gap-2 bg-sky-800 text-gray-200 rounded-full text-sm cursor-pointer hover:bg-sky-900 active:bg-sky-900 transition-colors ease-in-out duration-250"
             @click="displayNext()"
           >
             <span class="hidden lg:block">Next</span>
@@ -161,7 +161,7 @@ onMounted(() => {
       >
         <div
           class="flex gap-4 transition-transform duration-500 ease-in-out px-2"
-          :style="{ transform: `trangrayX(${offset}px)` }"
+          :style="{ transform: `translateX(${offset}px)` }"
         >
           <i v-if="loading" class="pi pi-spinner pi-spin text-gray-200"></i>
           <TopItem

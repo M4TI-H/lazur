@@ -48,7 +48,7 @@ onMounted(async () => {
 
     <button
       @click="emit('addToCart')"
-      class="w-full h-[3rem] min-w-[18rem] max-w-[24rem] bg-sky-700 rounded-lg flex items-center justify-center gap-2 text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer"
+      class="w-full h-[3rem] min-w-[18rem] max-w-[24rem] bg-sky-800 rounded-lg flex items-center justify-center gap-2 text-gray-200 hover:bg-sky-900 active:bg-sky-900 cursor-pointer"
     >
       <i class="pi pi-shopping-cart text-xl" />
       Add to cart

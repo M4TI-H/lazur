@@ -93,12 +93,7 @@ const onSubmit = handleSubmit(handleReviewSubmit);
       <h2 class="sm:text-xl font-semibold truncate">
         Reviewing {{ item_name }}
       </h2>
-      <button
-        @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-gray-300/50 :cursor-pointer transition-colors duration-150"
-      >
-        <i class="pi pi-times"></i>
-      </button>
+      <ExitButton @click="emit('close')" />
     </div>
 
     <ErrorMessage v-if="error" :error="error" />

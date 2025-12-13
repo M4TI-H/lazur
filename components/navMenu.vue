@@ -210,7 +210,7 @@ const isMobile = useMediaQuery("(max-width: 767px)");
         <i class="pi pi-shopping-cart text-xl text-gray-200 sm:hidden"></i>
         <div
           v-if="cartStore.itemCount > 0"
-          class="absolute top-1 right-0 px-1 bg-sky-700 rounded-full flex items-center justify-center"
+          class="absolute top-1 right-0 px-1 bg-sky-800 rounded-full flex items-center justify-center"
         >
           <p class="text-sm">
             {{ cartStore.itemCount > 99 ? "99+" : cartStore.itemCount }}

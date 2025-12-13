@@ -77,7 +77,7 @@ onMounted(async () => {
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "
-            class="text-sky-700"
+            class="text-sky-800"
           />
         </div>
       </div>
@@ -95,7 +95,7 @@ onMounted(async () => {
             v-if="rating && Number(rating.avg_rating) > 0"
           >
             {{ Number(rating.avg_rating).toFixed(1) }}
-            <Icon icon="tabler:star-filled" class="text-sky-700" />
+            <Icon icon="tabler:star-filled" class="text-sky-800" />
           </span>
         </div>
 
@@ -115,7 +115,7 @@ onMounted(async () => {
 
           <button
             @click.stop.prevent="addToCart"
-            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-sky-700 flex items-center justify-center rounded-full cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200"
+            class="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] bg-sky-800 flex items-center justify-center rounded-full cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200"
           >
             <i class="pi pi-shopping-bag text-sm text-gray-200" />
           </button>

@@ -21,16 +21,14 @@ const { scrollY } = useScroll();
       <CategoryMenu :gender="gender" />
       <Sorting />
     </section>
-    <div class="w-full h-[4rem] flex items-center justify-center my-4">
-      <h2 class="text-gray-500 text-2xl lg:text-3xl font-thin">
-        {{ category.toUpperCase() }}
-      </h2>
-    </div>
+
     <CategoryDisplay :category="category" :gender="gender" />
     <div
-      class="w-full h-[12rem] bg-gray-500 flex flex-col items-center justify-center gap-2"
+      class="w-full h-[12rem] bg-gray-200 flex flex-col items-center justify-center gap-2"
     >
-      <h3 class="text-xl md:text-2xl font-semibold">That is all for now</h3>
+      <h3 class="text-xl md:text-2xl font-semibold text-slate-700">
+        That is all for now
+      </h3>
       <p
         class="max-w-[14rem] md:text-lg md:max-w-[16rem] text-center text-gray-500"
       >

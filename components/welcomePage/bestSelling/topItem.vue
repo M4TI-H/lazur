@@ -59,7 +59,7 @@ function addToCart() {
                 ? 'tabler:star-filled'
                 : 'tabler:star'
             "
-            class="text-sky-700"
+            class="text-sky-800"
           />
         </div>
       </div>
@@ -87,7 +87,7 @@ function addToCart() {
 
           <button
             @click.stop.prevent="addToCart"
-            class="w-[2.5rem] h-[2.5rem] bg-sky-700 rounded-full md:flex items-center justify-center gap-1 text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer"
+            class="w-[2.5rem] h-[2.5rem] bg-sky-800 rounded-full md:flex items-center justify-center gap-1 text-gray-200 hover:bg-sky-900 active:bg-sky-900 cursor-pointer"
           >
             <i class="pi pi-shopping-bag text-sm text-gray-200" />
           </button>

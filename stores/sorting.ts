@@ -4,6 +4,7 @@ export const useSortStore = defineStore("sort", {
   state: () => ({
     option: "popularity" as string,
     ascending: false as boolean,
+    category: "all" as string,
   }),
 
   actions: {
@@ -13,6 +14,10 @@ export const useSortStore = defineStore("sort", {
     },
     setDirection(data: boolean) {
       this.ascending = data;
+      this.saveToStorage();
+    },
+    setCategory(data: string) {
+      this.category = data;
       this.saveToStorage();
     },
     saveToStorage() {
@@ -31,6 +36,7 @@ export const useSortStore = defineStore("sort", {
           const parsed = JSON.parse(data);
           this.option = parsed.option ?? "price";
           this.ascending = parsed.ascending ?? false;
+          this.category = parsed.category ?? "all";
         } catch (e) {
           console.error("Invalid sort data in storage:", e);
         }

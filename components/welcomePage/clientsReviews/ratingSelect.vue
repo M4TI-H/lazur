@@ -19,7 +19,7 @@ const changeSelected = (id: number) => {
       @click="changeSelected(0)"
       class="px-2 h-full rounded-full cursor-pointer text-gray-500 font-semibold flex items-center justify-center gap-1 transition duration-200 ease-in-out"
       :class="[
-        props.modelValue === 0 ? 'bg-stone-800/20' : 'hover:bg-stone-800/30',
+        props.modelValue === 0 ? 'bg-stone-800/20' : 'hover:bg-stone-800/10',
       ]"
     >
       <span class="hidden sm:flex">Recent</span>
@@ -35,7 +35,7 @@ const changeSelected = (id: number) => {
       ]"
     >
       <span>{{ i }}</span>
-      <Icon icon="tabler:star-filled" class="text-sky-700" />
+      <Icon icon="tabler:star-filled" class="text-sky-800" />
     </button>
   </div>
 </template>

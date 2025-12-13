@@ -99,16 +99,11 @@ const onSubmit = handleSubmit(handleSubmitAddress);
 <template>
   <form
     @submit.prevent="onSubmit"
-    class="fixed w-full min-w-[14rem] max-w-[90%] sm:max-w-[24rem] xl:max-w-[28rem] min-h-[32rem] p-4 gap-4 sm:gap-8 flex flex-col bg-white border-2 border-gray-300 rounded-lg overflow-y-auto"
+    class="fixed w-full min-w-[14rem] max-w-[90%] sm:max-w-[24rem] xl:max-w-[28rem] min-h-[32rem] p-4 gap-4 sm:gap-6 flex flex-col bg-white border-2 border-gray-300 rounded-lg overflow-y-auto"
   >
-    <div class="w-full flex items-center justify-between mb-4">
+    <div class="w-full flex items-center justify-between">
       <h2 class="text-xl font-semibold">New address</h2>
-      <button
-        @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-gray-300/50 cursor-pointer transition-colors duration-150"
-      >
-        <i class="pi pi-times"></i>
-      </button>
+      <ExitButton @click="emit('close')" />
     </div>
     <ErrorMessage v-if="error" :error="error" />
     <div

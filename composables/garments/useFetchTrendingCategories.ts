@@ -6,7 +6,7 @@ export function useFetchTrendingCategories(category: Ref<string>) {
     refresh: refresh,
   } = useAsyncData(
     () => `trending-${category.value}-garments`,
-    () => $fetch(`/api/garments/fetch_category_trending/${category.value}`),
+    () => $fetch(`api/garments/fetch_category_trending/${category.value}`),
     { watch: [category] }
   );
 

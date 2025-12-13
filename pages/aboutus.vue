@@ -30,7 +30,7 @@ const { scrollY } = useScroll();
     <div class="w-full flex flex-wrap items-center justify-evenly gap-y-8 pb-8">
       <Slider />
       <div
-        class="w-[18rem] sm:w-full sm:max-w-[22rem] md:max-w-[24rem] min-h-[28rem] h-auto md:h-[32rem] bg-sky-700 flex flex-col items-center p-4 rounded-lg gap-2"
+        class="w-[18rem] sm:w-full sm:max-w-[22rem] md:max-w-[24rem] min-h-[28rem] h-auto md:h-[32rem] bg-sky-800 flex flex-col items-center p-4 rounded-lg gap-2"
       >
         <div class="w-full md:h-[6rem] flex items-center justify-center gap-4">
           <i class="pi pi-eye text-gray-200 text-3xl"></i>
@@ -62,7 +62,7 @@ const { scrollY } = useScroll();
         </p>
       </div>
       <div
-        class="w-[18rem] sm:w-full sm:max-w-[22rem] md:max-w-[24rem] min-h-[28rem] h-auto md:h-[32rem] bg-sky-700 flex flex-col items-center p-4 rounded-lg gap-2"
+        class="w-[18rem] sm:w-full sm:max-w-[22rem] md:max-w-[24rem] min-h-[28rem] h-auto md:h-[32rem] bg-sky-800 flex flex-col items-center p-4 rounded-lg gap-2"
       >
         <div class="w-full md:h-[6rem] flex items-center justify-center gap-4">
           <i class="pi pi-globe text-gray-200 text-3xl"></i>

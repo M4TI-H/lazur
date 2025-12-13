@@ -99,7 +99,7 @@ const handleSwipe = () => {
     </div>
 
     <div
-      class="hidden md:flex flex-col absolute size-[24rem] left-0 md:ml-8 bg-sky-700 rounded-lg p-4 gap-4"
+      class="hidden md:flex flex-col absolute size-[24rem] left-0 md:ml-8 bg-sky-800 rounded-lg p-4 gap-4"
     >
       <h2 class="text-gray-200 md:text-xl font-semibold">
         {{ sliderContent[idCounter].header }}
@@ -108,7 +108,7 @@ const handleSwipe = () => {
       <div class="absolute flex items-center bottom-4 gap-4">
         <button
           @click="prevID"
-          class="bg-gray-200 size-[2rem] rounded-full text-sky-700 text-xs"
+          class="bg-gray-200 size-[2rem] rounded-full text-sky-800 text-xs"
           :class="[
             idCounter > 0
               ? ['bg-gray-200', ['cursor-pointer', 'hover:bg-gray-300']]
@@ -119,7 +119,7 @@ const handleSwipe = () => {
         </button>
         <button
           @click="nextID"
-          class="bg-gray-200 size-[2rem] rounded-full text-sky-700 text-xs"
+          class="bg-gray-200 size-[2rem] rounded-full text-sky-800 text-xs"
           :class="[
             idCounter < sliderContent.length - 1
               ? ['bg-gray-200', ['cursor-pointer', 'hover:bg-gray-300']]
@@ -157,10 +157,10 @@ const handleSwipe = () => {
         v-if="showDesc"
         enter-active-class="transition-all duration-300 ease-out"
         leave-active-class="transition-all duration-200 ease-in"
-        enter-from-class="trangray-y-full opacity-0"
-        enter-to-class="trangray-y-0 opacity-100"
-        leave-from-class="trangray-y-0 opacity-100"
-        leave-to-class="trangray-y-full opacity-0"
+        enter-from-class="translate-y-full opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-full opacity-0"
       >
         <p v-if="showDesc" class="text-gray-200 text-sm px-2 pb-2">
           {{ sliderContent[0].desc }}

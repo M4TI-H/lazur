@@ -37,7 +37,7 @@ const { review } = defineProps<{
             :icon="
               i <= review.general_rating ? 'tabler:star-filled' : 'tabler:star'
             "
-            class="text-sky-700"
+            class="text-sky-800"
           />
         </div>
       </div>

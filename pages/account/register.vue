@@ -70,7 +70,7 @@ const onSubmit = handleSubmit(handleRegister);
         class="relative min-h-[30rem] max-h-[42rem] w-full min-w-[18rem] md:min-w-[28rem] max-w-[90%] md:max-w-[32rem] lg:max-w-[32rem] p-4 gap-4 sm:gap-8 flex flex-col items-center bg-white border-2 border-gray-300 rounded-lg overflow-y-auto mx-auto"
       >
         <div class="w-full flex items-center justify-between">
-          <h1 class="self-start text-xl text-sky-700 font-bold">Lazur</h1>
+          <h1 class="self-start text-xl text-sky-800 font-bold">Lazur</h1>
           <NuxtLink to="/" class="text-sm text-gray-500">Back</NuxtLink>
         </div>
         <h2
@@ -90,7 +90,7 @@ const onSubmit = handleSubmit(handleRegister);
           class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
         >
           <i
-            class="pi pi-user absolute text-gray-500 text-lg left-3 top-1/2 -trangray-y-1/2"
+            class="pi pi-user absolute text-gray-500 text-lg left-3 top-1/2 -translate-y-1/2"
           ></i>
           <input
             type="text"
@@ -103,7 +103,7 @@ const onSubmit = handleSubmit(handleRegister);
           class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center my-2"
         >
           <i
-            class="pi pi-lock-open absolute text-lg left-3 top-1/2 -trangray-y-1/2 text-gray-500"
+            class="pi pi-lock-open absolute text-lg left-3 top-1/2 -translate-y-1/2 text-gray-500"
           ></i>
           <input
             type="password"
@@ -116,7 +116,7 @@ const onSubmit = handleSubmit(handleRegister);
           class="relative max-w-[20rem] lg:max-w-[24rem] w-full self-center mt-2"
         >
           <i
-            class="pi pi-lock absolute text-lg left-3 top-1/2 -trangray-y-1/2 text-gray-500"
+            class="pi pi-lock absolute text-lg left-3 top-1/2 -translate-y-1/2 text-gray-500"
           ></i>
           <input
             type="password"
@@ -133,7 +133,7 @@ const onSubmit = handleSubmit(handleRegister);
           <br class="sm:hidden" />
           <NuxtLink
             to="/account/login"
-            class="!text-sky-700 cursor-pointer hover:underline"
+            class="!text-sky-800 cursor-pointer hover:underline"
             >Sign in</NuxtLink
           >.</span
         >

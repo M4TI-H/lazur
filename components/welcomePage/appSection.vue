@@ -12,7 +12,7 @@
       sales and promotions.
     </p>
     <button
-      class="w-full max-w-[12rem] h-[2.5rem] bg-sky-700 rounded-lg flex items-center justify-center text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer transition-colors ease-in-out duration-250"
+      class="w-full max-w-[12rem] h-[2.5rem] bg-sky-800 rounded-lg flex items-center justify-center text-gray-200 hover:bg-sky-900 active:bg-sky-900 cursor-pointer transition-colors ease-in-out duration-250"
     >
       Download now
     </button>

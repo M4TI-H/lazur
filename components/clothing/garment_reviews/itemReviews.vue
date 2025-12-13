@@ -23,12 +23,7 @@ onMounted(async () => {
   >
     <div class="flex items-center justify-between">
       <h2 class="text-xl md:text-2xl font-semibold">All reviews</h2>
-      <button
-        @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-gray-500/50 cursor-pointer transition-colors duration-150"
-      >
-        <i class="pi pi-times"></i>
-      </button>
+      <ExitButton @click="emit('close')" />
     </div>
     <p v-if="reviews?.length === 0" class="my-4 text-gray-500 font-semibold">
       No reviews.
@@ -55,7 +50,7 @@ onMounted(async () => {
                 :icon="
                   i <= review.rating ? 'tabler:star-filled' : 'tabler:star'
                 "
-                class="text-sky-700 text-lg"
+                class="text-sky-800 text-lg"
               />
             </span>
             <p>{{ review.review }}</p>
@@ -64,7 +59,7 @@ onMounted(async () => {
             v-if="review.image_url"
             :src="review.image_url"
             draggable="false"
-            class="size-28"
+            class="h-[8rem] max-w-[16rem]"
           />
         </div>
 

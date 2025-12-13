@@ -57,14 +57,14 @@ onMounted(async () => {
     <NuxtLink
       v-if="userStore.isLoggedIn"
       to="cart/order"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
+      class="max-w-[12rem] w-full h-[2.5rem] bg-sky-800 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200 mx-auto"
     >
       Continue
     </NuxtLink>
     <NuxtLink
       v-if="!userStore.isLoggedIn"
       to="cart/guest/order"
-      class="max-w-[[12rem]] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
+      class="max-w-[[12rem]] w-full h-[2.5rem] bg-sky-800 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200 mx-auto"
     >
       Continue
     </NuxtLink>

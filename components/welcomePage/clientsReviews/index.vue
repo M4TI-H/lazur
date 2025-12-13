@@ -132,7 +132,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
       <div>
         <button
           v-if="firstVisible > 0"
-          class="hidden sm:block size-[2rem] bg-sky-700 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-800 active:bg-sky-800 transition-colors ease-in-out duration-250"
+          class="hidden sm:block size-[2rem] bg-sky-800 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-900 active:bg-sky-900 transition-colors ease-in-out duration-250"
           @click="displayPrev()"
         >
           <i class="pi pi-arrow-left"></i>
@@ -150,7 +150,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
       >
         <div
           class="flex gap-4 transition-transform duration-500 ease-in-out mx-auto px-2"
-          :style="{ transform: `trangrayX(${offset}px)` }"
+          :style="{ transform: `translateX(${offset}px)` }"
         >
           <i
             v-if="loading || ratingLoading"
@@ -174,7 +174,7 @@ const offset = computed(() => -(firstVisible.value * itemWidth.value));
           v-if="
             firstVisible + amountVisible + 1 < (displayedReviews?.length ?? 0)
           "
-          class="hidden sm:block size-[2rem] bg-sky-700 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-800 active:bg-sky-800transition-colors ease-in-out duration-250"
+          class="hidden sm:block size-[2rem] bg-sky-800 text-gray-200 rounded-full text-xs cursor-pointer hover:bg-sky-900 active:bg-sky-900transition-colors ease-in-out duration-250"
           @click="displayNext()"
         >
           <i class="pi pi-arrow-right"></i>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFetchCoverImage } from "~/composables/garments/images/useFetchCoverImage";
 import type Garment from "~/types/Garment";
 
 const { itemData } = defineProps<{
@@ -7,6 +8,12 @@ const { itemData } = defineProps<{
 
 const cartStore = useCartStore();
 cartStore.loadFromStorage();
+
+const { cover, coverLoading, refreshCover } = useFetchCoverImage(itemData.id);
+
+onMounted(async () => {
+  await refreshCover();
+});
 </script>
 
 <template>
@@ -22,12 +29,13 @@ cartStore.loadFromStorage();
     <NuxtLink
       :to="`/garments/${itemData.gender}/itemDetails/${itemData.id}`"
       draggable="false"
-      class="h-[9rem] lg:h-[11rem] w-[8rem] md:min-w-[10rem] lg:min-w-[12rem] lg:max-w-[20%] lg:w-full"
+      class="h-[9rem] lg:h-[11rem] w-[8rem] md:min-w-[10rem] lg:min-w-[12rem] lg:max-w-[20%]"
     >
       <img
         draggable="false"
-        src="https://static.vecteezy.com/system/resources/previews/034/969/304/non_2x/ai-generated-t-shirt-mockup-clip-art-free-png.png"
-        class="w-full h-full bg-gray-300 rounded-lg"
+        v-if="cover"
+        :src="cover.url"
+        class="h-full bg-gray-300 rounded-lg"
       />
     </NuxtLink>
     <div

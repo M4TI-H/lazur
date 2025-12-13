@@ -78,7 +78,7 @@ onMounted(async () => {
         >
           <div
             v-if="image.id === featuredImage?.id"
-            class="size-full bg-sky-700"
+            class="size-full bg-sky-800"
           ></div>
         </div>
       </div>

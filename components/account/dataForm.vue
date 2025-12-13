@@ -61,12 +61,7 @@ const onSubmit = handleSubmit(handleSubmitDataChange);
   >
     <div class="w-full flex items-center justify-between mb-4">
       <h2 class="text-xl font-semibold">Modify personal data</h2>
-      <button
-        @click="emit('close')"
-        class="text-sm flex items-center justify-center p-1 rounded-full hover:bg-gray-300/50 cursor-pointer transition-colors duration-150"
-      >
-        <i class="pi pi-times"></i>
-      </button>
+      <ExitButton @click="emit('close')" />
     </div>
     <ErrorMessage v-if="error" :error="error" />
     <div

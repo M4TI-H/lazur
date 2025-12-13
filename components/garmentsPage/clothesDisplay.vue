@@ -12,8 +12,6 @@ const { gender } = defineProps<{
 const { allGarments, loading, hasMore, fetchFirstPage, fetchNextPage, page } =
   useFetchAllGarments(8);
 
-const listEl = ref<HTMLElement | null>(null);
-
 await fetchFirstPage(sortStore.option, sortStore.ascending, gender);
 
 useInfiniteScroll(
@@ -38,7 +36,6 @@ watch(
 
 <template>
   <div
-    ref="listEl"
     class="w-full max-w-[100vw] flex flex-wrap items-start justify-center gap-4 sm:gap-8 px-4 sm:px-8 mx-auto"
   >
     <i v-if="loading" class="pi pi-spinner pi-spin text-2xl text-black"></i>

@@ -33,7 +33,7 @@ const searchItem = () => {
         >
           <button
             @click="searchItem"
-            class="absolute right-3 bg-sky-700 size-[2rem] rounded-full flex items-center justify-center z-20 cursor-pointer"
+            class="absolute right-3 bg-sky-800 size-[2rem] rounded-full flex items-center justify-center z-20 cursor-pointer"
           >
             <i class="pi pi-search text-gray-200 text-sm"></i>
           </button>

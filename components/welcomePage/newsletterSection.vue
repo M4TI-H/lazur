@@ -23,7 +23,7 @@
           class="w-full md:w-[24rem] h-[3rem] bg-stone-800/50 backdrop-blur-sm focus:bg-stone-800/60 focus:backdrop-blur-md placeholder-gray-200 placeholder:font-thin text-gray-200 rounded-full px-4 border border-gray-200 outline-none transition duration-500 ease-in-out"
         />
         <button
-          class="w-full max-w-[12rem] h-[2.5rem] bg-sky-700 rounded-lg flex items-center justify-center text-gray-200 hover:bg-sky-800 active:bg-sky-800 cursor-pointer transition-colors ease-in-out duration-250"
+          class="w-full max-w-[12rem] h-[2.5rem] bg-sky-800 rounded-lg flex items-center justify-center text-gray-200 hover:bg-sky-900 active:bg-sky-900 cursor-pointer transition-colors ease-in-out duration-250"
         >
           Subscribe
         </button>
