@@ -6,6 +6,7 @@ import { useFetchDelivery } from "~/composables/orders/useFetchDelivery";
 import { useCreateOrder } from "~/composables/orders/useCreateOrder";
 import { useFetchPersonalData } from "~/composables/users/personalData/useFetchPersonalData";
 import { useFetchUserAddresses } from "~/composables/users/addresses/useFetchAddresses";
+import type Order from "~/types/Order";
 
 const { addresses, addressesLoading, addressesRefresh } =
   useFetchUserAddresses();
@@ -74,12 +75,12 @@ const error = computed(() => {
 });
 
 const handleSubmitOrder = async () => {
-  const orderData = {
+  const orderData: Order = {
     id: 0,
     created_at: "",
     email: email.value,
     phone: phone.value,
-    total: cartStore.cart.total,
+    total: Number(cartStore.cart.total.toFixed(2)),
     user_id: 0,
     address: address.value,
     delivery_id: delivery.value,

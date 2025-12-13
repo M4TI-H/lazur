@@ -102,7 +102,7 @@ onMounted(async () => {
       <div class="w-full flex flex-col items-center gap-2">
         <NuxtLink
           to="/review"
-          class="max-w-[12rem] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
+          class="max-w-[12rem] w-full h-[2.5rem] bg-sky-700 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-800 active:bg-sky-800 transition-color ease-in-out duration-200 mx-auto"
         >
           Leave a review
         </NuxtLink>

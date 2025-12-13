@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     email: string;
     phone: string;
     total: number;
-    address_id: number;
+    address: number;
     delivery_id: number;
     items: {
       product_id: number;
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     .from("orders")
     .insert({
       name: body.name,
-      address_id: body.address_id,
+      address_id: body.address,
       email: body.email,
       phone: body.phone,
       delivery_id: body.delivery_id,
