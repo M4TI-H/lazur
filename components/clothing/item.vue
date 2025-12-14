@@ -3,6 +3,7 @@ import { Icon } from "@iconify/vue";
 import type Garment from "~/types/Garment";
 import { useFetchItemRating } from "~/composables/reviews/item/useFetchItemRating";
 import { useFetchCoverImage } from "~/composables/garments/images/useFetchCoverImage";
+import { useFetchSizes } from "~/composables/garments/useFetchSizes";
 
 const { itemData, gender } = defineProps<{
   itemData: Garment;
@@ -12,8 +13,8 @@ const { itemData, gender } = defineProps<{
 const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(
   itemData.id
 );
-
 const { cover, coverLoading, refreshCover } = useFetchCoverImage(itemData.id);
+const { sizes, sizesLoading, fetchSizes } = useFetchSizes();
 
 const selectedSize = ref<string>("-");
 
@@ -24,11 +25,14 @@ function addToCart() {
   if (selectedSize.value !== "-") {
     cartStore.addToCart(itemData, selectedSize.value);
   }
+
+  selectedSize.value = "-";
 }
 
 onMounted(async () => {
   await ratingRefresh();
   await refreshCover();
+  await fetchSizes(itemData.id);
 });
 </script>
 
@@ -38,13 +42,16 @@ onMounted(async () => {
     :to="`/garments/${gender}/itemDetails/${itemData.id}`"
     class="relative w-[8rem] sm:w-[18rem] lg:w-[24rem] h-[14rem] sm:h-[28rem] lg:h-[32rem] bg-white rounded-md overflow-hidden"
   >
-    <div class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-gray-300">
+    <div
+      class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl bg-gray-300 flex items-center justify-center"
+    >
       <img
         v-if="cover"
         :src="cover.url"
         class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto object-stretch"
         draggable="false"
       />
+      <i v-if="coverLoading" class="pi pi-spinner pi-spin"></i>
     </div>
 
     <div
@@ -79,6 +86,7 @@ onMounted(async () => {
             "
             class="text-sky-800"
           />
+          <i v-if="ratingLoading" class="pi pi-spinner pi-spin"></i>
         </div>
       </div>
 
@@ -106,11 +114,9 @@ onMounted(async () => {
             class="w-[4rem] sm:w-[6rem] h-[2rem] sm:h-[2.5rem] rounded-lg bg-gray-300 flex justify-center outline-0"
           >
             <option class="text-center">-</option>
-            <option class="text-center">XS</option>
-            <option class="text-center">S</option>
-            <option class="text-center">M</option>
-            <option class="text-center">L</option>
-            <option class="text-center">XL</option>
+            <option v-for="(size, id) in sizes" :key="id" class="text-center">
+              {{ size }}
+            </option>
           </select>
 
           <button

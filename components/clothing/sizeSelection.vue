@@ -11,7 +11,7 @@ const props = defineProps<{
   id: number;
 }>();
 
-const { sizes, loading, refresh } = useFetchSizes(props.id);
+const { sizes, sizesLoading, fetchSizes } = useFetchSizes();
 
 const selectSize = (value: string) => {
   if (value === props.modelValue) {
@@ -22,9 +22,7 @@ const selectSize = (value: string) => {
 };
 
 onMounted(async () => {
-  if (props.id) {
-    await refresh();
-  }
+  await fetchSizes(props.id);
 });
 </script>
 
