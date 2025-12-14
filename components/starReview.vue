@@ -41,7 +41,7 @@ const selectStar = (value: number) => {
             props.modelValue !== null &&
             value <= props.modelValue)
             ? 'text-sky-800'
-            : 'text-gray-500',
+            : 'text-gray-300',
         ]"
       />
     </button>

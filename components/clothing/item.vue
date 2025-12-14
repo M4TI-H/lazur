@@ -14,7 +14,7 @@ const { rating, ratingLoading, ratingRefresh } = useFetchItemRating(
   itemData.id
 );
 const { cover, coverLoading, refreshCover } = useFetchCoverImage(itemData.id);
-const { sizes, sizesLoading, fetchSizes } = useFetchSizes();
+const { sizes, fetchSizes } = useFetchSizes();
 
 const selectedSize = ref<string>("-");
 
@@ -51,7 +51,7 @@ onMounted(async () => {
         class="h-[8rem] sm:h-[20rem] lg:h-[24rem] rounded-t-xl mx-auto object-stretch"
         draggable="false"
       />
-      <i v-if="coverLoading" class="pi pi-spinner pi-spin"></i>
+      <i v-if="coverLoading" class="pi pi-spinner pi-spin text-white"></i>
     </div>
 
     <div

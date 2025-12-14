@@ -30,7 +30,7 @@ watch(localValue, (val) => {
     <input
       v-model="localValue"
       type="text"
-      class="w-full sm:w-[14rem] h-[2rem] bg-gray-200 border-1 border-gray-300 outline-300 text-lg px-2 rounded-md"
+      class="w-full sm:w-[14rem] h-[2rem] bg-gray-200 border-1 border-gray-300 outline-0 text-lg px-2 rounded-md"
     />
   </div>
 </template>

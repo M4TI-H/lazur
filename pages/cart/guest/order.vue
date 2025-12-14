@@ -122,11 +122,8 @@ onMounted(async () => {
     class="w-full min-h-screen flex flex-col items-center justify-center bg-white"
   >
     <section class="absolute z-10 w-full h-full">
-      <img
-        class="w-full h-full object-cover"
-        src="https://static.vecteezy.com/system/resources/thumbnails/039/653/479/small_2x/ai-generated-stylish-blue-shopping-bags-against-a-matching-blue-background-conveying-a-modern-aesthetic-ai-generated-photo.jpg"
-      />
-      <div class="absolute inset-0 bg-lack/60"></div>
+      <img class="w-full h-full object-cover" src="/order.jpg" />
+      <div class="absolute inset-0 bg-black/40"></div>
     </section>
 
     <form

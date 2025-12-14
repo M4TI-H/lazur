@@ -13,7 +13,7 @@ const emit = defineEmits<{
 
 <template>
   <div
-    class="w-full min-w-[18rem] max-w-[18rem] sm:max-w-[24rem] h-[17rem] sm:h-[15rem] gap-2 sm:gap-4 flex flex-col bg-white border-2 border-gray-200 rounded-lg overflow-y-auto"
+    class="w-full h-[17rem] sm:h-[15rem] gap-2 sm:gap-4 flex flex-col bg-white border-2 border-gray-200 rounded-lg overflow-y-auto"
   >
     <div class="w-full flex items-center justify-between bg-sky-800 p-4">
       <h2 class="text-xl text-gray-200 font-semibold">Personal data</h2>

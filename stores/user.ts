@@ -4,6 +4,7 @@ export const useUserStore = defineStore("user", {
   state: () => ({
     user: null as any,
     loading: false as boolean,
+    name: null as string | null,
   }),
 
   getters: {
@@ -11,6 +12,9 @@ export const useUserStore = defineStore("user", {
   },
 
   actions: {
+    async setName(name: string | null) {
+      this.name = name;
+    },
     async loadUser() {
       const supabase = useSupabaseClient();
       this.loading = true;

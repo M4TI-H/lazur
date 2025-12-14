@@ -18,6 +18,7 @@ const { order, orderLoading, orderRefresh } = useFetchOrder(
 onMounted(async () => {
   cartStore.clearStorage();
   await orderRefresh();
+  userStore.setName(order.value!.name ?? null);
 });
 </script>
 
@@ -27,11 +28,8 @@ onMounted(async () => {
     class="w-full min-h-screen flex flex-col items-center justify-center bg-white overflow-hidden"
   >
     <section class="absolute z-10 w-full h-full">
-      <img
-        class="w-full h-full object-cover"
-        src="https://static.vecteezy.com/system/resources/thumbnails/039/653/479/small_2x/ai-generated-stylish-blue-shopping-bags-against-a-matching-blue-background-conveying-a-modern-aesthetic-ai-generated-photo.jpg"
-      />
-      <div class="absolute inset-0 bg-black/60"></div>
+      <img class="w-full h-full object-cover" src="/order.jpg" />
+      <div class="absolute inset-0 bg-black/40"></div>
     </section>
 
     <section
@@ -101,7 +99,7 @@ onMounted(async () => {
 
       <div class="w-full flex flex-col items-center gap-2">
         <NuxtLink
-          to="/review"
+          to="/cart/review"
           class="max-w-[12rem] w-full h-[2.5rem] bg-sky-800 rounded-md mt-auto self-end flex items-center justify-center cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200 mx-auto"
         >
           Leave a review

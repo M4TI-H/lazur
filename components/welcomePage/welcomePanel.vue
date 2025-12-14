@@ -12,7 +12,7 @@ const searchItem = () => {
   <section class="relative w-full h-screen flex flex-col items-center">
     <img class="w-full h-full object-cover z-10" src="/welcomeBg.jpeg" />
     <div
-      class="absolute bg-black/60 w-full h-full z-20 flex items-center justify-center"
+      class="absolute bg-black/50 w-full h-full z-20 flex items-center justify-center"
     >
       <div
         class="absolute z-30 p-8 flex flex-col items-center mt-16 md:mt-24 gap-2 md:gap-4"

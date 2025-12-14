@@ -7,7 +7,7 @@
     <p class="text-gray-500">Thank you for supporting Lazur.</p>
     <NuxtLink
       to="/"
-      class="max-w-[12rem] w-full h-[2.5rem] bg-sky-800 rounded-md mt-auto self-end cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200 mx-auto"
+      class="max-w-[12rem] w-full h-[2.5rem] bg-sky-800 rounded-md flex items-center justify-center mt-auto self-end cursor-pointer text-gray-200 hover:bg-sky-900 active:bg-sky-900 transition-color ease-in-out duration-200 mx-auto"
     >
       Return to homepage
     </NuxtLink>
