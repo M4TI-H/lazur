@@ -3,9 +3,11 @@ import { useField, useForm } from "vee-validate";
 import { z } from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useCreateReview } from "~/composables/reviews/useCreateReview";
+import { useReviewImageUpload } from "~/composables/reviews/useReviewImageUpload";
 
 const emit = defineEmits<{
   (e: "submit"): void;
+  (e: "cancel"): void;
 }>();
 
 const props = defineProps<{
@@ -15,6 +17,7 @@ const props = defineProps<{
 const userStore = useUserStore();
 
 const { createReview, loading } = useCreateReview();
+const { uploadImage, imageUrl, uploadLoading } = useReviewImageUpload();
 const showError = ref<boolean>(false);
 
 const validationSchema = toTypedSchema(
@@ -66,7 +69,16 @@ const error = computed(() => {
   );
 });
 
+const reviewImage = ref<File | null>(null);
+const previewImageUrl = ref<string>("");
+
 const handleReviewSubmit = async () => {
+  let newImageUrl: string | null = null;
+
+  if (reviewImage.value) {
+    newImageUrl = await uploadImage(reviewImage.value);
+  }
+
   const reviewData = {
     id: 0,
     review: review.value,
@@ -77,10 +89,16 @@ const handleReviewSubmit = async () => {
     general_rating: 0,
     name: userStore.isLoggedIn && props.name ? props.name : name.value,
     created_at: "",
+    image: newImageUrl ?? "",
   };
 
   await createReview(reviewData);
 
+  if (previewImageUrl.value) {
+    URL.revokeObjectURL(previewImageUrl.value);
+  }
+
+  reviewImage.value = null;
   emit("submit");
 };
 
@@ -101,12 +119,12 @@ const onSubmit = handleSubmit(
   >
     <div class="w-full flex items-center justify-between">
       <h2 class="text-xl font-semibold">Review</h2>
-      <NuxtLink
-        to="/"
+      <button
+        @click="emit('cancel')"
         class="text-sm text-gray-700 cursor-pointer hover:underline"
       >
         Cancel
-      </NuxtLink>
+      </button>
     </div>
 
     <ErrorMessage v-if="showError && error" :error="error" />
@@ -154,6 +172,11 @@ const onSubmit = handleSubmit(
         </p>
       </div>
     </div>
+
+    <ImageSelector
+      v-model="previewImageUrl"
+      @file-selected="reviewImage = $event"
+    />
 
     <div
       v-if="!userStore.isLoggedIn"

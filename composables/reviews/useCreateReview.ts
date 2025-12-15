@@ -18,6 +18,7 @@ export function useCreateReview() {
         price: data.price,
         satisfaction: data.satisfaction,
         experience: data.shopping_experience,
+        image: data.image,
       }),
     });
 

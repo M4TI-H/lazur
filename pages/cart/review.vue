@@ -20,6 +20,7 @@ const submitReview = ref<boolean>(false);
       v-if="!submitReview"
       @submit="submitReview = true"
       :name="userStore.name"
+      @cancel="navigateTo('/')"
     />
     <ReviewConfirm v-else />
   </main>

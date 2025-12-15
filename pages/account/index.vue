@@ -105,6 +105,7 @@ watch(
       <LazurReviewForm
         :name="personalData?.name"
         @submit="showReviewForm = false"
+        @cancel="showReviewForm = false"
       />
     </div>
   </main>

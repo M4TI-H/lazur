@@ -1,4 +1,4 @@
-export function useImageUpload() {
+export function useReviewImageUpload() {
   const supabase = useSupabaseClient();
   const uploadLoading = ref<boolean>(false);
   const uploadError = ref<Error | null>(null);
@@ -8,7 +8,7 @@ export function useImageUpload() {
     const filePath = `${file.name}_${Date.now()}`;
 
     const { error } = await supabase.storage
-      .from("item-review-images")
+      .from("shop-reviews")
       .upload(filePath, file);
 
     if (error) {
@@ -17,7 +17,7 @@ export function useImageUpload() {
     }
 
     const { data } = await supabase.storage
-      .from("item-review-images")
+      .from("shop-reviews")
       .getPublicUrl(filePath);
 
     if (data) {

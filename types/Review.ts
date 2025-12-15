@@ -8,4 +8,5 @@ export default interface Review {
   general_rating: number;
   name: string;
   created_at: string;
+  image: string;
 }

@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     price: number;
     satisfaction: number;
     experience: number;
+    image: string;
   }>(event);
 
   const general = (
@@ -27,6 +28,7 @@ export default defineEventHandler(async (event) => {
       satisfaction: body.satisfaction,
       shopping_experience: body.experience,
       general_rating: general,
+      image: body.image ? body.image : null,
     })
     .select("id")
     .single();
