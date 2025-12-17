@@ -1,22 +1,26 @@
 import { defineStore } from "pinia";
 import { useAddToCart } from "~/composables/cart/useAddToCart";
+import { useFetchCart } from "~/composables/cart/useFetchCart";
 import { useRemoveFromCart } from "~/composables/cart/useRemoveFromCart";
+import { useUpdateQuantity } from "~/composables/cart/useUpdateQuantity";
+import type CartItem from "~/types/CartItem";
 import type Garment from "~/types/Garment";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cart: {
-      items: [] as (Garment & {
-        quantity: number;
-        size: string;
-        cartItemId: number | null;
-      })[],
+      items: [] as CartItem[],
       total: 0,
       delivery_cost: 0,
     },
   }),
 
   actions: {
+    async loadCart() {
+      const { cartItems, fetchCart } = useFetchCart();
+      await fetchCart();
+      this.cart.items = cartItems.value;
+    },
     async addToCart(product: Garment, size: string) {
       const userStore = useUserStore();
       const { addItemToCart } = useAddToCart();
@@ -31,10 +35,12 @@ export const useCartStore = defineStore("cart", {
         }
       } else {
         item = {
-          ...product,
+          id: null,
+          user_id: userStore.user?.id ?? 0,
+          product_id: product.id,
           quantity: 1,
           size,
-          cartItemId: null,
+          product,
         };
         this.cart.items.push(item);
       }
@@ -46,7 +52,7 @@ export const useCartStore = defineStore("cart", {
       const cartItemId = await addItemToCart(product.id, size);
 
       if (cartItemId) {
-        item.cartItemId = cartItemId;
+        item.id = cartItemId;
         this.saveToStorage();
       }
     },
@@ -65,30 +71,24 @@ export const useCartStore = defineStore("cart", {
       this.updateTotal();
       this.saveToStorage();
 
-      if (!userStore.isLoggedIn || !item.cartItemId) return;
+      if (!userStore.isLoggedIn || !item.id) return;
 
-      removeFromCart(item.cartItemId);
+      removeFromCart(item.id);
     },
-    incrementQuantity(id: number, size: string) {
-      const product = this.cart.items.find(
-        (i) => i.id === id && i.size === size
-      );
+    chageQuantity(id: number, size: string, delta: number) {
+      const userStore = useUserStore();
+      const { updateQuantity } = useUpdateQuantity();
 
-      if (product && product.quantity < 10) {
-        product.quantity++;
-        this.updateTotal();
-        this.saveToStorage();
-      }
-    },
-    decrementQuantity(id: number, size: string) {
-      const product = this.cart.items.find(
-        (i) => i.id == id && i.size === size
-      );
+      const item = this.cart.items.find((i) => i.id === id && i.size === size);
+      if (!item) return;
 
-      if (product && product.quantity > 1) {
-        product.quantity--;
-        this.updateTotal();
-        this.saveToStorage();
+      item.quantity = Math.max(1, Math.min(10, item.quantity + delta));
+
+      this.updateTotal();
+      this.saveToStorage();
+
+      if (userStore.isLoggedIn && item.id) {
+        updateQuantity(item.id, delta);
       }
     },
     updateTotal() {
@@ -110,8 +110,8 @@ export const useCartStore = defineStore("cart", {
     clearStorage() {
       this.cart.items = [];
       this.cart.total = 0;
+      this.cart.delivery_cost = 0;
       localStorage.removeItem("cart");
-      localStorage.clear();
     },
   },
 
@@ -120,7 +120,7 @@ export const useCartStore = defineStore("cart", {
       state.cart.items.reduce((sum, item) => sum + item.quantity, 0),
     totalPrice: (state) =>
       state.cart.items
-        .reduce((sum, item) => sum + item.price * item.quantity, 0)
+        .reduce((sum, item) => sum + item.product.price * item.quantity, 0)
         .toFixed(2),
   },
 });

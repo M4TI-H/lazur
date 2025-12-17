@@ -5,7 +5,7 @@ export function useFetchCart() {
   const cartError = ref<Error | null>();
   const cartItems = ref<CartItem[]>([]);
 
-  const fetchCart = async (id: number) => {
+  const fetchCart = async () => {
     cartLoading.value = true;
 
     const { data, error: cartError } = await fetchData<CartItem[]>(
@@ -20,6 +20,8 @@ export function useFetchCart() {
     }
 
     cartItems.value = data ?? [];
+
+    return;
   };
 
   return { cartItems, cartLoading, cartError, fetchCart };

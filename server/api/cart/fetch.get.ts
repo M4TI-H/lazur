@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await supabase
     .from("cart_items")
-    .select("*")
+    .select("id, product_id, size, quantity, product:garments(*)")
     .eq("user_id", user.id);
 
   if (error) {

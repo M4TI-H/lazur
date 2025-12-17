@@ -22,7 +22,16 @@ export const useUserStore = defineStore("user", {
       const { data, error } = await supabase.auth.getSession();
       this.user = data.session?.user ?? null;
 
-      if (error) return;
+      if (error) {
+        this.loading = false;
+        return;
+      }
+
+      if (this.user) {
+        const cartStore = useCartStore();
+        await cartStore.loadCart();
+      }
+
       this.loading = false;
     },
 
@@ -37,7 +46,16 @@ export const useUserStore = defineStore("user", {
 
       this.loading = false;
 
-      if (error) return;
+      if (error) {
+        this.loading = false;
+        return;
+      }
+
+      if (this.user) {
+        const cartStore = useCartStore();
+        await cartStore.loadCart();
+      }
+
       this.user = data.user;
     },
 
@@ -58,9 +76,11 @@ export const useUserStore = defineStore("user", {
     },
 
     async signOut() {
+      const cartStore = useCartStore();
       const supabase = useSupabaseClient();
-      await supabase.auth.signOut();
       this.user = null;
+      cartStore.clearStorage();
+      await supabase.auth.signOut();
     },
   },
 });

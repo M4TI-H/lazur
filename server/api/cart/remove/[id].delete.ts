@@ -17,8 +17,6 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: "Invalid id" });
   }
 
-  console.log(id);
-
   const { error: deleteError } = await supabase
     .from("cart_items")
     .delete()
