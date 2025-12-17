@@ -1,37 +1,73 @@
 import { defineStore } from "pinia";
+import { useAddToCart } from "~/composables/cart/useAddToCart";
+import { useRemoveFromCart } from "~/composables/cart/useRemoveFromCart";
 import type Garment from "~/types/Garment";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cart: {
-      items: [] as (Garment & { quantity: number; size: string })[],
+      items: [] as (Garment & {
+        quantity: number;
+        size: string;
+        cartItemId: number | null;
+      })[],
       total: 0,
       delivery_cost: 0,
     },
   }),
 
   actions: {
-    addToCart(product: Garment, size: string) {
-      const isInCart = this.cart.items.find(
+    async addToCart(product: Garment, size: string) {
+      const userStore = useUserStore();
+      const { addItemToCart } = useAddToCart();
+
+      let item = this.cart.items.find(
         (p) => p.id === product.id && p.size === size
       );
-      if (isInCart) {
-        if (isInCart.quantity < 10) {
-          isInCart.quantity++;
+
+      if (item) {
+        if (item.quantity < 10) {
+          item.quantity++;
         }
       } else {
-        this.cart.items.push({ ...product, quantity: 1, size });
+        item = {
+          ...product,
+          quantity: 1,
+          size,
+          cartItemId: null,
+        };
+        this.cart.items.push(item);
       }
+      this.updateTotal();
+      this.saveToStorage();
+
+      if (!userStore.isLoggedIn) return;
+
+      const cartItemId = await addItemToCart(product.id, size);
+
+      if (cartItemId) {
+        item.cartItemId = cartItemId;
+        this.saveToStorage();
+      }
+    },
+    removeFromCart(product_id: number, size: string) {
+      const userStore = useUserStore();
+      const { removeFromCart } = useRemoveFromCart();
+
+      const item = this.cart.items.find(
+        (i) => i.id === product_id && i.size === size
+      );
+
+      if (!item) return;
+
+      this.cart.items = this.cart.items.filter((i) => i !== item);
 
       this.updateTotal();
       this.saveToStorage();
-    },
-    removeFromCart(id: number, size: string) {
-      this.cart.items = this.cart.items.filter(
-        (i) => !(i.id === id && i.size === size)
-      );
-      this.updateTotal();
-      this.saveToStorage();
+
+      if (!userStore.isLoggedIn || !item.cartItemId) return;
+
+      removeFromCart(item.cartItemId);
     },
     incrementQuantity(id: number, size: string) {
       const product = this.cart.items.find(
