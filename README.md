@@ -1,75 +1,16 @@
-# Nuxt Minimal Starter
+# Lazur - Modern E-commerce Platform
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A scalable full-stack e-commerce application built with Nuxt 3. The project demonstrates a robust architecture for handling product catalogs, user authentication, and real-time database operations, focusing on high performance and maintainability.
 
-## Setup
+## 🛠 Technologies
 
-Make sure to install dependencies:
+* **Frontend:** Nuxt, Typescript, Tailwind CSS
+* **Backend:** Node.js, Supabase
 
-```bash
-# npm
-npm install
+## Key Features
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+* **Full-Stack Integration:** Leveraged the Supabase ecosystem to implement secure User Authentication and real-time database management.
+* **State Management:** Utilized **Pinia** for efficient global state handling, ensuring predictable data flow across complex shopping cart and user session routes.
+* **Component-Based Architecture:** Engineered a modular system with highly reusable Vue.js components, following clean code principles and DRY patterns.
+* **Performance & UX:** Optimized the frontend using Nuxt's hybrid rendering capabilities (SSR/SSG) and Tailwind CSS for a fast, responsive, and modern user interface.
+* **Responsive Design:** A mobile-first approach ensuring a seamless shopping experience across all device types.
